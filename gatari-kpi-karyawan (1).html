@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>Gatari KPI — Karyawan</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root{
+  --bg:#f7f4ee;--surface:#fffaf2;--card:#ffffff;--text:#181612;--muted:#847c70;--line:#ece5da;
+  --brand:#f3b23c;--green:#1f9d63;--green-bg:#eaf8f0;--red:#df4759;--red-bg:#fff0f2;
+  --shadow:0 18px 55px rgba(38,30,19,.10);--shadow2:0 8px 28px rgba(38,30,19,.08);
+  --safe:env(safe-area-inset-bottom,0px);--nav-h:80px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif;background:radial-gradient(circle at 10% 0%,#fff2cc 0,#f7f4ee 32%,#f5f1ea 100%);color:var(--text);-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit}button{border:0;cursor:pointer}
+input,select{width:100%;border:1.5px solid var(--line);background:#fff;border-radius:20px;padding:15px 16px;color:var(--text);outline:0;font-size:16px;transition:border .2s,box-shadow .2s}
+input:focus,select:focus{border-color:#d9c7a8;box-shadow:0 0 0 4px rgba(243,178,60,.14)}
+
+/* ── LOGIN SCREEN ── */
+.login-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;gap:0}
+.login-card{background:#fff;border:1px solid var(--line);border-radius:36px;padding:36px 28px 28px;width:100%;max-width:400px;box-shadow:var(--shadow)}
+.login-logo{width:64px;height:64px;border-radius:22px;background:linear-gradient(145deg,#fff6dc,#f4b13c);box-shadow:0 12px 28px rgba(243,178,60,.25);display:grid;place-items:center;margin:0 auto 20px}
+.login-logo svg{width:30px}
+.login-title{font-size:28px;font-weight:900;letter-spacing:-1px;text-align:center;margin:0 0 4px}
+.login-sub{font-size:15px;color:var(--muted);font-weight:600;text-align:center;margin:0 0 28px}
+.form-label{font-size:13px;font-weight:750;color:var(--muted);margin-bottom:6px;display:block}
+.form-group{margin-bottom:14px}
+.pin-row{display:flex;gap:10px;justify-content:center;margin:4px 0}
+.pin-box{width:56px;height:64px;border:2px solid var(--line);border-radius:18px;font-size:26px;font-weight:900;text-align:center;background:#fff;color:var(--text);letter-spacing:0;-webkit-text-security:disc;outline:none;transition:border .2s,box-shadow .2s}
+.pin-box:focus{border-color:var(--brand);box-shadow:0 0 0 4px rgba(243,178,60,.14)}
+.pin-box.filled{border-color:#d9c7a8;background:#fffdf8}
+.btn-login{width:100%;background:#15120e;color:#fff;border-radius:22px;padding:17px;font-size:17px;font-weight:850;margin-top:8px;transition:all .2s;box-shadow:0 12px 30px rgba(15,13,10,.18)}
+.btn-login:hover{background:#2a2520;transform:translateY(-1px)}
+.btn-login:active{transform:translateY(0)}
+.error-msg{background:var(--red-bg);border:1px solid #ffd6dc;border-radius:14px;padding:12px 16px;font-size:14px;font-weight:700;color:var(--red);text-align:center;margin-top:12px;display:none}
+.error-msg.show{display:block}
+.shake{animation:shake .4s ease}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+
+/* ── APP SHELL ── */
+.app{max-width:760px;margin:0 auto;min-height:100vh;display:none;padding-bottom:calc(var(--nav-h) + var(--safe) + 24px)}
+.topbar{position:sticky;top:0;z-index:20;background:rgba(247,244,238,.88);backdrop-filter:blur(18px);border-bottom:1px solid rgba(236,229,218,.7)}
+.topbar-inner{display:flex;align-items:center;gap:12px;padding:14px 20px}
+.tlogo{width:44px;height:44px;border-radius:15px;background:linear-gradient(145deg,#fff6dc,#f4b13c);box-shadow:0 8px 20px rgba(243,178,60,.2);display:grid;place-items:center;flex-shrink:0}
+.tlogo svg{width:22px}
+.tbrand{font-size:18px;font-weight:850;letter-spacing:-.5px}
+.tbadge{font-size:11px;background:#eaf8f0;color:var(--green);border:1px solid #cdeedc;border-radius:999px;padding:3px 9px;font-weight:750;margin-left:6px;vertical-align:middle}
+.tuser{margin-left:auto;display:flex;align-items:center;gap:10px}
+.avatar-sm{width:38px;height:38px;border-radius:13px;background:#fff5d8;border:1px solid #f4dfae;color:#b87a03;display:grid;place-items:center;font-weight:900;font-size:15px;flex-shrink:0}
+.logout-btn{background:transparent;border:1.5px solid var(--line);border-radius:14px;padding:7px 13px;font-size:13px;font-weight:750;color:var(--muted);transition:all .2s}
+.logout-btn:hover{border-color:var(--red);color:var(--red)}
+
+/* ── BOTTOM NAV ── */
+.bottom-nav{position:fixed;left:50%;bottom:calc(12px + var(--safe));transform:translateX(-50%);width:min(720px,calc(100% - 28px));height:var(--nav-h);background:rgba(255,255,255,.88);backdrop-filter:blur(18px);border:1px solid rgba(236,229,218,.9);box-shadow:0 22px 70px rgba(39,30,18,.16);border-radius:30px;display:grid;grid-template-columns:repeat(3,1fr);z-index:30;padding:8px}
+.nav-btn{background:transparent;color:#91887c;border-radius:22px;font-size:12px;font-weight:850;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.nav-btn svg{width:22px;height:22px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.nav-btn.active{color:#15120e;background:#fff3d5}
+
+/* ── CONTENT ── */
+.main{padding:18px 20px 0}
+.hero{margin:0 0 22px}
+.title{font-size:36px;line-height:.95;letter-spacing:-1.8px;font-weight:900;margin:0}
+.subtitle{font-size:15px;line-height:1.5;color:var(--muted);font-weight:700;margin:10px 0 0}
+
+/* ── CARDS ── */
+.card{background:rgba(255,255,255,.92);border:1px solid rgba(236,229,218,.95);border-radius:28px;padding:20px;box-shadow:var(--shadow)}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.stat{background:rgba(255,255,255,.8);border:1px solid rgba(236,229,218,.9);border-radius:24px;padding:16px;box-shadow:var(--shadow2)}
+.stat-label{font-size:12px;color:var(--muted);font-weight:750}
+.stat-value{font-size:22px;font-weight:900;letter-spacing:-.6px;margin-top:5px}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin:20px 0 12px}
+.section-head h2{font-size:20px;letter-spacing:-.5px;margin:0;font-weight:900}
+
+/* ── KPI SCORE RING ── */
+.score-ring-wrap{display:flex;flex-direction:column;align-items:center;padding:24px 0 8px}
+.score-ring{position:relative;width:140px;height:140px}
+.score-ring svg{transform:rotate(-90deg)}
+.score-ring-num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.score-big{font-size:36px;font-weight:900;letter-spacing:-2px;line-height:1}
+.score-label-sm{font-size:12px;font-weight:750;color:var(--muted);margin-top:2px}
+.score-status{font-size:17px;font-weight:850;margin-top:14px;letter-spacing:-.3px}
+
+/* ── RECORD ITEMS ── */
+.record-item{display:flex;gap:12px;align-items:flex-start;padding:16px 0;border-bottom:1px solid var(--line)}
+.record-item:last-child{border-bottom:none}
+.rec-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.rec-dot.bonus{background:var(--green)}
+.rec-dot.penalty{background:var(--red)}
+.rec-body{flex:1;min-width:0}
+.rec-label{font-size:15px;font-weight:750}
+.rec-meta{font-size:13px;color:var(--muted);margin-top:3px}
+.rec-note{font-size:13px;color:var(--muted);font-style:italic;margin-top:4px;line-height:1.4}
+.rec-amount{font-size:16px;font-weight:900;white-space:nowrap;flex-shrink:0}
+.rec-amount.bonus{color:var(--green)}
+.rec-amount.penalty{color:var(--red)}
+
+/* ── PHOTO GALLERY ── */
+.photo-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.photo-thumb{width:64px;height:64px;object-fit:cover;border-radius:12px;border:1px solid var(--line);cursor:pointer;transition:opacity .15s}
+.photo-thumb:hover{opacity:.8}
+
+/* ── LIGHTBOX ── */
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:200;display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px}
+.lightbox.show{display:flex}
+.lightbox img{max-width:90vw;max-height:75vh;object-fit:contain;border-radius:14px}
+.lb-nav{display:flex;gap:14px;align-items:center;margin-top:16px}
+.lb-nav button{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.15);color:#fff;font-size:20px;display:grid;place-items:center;border:0;cursor:pointer}
+.lb-close{background:rgba(255,255,255,.1)!important;border:1px solid rgba(255,255,255,.2)!important;border-radius:14px!important;padding:10px 20px!important;color:#fff;font-weight:700;width:auto!important;font-size:14px}
+
+/* ── MONTH PICKER ── */
+.month-bar{background:rgba(247,244,238,.7);border-bottom:1px solid rgba(236,229,218,.5);padding:10px 20px;display:flex;align-items:center;gap:10px}
+.month-bar select{width:auto;border-radius:16px;padding:8px 12px;font-size:14px;font-weight:700;background:#fff}
+.month-count{font-size:13px;color:var(--muted);font-weight:700}
+
+/* ── EMPTY ── */
+.empty{border:1px dashed #ded4c6;border-radius:22px;padding:30px;text-align:center;color:var(--muted);font-weight:700;font-size:14px;background:rgba(255,255,255,.4)}
+
+/* ── BADGE ── */
+.badge{display:inline-block;border-radius:999px;padding:4px 12px;font-size:12px;font-weight:750}
+.badge.good{background:var(--green-bg);color:var(--green);border:1px solid #cdeedc}
+.badge.warn{background:#fff8df;color:#b87900;border:1px solid #f5e4a9}
+.badge.bad{background:var(--red-bg);color:var(--red);border:1px solid #ffd6dc}
+
+/* ── TOAST ── */
+.toast{position:fixed;left:20px;right:20px;bottom:calc(100px + var(--safe));z-index:80;background:#15120e;color:#fff;border-radius:18px;padding:13px 16px;text-align:center;font-weight:800;font-size:14px;display:none;max-width:500px;margin:auto}
+.toast.show{display:block}
+
+/* ── ANIMATIONS ── */
+@keyframes fade-up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.anim{animation:fade-up .3s ease both}
+
+@media(max-width:420px){
+  .title{font-size:30px}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .pin-box{width:48px;height:58px;font-size:22px}
+}
+</style>
+</head>
+<body>
+
+<!-- ── LOGIN SCREEN ── -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#9c6900" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M13 2 4 14h7l-1 8 10-13h-7l1-7z" fill="#ffd978"/>
+      </svg>
+    </div>
+    <h1 class="login-title">Portal Karyawan</h1>
+    <p class="login-sub">Gatari Edutoys · Lihat performa Anda</p>
+
+    <div class="form-group">
+      <label class="form-label">Pilih Nama Anda</label>
+      <select id="loginName">
+        <option value="">— Pilih nama —</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">PIN 4 Digit</label>
+      <div class="pin-row" id="pinRow">
+        <input class="pin-box" type="password" maxlength="1" inputmode="numeric" pattern="[0-9]" id="p0" oninput="pinInput(0)">
+        <input class="pin-box" type="password" maxlength="1" inputmode="numeric" pattern="[0-9]" id="p1" oninput="pinInput(1)">
+        <input class="pin-box" type="password" maxlength="1" inputmode="numeric" pattern="[0-9]" id="p2" oninput="pinInput(2)">
+        <input class="pin-box" type="password" maxlength="1" inputmode="numeric" pattern="[0-9]" id="p3" oninput="pinInput(3)" onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+    </div>
+
+    <button class="btn-login" onclick="doLogin()">Masuk →</button>
+    <div class="error-msg" id="errMsg">Nama atau PIN salah. Coba lagi.</div>
+  </div>
+  <div style="margin-top:20px;font-size:13px;color:#b0a898;font-weight:600;">Belum punya PIN? Hubungi owner.</div>
+</div>
+
+<!-- ── APP ── -->
+<div class="app" id="appShell">
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="tlogo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#9c6900" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M13 2 4 14h7l-1 8 10-13h-7l1-7z" fill="#ffd978"/>
+        </svg>
+      </div>
+      <div>
+        <div class="tbrand">Gatari KPI <span class="tbadge">Karyawan</span></div>
+        <div style="font-size:12px;color:var(--muted);font-weight:700;margin-top:1px">Portal Performa Pribadi</div>
+      </div>
+      <div class="tuser">
+        <div class="avatar-sm" id="topAvatar">?</div>
+        <button class="logout-btn" onclick="doLogout()">Keluar</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="month-bar">
+    <select id="monthPicker" onchange="onMonthChange()"></select>
+    <span class="month-count" id="monthCount"></span>
+  </div>
+
+  <main class="main" id="mainContent"></main>
+</div>
+
+<nav class="bottom-nav" id="bottomNav" style="display:none">
+  <button class="nav-btn active" id="nav-home" onclick="switchTab('home')">
+    <svg viewBox="0 0 24 24"><path d="M3 10.8 12 3l9 7.8v9.7a.5.5 0 0 1-.5.5H15v-6H9v6H3.5a.5.5 0 0 1-.5-.5z"/></svg>
+    <span>Beranda</span>
+  </button>
+  <button class="nav-btn" id="nav-records" onclick="switchTab('records')">
+    <svg viewBox="0 0 24 24"><path d="M9 2h6v4H9z"/><path d="M16 4h3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h3"/><path d="M8 11h8M8 16h5"/></svg>
+    <span>Catatan</span>
+  </button>
+  <button class="nav-btn" id="nav-slip" onclick="switchTab('slip')">
+    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+    <span>Slip Gaji</span>
+  </button>
+</nav>
+
+<div class="lightbox" id="lightbox">
+  <img id="lbImg" src="" alt="">
+  <div class="lb-nav">
+    <button id="lbPrev" onclick="lbNav(-1)">‹</button>
+    <span id="lbCount" style="color:#fff;font-size:13px;font-weight:700"></span>
+    <button id="lbNext" onclick="lbNav(1)">›</button>
+    <button class="lb-close" onclick="closeLb()">Tutup</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── STORAGE (shared keys dengan owner) ───────────────────────────
+const ld=(k,f)=>{try{return JSON.parse(localStorage.getItem(k))??f}catch{return f}};
+const sv=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+const $=id=>document.getElementById(id);
+const MONTHS=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+
+// ─── STATE ────────────────────────────────────────────────────────
+let currentEmp=null;
+let month=new Date().toISOString().slice(0,7);
+let tab='home';
+let lbPhotos=[],lbIdx=0;
+
+// ─── HELPERS ──────────────────────────────────────────────────────
+function today(){return new Date().toISOString().slice(0,10)}
+function fmt(d){if(!d)return'';let[y,m,da]=d.split('-');return da+' '+MONTHS[+m-1]+' '+y}
+function idr(n){return'Rp '+Math.abs(Math.round(n||0)).toLocaleString('id-ID')}
+function av(n){return(n||'?').trim()[0]?.toUpperCase()||'?'}
+function toast(m){let t=$('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}
+
+// ─── PIN INPUT FLOW ───────────────────────────────────────────────
+function pinInput(idx){
+  let box=$('p'+idx);
+  // allow only numbers
+  box.value=box.value.replace(/[^0-9]/g,'');
+  box.classList.toggle('filled',box.value!=='');
+  if(box.value&&idx<3)$('p'+(idx+1)).focus();
+  if(!box.value&&idx>0){
+    // backspace support: handled by keydown
+  }
+}
+// backspace nav
+document.addEventListener('keydown',e=>{
+  if(!$('loginScreen').style.display||$('loginScreen').style.display!=='none'){
+    for(let i=1;i<=3;i++){
+      if(document.activeElement===$('p'+i)&&e.key==='Backspace'&&!$('p'+i).value){
+        $('p'+(i-1)).focus();break;
+      }
+    }
+  }
+  if(e.key==='Escape'&&$('lightbox').classList.contains('show'))closeLb();
+  if($('lightbox').classList.contains('show')){
+    if(e.key==='ArrowLeft')lbNav(-1);
+    else if(e.key==='ArrowRight')lbNav(1);
+  }
+});
+
+// ─── POPULATE LOGIN DROPDOWN ──────────────────────────────────────
+function populateNames(){
+  let emps=ld('kpi_employees',[]);
+  let active=emps.filter(e=>e.active!==false&&e.pin);
+  let sel=$('loginName');
+  sel.innerHTML='<option value="">— Pilih nama —</option>';
+  if(active.length===0){
+    sel.innerHTML+='<option disabled>Belum ada karyawan dengan PIN (hubungi owner)</option>';
+    return;
+  }
+  active.forEach(e=>{
+    let opt=document.createElement('option');
+    opt.value=e.id;opt.textContent=e.name+' · '+e.role;
+    sel.appendChild(opt);
+  });
+}
+
+// ─── LOGIN ────────────────────────────────────────────────────────
+function doLogin(){
+  let empId=$('loginName').value;
+  let pin=[$('p0'),$('p1'),$('p2'),$('p3')].map(b=>b.value).join('');
+  let emps=ld('kpi_employees',[]);
+  let emp=emps.find(e=>e.id===empId);
+  let err=$('errMsg');
+
+  if(!empId||pin.length<4){
+    err.textContent='Pilih nama dan isi PIN 4 digit.';
+    err.classList.add('show');
+    $('pinRow').classList.add('shake');
+    setTimeout(()=>$('pinRow').classList.remove('shake'),400);
+    return;
+  }
+  if(!emp||emp.pin!==pin){
+    err.textContent='Nama atau PIN salah. Coba lagi.';
+    err.classList.add('show');
+    $('pinRow').classList.add('shake');
+    setTimeout(()=>$('pinRow').classList.remove('shake'),400);
+    // clear PIN
+    [$('p0'),$('p1'),$('p2'),$('p3')].forEach(b=>{b.value='';b.classList.remove('filled');});
+    $('p0').focus();
+    return;
+  }
+
+  // success
+  err.classList.remove('show');
+  currentEmp=emp;
+  sv('kpi_session',{empId:emp.id,at:Date.now()});
+  showApp();
+}
+
+function showApp(){
+  $('loginScreen').style.display='none';
+  $('appShell').style.display='block';
+  $('bottomNav').style.display='grid';
+  $('topAvatar').textContent=av(currentEmp.name);
+  buildMonthPicker();
+  switchTab('home');
+}
+
+function doLogout(){
+  if(!confirm('Keluar dari portal karyawan?'))return;
+  localStorage.removeItem('kpi_session');
+  currentEmp=null;
+  [$('p0'),$('p1'),$('p2'),$('p3')].forEach(b=>{b.value='';b.classList.remove('filled');});
+  $('loginName').value='';
+  $('errMsg').classList.remove('show');
+  $('loginScreen').style.display='flex';
+  $('appShell').style.display='none';
+  $('bottomNav').style.display='none';
+}
+
+// ─── RESTORE SESSION ──────────────────────────────────────────────
+function tryRestoreSession(){
+  let sess=ld('kpi_session',null);
+  if(!sess)return false;
+  // session expires after 12 hours
+  if(Date.now()-sess.at>12*60*60*1000){localStorage.removeItem('kpi_session');return false;}
+  let emps=ld('kpi_employees',[]);
+  let emp=emps.find(e=>e.id===sess.empId);
+  if(!emp||emp.active===false){localStorage.removeItem('kpi_session');return false;}
+  // re-read fresh employee data
+  currentEmp=emp;
+  return true;
+}
+
+// ─── MONTH PICKER ─────────────────────────────────────────────────
+function buildMonthPicker(){
+  let mp=$('monthPicker');mp.innerHTML='';
+  for(let i=-12;i<=2;i++){
+    let d=new Date();d.setMonth(d.getMonth()+i);
+    let v=d.toISOString().slice(0,7);
+    let[y,m]=v.split('-');
+    mp.innerHTML+=`<option value="${v}">${MONTHS[+m-1]} ${y}</option>`;
+  }
+  mp.value=month;
+}
+function onMonthChange(){
+  month=$('monthPicker').value;
+  renderTab();
+}
+
+// ─── TABS ─────────────────────────────────────────────────────────
+function switchTab(t){
+  tab=t;
+  // pull fresh on each tab switch
+  pullSheets().then(()=>renderTab());
+  ['home','records','slip'].forEach(k=>{
+    $('nav-'+k)?.classList.toggle('active',k===t);
+  });
+  renderTab();
+}
+function renderTab(){
+  // always re-read fresh data from localStorage (synced from Sheets)
+  let emps=ld('kpi_employees',[]);
+  currentEmp=emps.find(e=>e.id===currentEmp.id)||currentEmp;
+  let recs=ld('kpi_records',[]);
+  let myRecs=recs.filter(r=>r.empId===currentEmp.id&&r.date.startsWith(month));
+  let[y,mo]=month.split('-');
+  $('monthCount').textContent=`${MONTHS[+mo-1]} ${y} · ${myRecs.length} catatan`;
+
+  if(tab==='home')$('mainContent').innerHTML=renderHome(myRecs);
+  else if(tab==='records')$('mainContent').innerHTML=renderRecords(myRecs);
+  else if(tab==='slip')$('mainContent').innerHTML=renderSlip(myRecs);
+}
+
+// ─── HOME TAB ─────────────────────────────────────────────────────
+function renderHome(myRecs){
+  let bonus=myRecs.filter(r=>r.category==='bonus').reduce((s,r)=>s+r.amount,0);
+  let penalty=myRecs.filter(r=>r.category==='penalty').reduce((s,r)=>s+r.amount,0);
+  let pc=myRecs.filter(r=>r.category==='penalty').length;
+  let bc=myRecs.filter(r=>r.category==='bonus').length;
+  let score=Math.max(0,Math.min(100,100-(pc*12)+(bc*4)-Math.floor(penalty/100000)*3));
+  let kpi=currentEmp.kpi||{maxPenalty:2,targetBonus:1};
+  let total=currentEmp.baseSalary+bonus-penalty;
+  let scoreColor=score>=85?'#1f9d63':score>=70?'#b87900':'#df4759';
+  let scoreStatus=score>=85?'Elite 🏆':score>=70?'Watch ⚠️':'Risk ❌';
+  let scoreClass=score>=85?'good':score>=70?'warn':'bad';
+  // KPI progress
+  let penPct=Math.min(100,(pc/Math.max(kpi.maxPenalty,1))*100);
+  let bonPct=Math.min(100,(bc/Math.max(kpi.targetBonus,1))*100);
+  // recent 3 records
+  let recent=[...myRecs].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,3);
+  // score ring circumference
+  let r=54,circ=2*Math.PI*r,dash=circ*(score/100);
+
+  return`<div class="anim">
+    <div class="hero">
+      <h1 class="title">Halo,<br>${currentEmp.name.split(' ')[0]} 👋</h1>
+      <p class="subtitle">${currentEmp.role||''} · ${fmt(today())}</p>
+    </div>
+
+    <!-- Score Ring -->
+    <div class="card" style="margin-bottom:16px;">
+      <div class="score-ring-wrap">
+        <div class="score-ring">
+          <svg width="140" height="140" viewBox="0 0 140 140">
+            <circle cx="70" cy="70" r="${r}" fill="none" stroke="#f0ece4" stroke-width="12"/>
+            <circle cx="70" cy="70" r="${r}" fill="none" stroke="${scoreColor}" stroke-width="12"
+              stroke-dasharray="${dash} ${circ}" stroke-linecap="round" style="transition:stroke-dasharray .6s ease"/>
+          </svg>
+          <div class="score-ring-num">
+            <div class="score-big" style="color:${scoreColor}">${score}</div>
+            <div class="score-label-sm">/ 100</div>
+          </div>
+        </div>
+        <div class="score-status" style="color:${scoreColor}">${scoreStatus}</div>
+        <span class="badge ${scoreClass}" style="margin-top:6px;">KPI Score Bulan Ini</span>
+      </div>
+
+      <!-- Target bars -->
+      <div style="padding:0 4px 4px;">
+        <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:750;color:var(--muted);margin-bottom:6px;">
+          <span>Pinalti <b style="color:${pc>kpi.maxPenalty?'var(--red)':'var(--text)'}">${pc}/${kpi.maxPenalty}</b></span>
+          <span>${pc>kpi.maxPenalty?'⚠️ Melebihi batas':'✓ Dalam batas'}</span>
+        </div>
+        <div style="background:#f0ece4;border-radius:99px;height:8px;margin-bottom:14px;">
+          <div style="width:${penPct}%;height:100%;border-radius:99px;background:${pc>kpi.maxPenalty?'var(--red)':'var(--green)'};transition:width .5s;"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:750;color:var(--muted);margin-bottom:6px;">
+          <span>Bonus <b style="color:${bc>=kpi.targetBonus?'var(--green)':'var(--text)'}">${bc}/${kpi.targetBonus}</b></span>
+          <span>${bc>=kpi.targetBonus?'✓ Target tercapai':'Belum tercapai'}</span>
+        </div>
+        <div style="background:#f0ece4;border-radius:99px;height:8px;">
+          <div style="width:${bonPct}%;height:100%;border-radius:99px;background:var(--green);transition:width .5s;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat"><div class="stat-label">Gaji Pokok</div><div class="stat-value">${idr(currentEmp.baseSalary)}</div></div>
+      <div class="stat"><div class="stat-label">Est. Total Gaji</div><div class="stat-value" style="color:${total>=currentEmp.baseSalary?'var(--green)':'var(--red)'}">${idr(total)}</div></div>
+      <div class="stat"><div class="stat-label">Total Bonus</div><div class="stat-value green">+${idr(bonus)}</div></div>
+      <div class="stat"><div class="stat-label">Total Pinalti</div><div class="stat-value red">-${idr(penalty)}</div></div>
+    </div>
+
+    <!-- Recent -->
+    ${recent.length?`<div class="section-head"><h2>Catatan Terbaru</h2><button onclick="switchTab('records')" style="background:none;border:none;color:var(--brand);font-weight:750;font-size:14px;cursor:pointer;">Lihat semua →</button></div>
+    <div class="card">${recent.map(r=>recItem(r)).join('')}</div>`
+    :`<div class="empty" style="margin-top:20px;">Belum ada catatan bulan ini.</div>`}
+  </div>`;
+}
+
+// ─── RECORDS TAB ──────────────────────────────────────────────────
+function renderRecords(myRecs){
+  let sorted=[...myRecs].sort((a,b)=>b.date.localeCompare(a.date));
+  let bonusRecs=sorted.filter(r=>r.category==='bonus');
+  let penaltyRecs=sorted.filter(r=>r.category==='penalty');
+  return`<div class="anim">
+    <div class="hero"><h1 class="title">Catatan</h1><p class="subtitle">Semua bonus & pinalti bulan ini</p></div>
+    ${penaltyRecs.length?`
+    <div class="section-head"><h2>⚠️ Pinalti (${penaltyRecs.length})</h2></div>
+    <div class="card">${penaltyRecs.map(r=>recItem(r)).join('')}</div>`:''}
+    ${bonusRecs.length?`
+    <div class="section-head"><h2>✅ Bonus (${bonusRecs.length})</h2></div>
+    <div class="card">${bonusRecs.map(r=>recItem(r)).join('')}</div>`:''}
+    ${!myRecs.length?`<div class="empty" style="margin-top:20px;">Belum ada catatan bulan ini.</div>`:''}
+  </div>`;
+}
+
+function recItem(r){
+  let photos=r.photos||[];
+  return`<div class="record-item">
+    <div class="rec-dot ${r.category}"></div>
+    <div class="rec-body">
+      <div class="rec-label">${r.label}</div>
+      <div class="rec-meta">${fmt(r.date)}</div>
+      ${r.note?`<div class="rec-note">"${r.note}"</div>`:''}
+      ${photos.length?`<div class="photo-row">${photos.map((p,i)=>`<img src="${p}" class="photo-thumb" onclick="openLb(${JSON.stringify(photos).replace(/"/g,"'")},${i})">`).join('')}</div>`:''}
+    </div>
+    <div class="rec-amount ${r.category}">${r.category==='bonus'?'+':'-'}${idr(r.amount)}</div>
+  </div>`;
+}
+
+// ─── SLIP TAB ─────────────────────────────────────────────────────
+function renderSlip(myRecs){
+  let bonus=myRecs.filter(r=>r.category==='bonus').reduce((s,r)=>s+r.amount,0);
+  let penalty=myRecs.filter(r=>r.category==='penalty').reduce((s,r)=>s+r.amount,0);
+  let pc=myRecs.filter(r=>r.category==='penalty').length;
+  let bc=myRecs.filter(r=>r.category==='bonus').length;
+  let score=Math.max(0,Math.min(100,100-(pc*12)+(bc*4)-Math.floor(penalty/100000)*3));
+  let total=currentEmp.baseSalary+bonus-penalty;
+  let[y,mo]=month.split('-');
+  let companyName=ld('kpi_settings',{companyName:'Gatari Edutoys'}).companyName||'Gatari Edutoys';
+  let scoreColor=score>=85?'var(--green)':score>=70?'#b87900':'var(--red)';
+
+  return`<div class="anim">
+    <div class="hero"><h1 class="title">Slip Gaji</h1><p class="subtitle">${MONTHS[+mo-1]} ${y}</p></div>
+
+    <!-- Slip preview card -->
+    <div class="card" style="margin-bottom:16px;border:2px solid var(--line);" id="slipPreview">
+      <!-- Header -->
+      <div style="background:#15120e;border-radius:18px 18px 0 0;margin:-20px -20px 20px;padding:18px 20px;">
+        <div style="font-size:16px;font-weight:900;color:#fff;">${companyName}</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:2px;">SLIP GAJI · ${MONTHS[+mo-1]} ${y}</div>
+      </div>
+      <!-- Employee -->
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px;">
+        <div style="width:52px;height:52px;border-radius:18px;background:#fff5d8;border:1px solid #f4dfae;color:#b87a03;display:grid;place-items:center;font-weight:900;font-size:20px;flex-shrink:0;">${av(currentEmp.name)}</div>
+        <div>
+          <div style="font-size:18px;font-weight:900;letter-spacing:-.4px;">${currentEmp.name}</div>
+          <div style="font-size:14px;color:var(--muted);font-weight:700;">${currentEmp.role||''}</div>
+        </div>
+        <span class="badge ${score>=85?'good':score>=70?'warn':'bad'}" style="margin-left:auto;">${score}/100</span>
+      </div>
+      <!-- Rows -->
+      <div style="display:flex;flex-direction:column;gap:0;">
+        ${slipRow('Gaji Pokok',idr(currentEmp.baseSalary),'var(--text)',true)}
+        ${myRecs.filter(r=>r.category==='bonus').map(r=>slipRow('+ '+r.label,idr(r.amount),'var(--green)')).join('')}
+        ${myRecs.filter(r=>r.category==='penalty').map(r=>slipRow('− '+r.label,'('+idr(r.amount)+')','var(--red)')).join('')}
+      </div>
+      <div style="border-top:2px solid var(--line);margin:14px 0 16px;"></div>
+      <!-- Total -->
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div style="font-size:15px;font-weight:900;">TOTAL GAJI</div>
+        <div style="font-size:24px;font-weight:900;color:${total>=currentEmp.baseSalary?'var(--green)':'var(--red)'};">${idr(total)}</div>
+      </div>
+      <div style="margin-top:12px;font-size:12px;color:var(--muted);font-weight:700;display:flex;gap:10px;flex-wrap:wrap;">
+        <span>KPI Score: <b style="color:${scoreColor}">${score}/100</b></span>
+        <span>·</span>
+        <span>Bonus: <b>${bc}x</b></span>
+        <span>·</span>
+        <span>Pinalti: <b>${pc}x</b></span>
+      </div>
+    </div>
+
+    <button onclick="downloadSlipPDF()" style="width:100%;background:#15120e;color:#fff;border-radius:22px;padding:17px;font-size:16px;font-weight:850;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 12px 30px rgba(15,13,10,.16);">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download Slip PDF
+    </button>
+    <p style="text-align:center;font-size:12px;color:var(--muted);margin-top:12px;font-weight:700;">Data diterima secara read-only dari sistem owner</p>
+  </div>`;
+}
+
+function slipRow(label,val,color,bold=false){
+  return`<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #f5f0e8;">
+    <span style="font-size:14px;font-weight:${bold?800:600};color:${bold?'var(--text)':'var(--muted)'};">${label}</span>
+    <span style="font-size:14px;font-weight:800;color:${color};">${val}</span>
+  </div>`;
+}
+
+// ─── PDF DOWNLOAD ─────────────────────────────────────────────────
+function downloadSlipPDF(){
+  let recs=ld('kpi_records',[]);
+  let myRecs=recs.filter(r=>r.empId===currentEmp.id&&r.date.startsWith(month));
+  let bonus=myRecs.filter(r=>r.category==='bonus').reduce((s,r)=>s+r.amount,0);
+  let penalty=myRecs.filter(r=>r.category==='penalty').reduce((s,r)=>s+r.amount,0);
+  let pc=myRecs.filter(r=>r.category==='penalty').length;
+  let bc=myRecs.filter(r=>r.category==='bonus').length;
+  let score=Math.max(0,Math.min(100,100-(pc*12)+(bc*4)-Math.floor(penalty/100000)*3));
+  let total=currentEmp.baseSalary+bonus-penalty;
+  let[y,mo]=month.split('-');
+  let companyName=ld('kpi_settings',{companyName:'Gatari Edutoys'}).companyName||'Gatari Edutoys';
+  if(!window.jspdf){toast('Library PDF belum siap');return;}
+  const{jsPDF}=window.jspdf;
+  const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a5'});
+  const W=148,pad=16;
+  doc.setFillColor(21,18,14);doc.rect(0,0,W,20,'F');
+  doc.setTextColor(255,255,255);doc.setFontSize(13);doc.setFont('helvetica','bold');
+  doc.text(companyName,pad,13);
+  doc.setFontSize(8);doc.setFont('helvetica','normal');doc.text('SLIP GAJI',W-pad,13,{align:'right'});
+  doc.setFillColor(243,178,60);doc.rect(0,20,W,8,'F');
+  doc.setTextColor(21,18,14);doc.setFontSize(8);doc.setFont('helvetica','bold');
+  doc.text(`Periode: ${MONTHS[+mo-1]} ${y}`,pad,26);
+  doc.text(`Dicetak: ${fmt(today())}`,W-pad,26,{align:'right'});
+  doc.setFillColor(250,247,242);doc.rect(pad,32,W-pad*2,22,'F');
+  doc.setDrawColor(236,229,218);doc.rect(pad,32,W-pad*2,22,'S');
+  doc.setTextColor(24,22,18);doc.setFontSize(13);doc.setFont('helvetica','bold');
+  doc.text(currentEmp.name,pad+6,42);
+  doc.setFontSize(9);doc.setFont('helvetica','normal');doc.setTextColor(132,124,112);
+  doc.text(currentEmp.role||'',pad+6,49);
+  doc.text(`KPI: ${score}/100`,W-pad-6,49,{align:'right'});
+  let yy=62;
+  const row=(l,v,col)=>{doc.setFontSize(9);doc.setTextColor(...(col||[24,22,18]));doc.setFont('helvetica',l.startsWith(' ')?'normal':'bold');doc.text(l,pad,yy);doc.text(v,W-pad,yy,{align:'right'});yy+=7;};
+  row('Gaji Pokok',idr(currentEmp.baseSalary));
+  myRecs.filter(r=>r.category==='bonus').forEach(r=>row(`  + ${r.label}`,idr(r.amount),[31,157,99]));
+  myRecs.filter(r=>r.category==='penalty').forEach(r=>row(`  − ${r.label}`,'('+idr(r.amount)+')',[223,71,89]));
+  doc.setDrawColor(236,229,218);doc.line(pad,yy,W-pad,yy);yy+=8;
+  doc.setFillColor(250,247,242);doc.rect(pad,yy-5,W-pad*2,14,'F');
+  doc.setDrawColor(21,18,14);doc.setLineWidth(.5);doc.rect(pad,yy-5,W-pad*2,14,'S');
+  doc.setTextColor(24,22,18);doc.setFont('helvetica','normal');doc.setFontSize(10);doc.text('TOTAL GAJI',pad+4,yy+4);
+  doc.setFont('helvetica','bold');doc.setFontSize(12);doc.setTextColor(...(total>=currentEmp.baseSalary?[31,157,99]:[223,71,89]));
+  doc.text(idr(total),W-pad-4,yy+4,{align:'right'});yy+=20;
+  doc.setTextColor(132,124,112);doc.setFontSize(7);doc.setFont('helvetica','normal');
+  doc.text(`KPI Score: ${score}/100 | Bonus: ${bc}x | Pinalti: ${pc}x`,pad,yy);
+  doc.setDrawColor(236,229,218);doc.line(pad,200,W-pad,200);
+  doc.setTextColor(180,170,160);doc.setFontSize(7);
+  doc.text('Slip diterbitkan secara digital.',pad,206);
+  doc.text(`© ${y} ${companyName}`,W-pad,206,{align:'right'});
+  doc.save(`Slip_${currentEmp.name.replace(/ /g,'_')}_${month}.pdf`);
+  toast('Slip berhasil diunduh ✓');
+}
+
+// ─── LIGHTBOX ─────────────────────────────────────────────────────
+function openLb(photos,idx){
+  // photos might be passed as string from onclick attr
+  if(typeof photos==='string')try{photos=JSON.parse(photos.replace(/'/g,'"'));}catch{photos=[photos];}
+  lbPhotos=photos||[];lbIdx=idx||0;
+  $('lbImg').src=lbPhotos[lbIdx]||'';
+  $('lbCount').textContent=lbPhotos.length>1?`${lbIdx+1} / ${lbPhotos.length}`:'';
+  $('lbPrev').style.display=lbPhotos.length>1?'':'none';
+  $('lbNext').style.display=lbPhotos.length>1?'':'none';
+  $('lightbox').classList.add('show');
+}
+function lbNav(d){lbIdx=(lbIdx+d+lbPhotos.length)%lbPhotos.length;$('lbImg').src=lbPhotos[lbIdx];$('lbCount').textContent=`${lbIdx+1} / ${lbPhotos.length}`;}
+function closeLb(){$('lightbox').classList.remove('show');}
+$('lightbox').onclick=e=>{if(e.target===$('lightbox'))closeLb();}
+
+// ─── BOOT ─────────────────────────────────────────────────────────
+// ─── SHEETS SYNC (karyawan = pull only) ──────────────────────────
+async function pullSheets(){
+  let cfg=ld('kpi_settings',{});
+  if(!cfg.sheetsUrl||!cfg.sheetsEnabled)return;
+  try{
+    const url=cfg.sheetsUrl+'?action=pull_all&_='+Date.now();
+    const res=await fetch(url,{method:'GET',mode:'cors'});
+    if(!res.ok)return;
+    const data=await res.json();
+    if(data.status!=='ok')return;
+    if(Array.isArray(data.employees)&&data.employees.length>0){
+      // preserve photos from local
+      const localRecs=ld('kpi_records',[]);
+      const photoMap={};
+      localRecs.forEach(r=>{if(r.photos?.length)photoMap[r.id]=r.photos;});
+      localStorage.setItem('kpi_employees',JSON.stringify(data.employees));
+      if(Array.isArray(data.records)){
+        const merged=data.records.map(r=>({...r,photos:photoMap[r.id]||[]}));
+        localStorage.setItem('kpi_records',JSON.stringify(merged));
+      }
+      if(data.settings?.companyName)localStorage.setItem('kpi_settings',JSON.stringify({...cfg,...data.settings}));
+      // refresh current employee data
+      if(currentEmp){
+        const fresh=data.employees.find(e=>e.id===currentEmp.id);
+        if(fresh)currentEmp=fresh;
+      }
+      // refresh name list
+      populateNames();
+    }
+  }catch(e){console.warn('Pull sheets:',e);}
+}
+
+(function boot(){
+  populateNames();
+  // Pull from Sheets before showing login
+  let cfg=ld('kpi_settings',{});
+  if(cfg.sheetsUrl&&cfg.sheetsEnabled){
+    pullSheets().then(()=>populateNames());
+  }
+  if(tryRestoreSession()){
+    showApp();
+    // Auto pull every 60s when logged in
+    setInterval(()=>pullSheets().then(()=>{renderTab();}),60000);
+  }
+})();
+</script>
+</body>
+</html>
