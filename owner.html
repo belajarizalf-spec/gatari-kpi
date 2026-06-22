@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=0"/>
-<title>Gatari KPI v7 — Owner (Mobile Optimized)</title>
+<title>Gatari KPI v7 — Owner</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 :root {
@@ -28,7 +28,7 @@ button, input, select, textarea { font: inherit; transition: all 0.2s cubic-bezi
 button { border: 0; cursor: pointer; }
 input, select, textarea {
   width: 100%; border: 1.5px solid var(--line); background: #ffffff;
-  border-radius: 18px; padding: 16px 18px; color: var(--text); outline: 0; font-size: 15px;
+  border-radius: 18px; padding: 14px 16px; color: var(--text); outline: 0; font-size: 14px;
   box-shadow: inset 0 2px 6px rgba(0,0,0,0.01);
 }
 input:focus, select:focus, textarea:focus {
@@ -37,138 +37,147 @@ input:focus, select:focus, textarea:focus {
 }
 
 .app { max-width: 760px; margin: 0 auto; min-height: 100vh; padding-bottom: calc(100px + var(--safe)); }
-.main { padding: 18px 22px 0; }
+.main { padding: 16px 20px 0; }
 
 .topbar {
   position: sticky; top: 0; z-index: 20; background: rgba(249, 248, 245, 0.85);
   backdrop-filter: blur(24px) saturate(150%); -webkit-backdrop-filter: blur(24px) saturate(150%);
   border-bottom: 1px solid rgba(230, 225, 216, 0.6);
 }
-.topbar-inner { display: flex; align-items: center; gap: 16px; padding: 18px 22px; }
+.topbar-inner { display: flex; align-items: center; gap: 14px; padding: 14px 20px; }
 .logo {
-  width: 50px; height: 50px; border-radius: 16px; background: linear-gradient(135deg, #ffffff, #f7e6c3);
+  width: 44px; height: 44px; border-radius: 14px; background: linear-gradient(135deg, #ffffff, #f7e6c3);
   box-shadow: inset 0 0 0 1px rgba(255,255,255,1), 0 10px 24px rgba(216,159,60,0.18); display: grid; place-items: center;
 }
-.logo svg { width: 24px; }
-.brand { font-size: 21px; font-weight: 800; letter-spacing: -0.6px; color: #1a1815; }
+.logo svg { width: 22px; }
+.brand { font-size: 19px; font-weight: 800; letter-spacing: -0.5px; color: #1a1815; }
 
 .pill {
-  display: inline-flex; align-items: center; gap: 8px;
+  display: inline-flex; align-items: center; gap: 6px;
   border: 1px solid rgba(230, 225, 216, 0.8); background: rgba(255,255,255,0.85);
-  border-radius: 999px; padding: 10px 16px; color: var(--muted); font-size: 13px; font-weight: 700;
+  border-radius: 999px; padding: 8px 14px; color: var(--muted); font-size: 12px; font-weight: 700;
   box-shadow: var(--shadow2); backdrop-filter: blur(10px); white-space: nowrap;
 }
-.controls { display: grid; grid-template-columns: 1fr; gap: 14px; padding: 16px 22px 8px; }
-.controls select { height: 58px; border-radius: 20px; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: var(--shadow2); border-color: transparent;}
-.status-row { padding: 0 22px 18px; display: flex; gap: 10px; flex-wrap: wrap; }
+.controls { display: grid; grid-template-columns: 1fr; gap: 12px; padding: 14px 20px 6px; }
+.controls select { height: 50px; border-radius: 16px; font-size: 15px; font-weight: 600; cursor: pointer; box-shadow: var(--shadow2); border-color: transparent;}
+.status-row { padding: 0 20px 14px; display: flex; gap: 8px; flex-wrap: wrap; }
 .dot { width: 8px; height: 8px; border-radius: 50%; background: #c8bfb2; }
 
-.hero { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; margin: 8px 0 26px; }
-.title { font-size: 36px; line-height: 1; letter-spacing: -1.2px; font-weight: 850; margin: 0; color: #1a1815; }
-.subtitle { font-size: 16px; line-height: 1.5; color: var(--muted); font-weight: 600; margin: 10px 0 0; }
+.hero { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin: 4px 0 20px; }
+.title { font-size: 32px; line-height: 1.1; letter-spacing: -1px; font-weight: 850; margin: 0; color: #1a1815; }
+.subtitle { font-size: 15px; line-height: 1.4; color: var(--muted); font-weight: 600; margin: 8px 0 0; }
 
-.hero-actions { display: flex; flex-direction: row; flex-wrap: wrap; gap: 10px; flex: 0 0 auto; }
+.hero-actions { display: flex; flex-direction: row; flex-wrap: wrap; gap: 8px; flex: 0 0 auto; }
 .btn {
-  border-radius: 20px; padding: 14px 18px; font-weight: 750; font-size: 14px;
+  border-radius: 16px; padding: 12px 16px; font-weight: 750; font-size: 13px;
   background: #ffffff; color: var(--text); box-shadow: var(--shadow2); 
-  border: 1px solid var(--line); display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 50px;
+  border: 1px solid var(--line); display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px;
 }
 .btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); border-color: #d1c8ba;}
 .btn:active { transform: scale(0.96); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
 
-.btn.primary { background: #1a1815; color: #ffffff; border-color: #1a1815; box-shadow: 0 12px 28px rgba(26, 24, 21, 0.2); }
+.btn.primary { background: #1a1815; color: #ffffff; border-color: #1a1815; box-shadow: 0 10px 24px rgba(26, 24, 21, 0.18); }
 .btn.green-btn { background: var(--green-bg); color: var(--green); border-color: #d4ebd9; box-shadow: none; }
 .btn.blue { background: var(--blue-bg); color: var(--blue); border-color: #dbe7fa; box-shadow: none; }
 .btn.danger { background: var(--red-bg); color: var(--red); border-color: #fadce0; box-shadow: none; }
-.btn.small { min-height: 40px; padding: 10px 14px; border-radius: 14px; font-size: 13px; }
-.btn.xsmall { min-height: 34px; padding: 8px 12px; border-radius: 12px; font-size: 12px; font-weight: 700; }
+.btn.small { min-height: 38px; padding: 8px 12px; border-radius: 12px; font-size: 12px; }
+.btn.xsmall { min-height: 32px; padding: 6px 10px; border-radius: 10px; font-size: 11px; font-weight: 700; }
 
-.icon { width: 18px; height: 18px; display: inline-block; vertical-align: -3px; }
+.icon { width: 16px; height: 16px; display: inline-block; vertical-align: -3px; }
 .icon svg { width: 100%; height: 100%; stroke: currentColor; stroke-width: 2.2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
 
-.stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 26px; }
-.stat { background: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.9); border-radius: 20px; padding: 16px; box-shadow: var(--shadow2); backdrop-filter: blur(10px); }
-.stat-label { font-size: 12px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
-.stat-value { font-size: 22px; font-weight: 850; letter-spacing: -0.5px; margin-top: 6px; color: #1a1815; word-break: break-word; }
+.stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 22px; }
+.stat { background: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.9); border-radius: 18px; padding: 14px; box-shadow: var(--shadow2); backdrop-filter: blur(10px); }
+.stat-label { font-size: 11px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+.stat-value { font-size: 20px; font-weight: 850; letter-spacing: -0.5px; margin-top: 4px; color: #1a1815; word-break: break-word; }
 
-.section-head { display: flex; align-items: center; justify-content: space-between; margin: 28px 0 14px; }
-.section-head h2 { font-size: 20px; letter-spacing: -0.5px; margin: 0; font-weight: 800; color: #1a1815; }
-.card-list { display: flex; flex-direction: column; gap: 14px; }
+.section-head { display: flex; align-items: center; justify-content: space-between; margin: 24px 0 12px; }
+.section-head h2 { font-size: 18px; letter-spacing: -0.4px; margin: 0; font-weight: 800; color: #1a1815; }
+.card-list { display: flex; flex-direction: column; gap: 12px; }
 
 .emp-card, .pay-card, .record-card, .refund-card {
-  background: #ffffff; border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; 
+  background: #ffffff; border: 1px solid var(--line); border-radius: 20px; padding: 16px; 
   box-shadow: var(--shadow); overflow: hidden; transition: all 0.3s ease;
 }
 
-.emp-main { display: grid; grid-template-columns: 52px 1fr auto; gap: 14px; align-items: start; }
+.emp-main { display: grid; grid-template-columns: 48px 1fr auto; gap: 12px; align-items: start; }
 .avatar {
-  width: 52px; height: 52px; border-radius: 16px; background: linear-gradient(135deg, #fff7e6, #f3ead3);
-  border: 1px solid #e8d9bd; color: #a37526; display: grid; place-items: center; font-weight: 850; font-size: 20px; flex-shrink: 0;
+  width: 48px; height: 48px; border-radius: 14px; background: linear-gradient(135deg, #fff7e6, #f3ead3);
+  border: 1px solid #e8d9bd; color: #a37526; display: grid; place-items: center; font-weight: 850; font-size: 18px; flex-shrink: 0;
 }
-.emp-name { font-size: 19px; line-height: 1.2; font-weight: 800; letter-spacing: -0.5px; color: #1a1815; }
-.emp-meta { font-size: 13px; color: var(--muted); line-height: 1.5; margin-top: 4px; font-weight: 500; }
-.amount { font-size: 20px; font-weight: 850; letter-spacing: -0.5px; text-align: right; white-space: nowrap; color: #1a1815;}
+.emp-name { font-size: 17px; line-height: 1.2; font-weight: 800; letter-spacing: -0.4px; color: #1a1815; }
+.emp-meta { font-size: 12px; color: var(--muted); line-height: 1.4; margin-top: 4px; font-weight: 500; }
+.amount { font-size: 18px; font-weight: 850; letter-spacing: -0.5px; text-align: right; white-space: nowrap; color: #1a1815;}
 
-.score { display: inline-flex; align-items: center; gap: 4px; border-radius: 999px; padding: 4px 10px; font-size: 12px; font-weight: 750; margin-top: 8px; }
+.score { display: inline-flex; align-items: center; gap: 4px; border-radius: 999px; padding: 4px 8px; font-size: 11px; font-weight: 750; margin-top: 6px; }
 .score.good { background: var(--green-bg); color: var(--green); }
 .score.warn { background: #fff9e6; color: #b87900; }
 .score.bad { background: var(--red-bg); color: var(--red); }
 
-.emp-actions { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
-.emp-actions .btn { flex: 1; min-width: 100px; }
+.emp-actions { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+.emp-actions .btn { flex: 1; min-width: 90px; }
 
-.metric-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 16px; }
-.metric { border: 1px solid rgba(230, 225, 216, 0.6); background: #fdfcfb; border-radius: 16px; padding: 12px; }
-.metric span { display: block; color: var(--muted); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
-.metric b { display: block; font-size: 17px; font-weight: 800; letter-spacing: -0.5px; margin-top: 4px; color: #1a1815; word-break: break-word; }
+.metric-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 14px; }
+.metric { border: 1px solid rgba(230, 225, 216, 0.6); background: #fdfcfb; border-radius: 14px; padding: 10px; }
+.metric span { display: block; color: var(--muted); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+.metric b { display: block; font-size: 15px; font-weight: 800; letter-spacing: -0.3px; margin-top: 4px; color: #1a1815; word-break: break-word; }
 .green { color: var(--green) !important; } .red { color: var(--red) !important; } .gold { color: #b58220 !important; }
 
 .leader {
-  display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center;
-  background: #ffffff; border: 1px solid var(--line); border-radius: 18px; padding: 12px 16px; margin-bottom: 10px;
+  display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center;
+  background: #ffffff; border: 1px solid var(--line); border-radius: 16px; padding: 10px 14px; margin-bottom: 8px;
   box-shadow: var(--shadow2);
 }
-.rank { width: 32px; height: 32px; border-radius: 10px; background: #1a1815; color: #fff; display: grid; place-items: center; font-weight: 850; font-size: 14px; }
+.rank { width: 28px; height: 28px; border-radius: 8px; background: #1a1815; color: #fff; display: grid; place-items: center; font-weight: 850; font-size: 13px; }
 
-.empty { border: 2px dashed #ded6ca; border-radius: 20px; padding: 30px 20px; text-align: center; color: var(--muted); font-weight: 600; background: rgba(255,255,255,0.4); }
+.empty { border: 2px dashed #ded6ca; border-radius: 18px; padding: 24px 16px; text-align: center; color: var(--muted); font-weight: 600; font-size: 13px; background: rgba(255,255,255,0.4); }
 
 /* MOBILE BOTTOM NAV FIX */
 .bottom-nav {
   position: fixed; left: 0; right: 0; bottom: 0;
-  width: 100%; height: calc(70px + var(--safe));
+  width: 100%; height: calc(66px + var(--safe));
   background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px) saturate(150%); -webkit-backdrop-filter: blur(20px) saturate(150%);
   border-top: 1px solid rgba(230, 225, 216, 0.8); box-shadow: 0 -4px 24px rgba(28, 25, 20, 0.06);
-  border-radius: 24px 24px 0 0; display: flex; justify-content: space-around; z-index: 50; padding: 6px 8px calc(6px + var(--safe));
+  border-radius: 20px 20px 0 0; display: flex; justify-content: space-around; z-index: 50; padding: 6px 4px calc(6px + var(--safe));
 }
 .nav-btn {
-  background: transparent; color: #a39c92; border-radius: 18px; font-size: 11px; font-weight: 700;
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; flex: 1;
+  background: transparent; color: #a39c92; border-radius: 14px; font-size: 10px; font-weight: 700;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; flex: 1; padding: 4px;
 }
-.nav-btn svg { width: 22px; height: 22px; transition: transform 0.2s; }
+.nav-btn svg { width: 20px; height: 20px; transition: transform 0.2s; }
 .nav-btn.active { color: #1a1815; background: #f5f0e6; }
 .nav-btn.active svg { transform: translateY(-2px); stroke-width: 2.5; }
 
 /* FAB FIX */
 .fab {
-  position: fixed; right: 20px; bottom: calc(88px + var(--safe));
-  width: 58px; height: 58px; border-radius: 20px; background: #1a1815; color: #fff;
-  box-shadow: 0 12px 28px rgba(26, 24, 21, 0.25); display: grid; place-items: center; z-index: 31; transition: all 0.3s;
+  position: fixed; right: 20px; bottom: calc(84px + var(--safe));
+  width: 54px; height: 54px; border-radius: 18px; background: #1a1815; color: #fff;
+  box-shadow: 0 10px 24px rgba(26, 24, 21, 0.25); display: grid; place-items: center; z-index: 31; transition: all 0.3s;
 }
 .fab:active { transform: scale(0.9); }
-.fab svg { width: 28px; height: 28px; stroke-width: 2.5; }
+.fab svg { width: 26px; height: 26px; stroke-width: 2.5; }
 
-/* MOBILE OPTIMIZATIONS */
+/* MOBILE OPTIMIZATIONS (The Core Fix) */
 @media(max-width: 520px) {
   .controls { grid-template-columns: 1fr; }
-  .hero { flex-direction: column; align-items: flex-start; gap: 14px; margin-bottom: 20px;}
+  .hero { flex-direction: column; align-items: flex-start; gap: 12px; margin-bottom: 16px;}
+  .title { font-size: 26px; letter-spacing: -0.8px; }
+  .subtitle { font-size: 14px; }
   .hero-actions { width: 100%; }
-  .hero-actions .btn { flex: 1; min-width: calc(50% - 8px); padding: 12px 10px; font-size: 13px; }
-  .emp-main { grid-template-columns: 50px 1fr; }
-  .emp-main .amount { grid-column: 1 / -1; margin-top: 8px; text-align: left; font-size: 22px; }
+  .hero-actions .btn { flex: 1; min-width: calc(50% - 8px); padding: 10px; font-size: 12px; min-height: 40px; }
+  .emp-main { grid-template-columns: 44px 1fr; gap: 10px; }
+  .avatar { width: 44px; height: 44px; font-size: 16px; border-radius: 12px;}
+  .emp-main .amount { grid-column: 1 / -1; margin-top: 6px; text-align: left; font-size: 20px; }
+  .stat-value { font-size: 18px; }
+  .pay-card .emp-main .amount { font-size: 24px; }
+  .calc-box { padding: 12px; }
+  .res-opt { padding: 10px 8px; }
+  .res-opt .res-lbl { font-size: 13px; }
 }
+
 @media(min-width: 720px) {
-  .bottom-nav { width: 720px; left: 50%; transform: translateX(-50%); border-radius: 28px; bottom: 16px; height: 82px; border: 1px solid rgba(230, 225, 216, 0.8); }
-  .fab { right: calc((100% - 720px)/2 + 20px); bottom: calc(112px + var(--safe)); }
+  .bottom-nav { width: 720px; left: 50%; transform: translateX(-50%); border-radius: 28px; bottom: 16px; height: 76px; border: 1px solid rgba(230, 225, 216, 0.8); }
+  .fab { right: calc((100% - 720px)/2 + 20px); bottom: calc(108px + var(--safe)); }
   .card-list.grid { display: grid; grid-template-columns: 1fr 1fr; }
   .stats { grid-template-columns: repeat(4, 1fr); }
   .controls { grid-template-columns: 1fr auto; }
@@ -177,77 +186,77 @@ input:focus, select:focus, textarea:focus {
 .sheet { position: fixed; inset: 0; z-index: 60; background: rgba(20, 18, 15, 0.5); backdrop-filter: blur(4px); display: none; align-items: flex-end; opacity: 0; transition: opacity 0.3s; }
 .sheet.show { display: flex; opacity: 1; }
 .sheet-card {
-  width: 100%; max-width: 760px; margin: 0 auto; background: #ffffff; border-radius: 32px 32px 0 0;
+  width: 100%; max-width: 760px; margin: 0 auto; background: #ffffff; border-radius: 28px 28px 0 0;
   padding: 16px 20px calc(24px + var(--safe)); box-shadow: 0 -20px 60px rgba(20, 18, 15, 0.15); max-height: 92vh; overflow: auto;
   transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .sheet.show .sheet-card { transform: translateY(0); }
-.handle { width: 44px; height: 5px; background: #e0d8cc; border-radius: 99px; margin: 0 auto 20px; }
-.sheet-title { font-size: 22px; font-weight: 850; letter-spacing: -0.5px; margin: 0 0 16px; color: #1a1815; }
+.handle { width: 40px; height: 4px; background: #e0d8cc; border-radius: 99px; margin: 0 auto 16px; }
+.sheet-title { font-size: 20px; font-weight: 850; letter-spacing: -0.5px; margin: 0 0 14px; color: #1a1815; }
 
-.form { display: grid; gap: 12px; }
-.seg { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: #f2efe9; border-radius: 18px; padding: 6px; }
-.seg button { height: 46px; border-radius: 14px; background: transparent; font-weight: 750; color: var(--muted); }
+.form { display: grid; gap: 10px; }
+.seg { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: #f2efe9; border-radius: 16px; padding: 4px; }
+.seg button { height: 42px; border-radius: 12px; background: transparent; font-weight: 750; color: var(--muted); font-size: 13px; }
 .seg button.active { background: #ffffff; color: #1a1815; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
-.two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
-.toast { position: fixed; left: 20px; right: 20px; bottom: calc(100px + var(--safe)); z-index: 80; background: rgba(26, 24, 21, 0.95); backdrop-filter: blur(12px); color: #fff; border-radius: 18px; padding: 14px 18px; text-align: center; font-weight: 600; font-size: 14px; display: none; max-width: 560px; margin: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.2); animation: fadeUp 0.3s; }
+.toast { position: fixed; left: 20px; right: 20px; bottom: calc(90px + var(--safe)); z-index: 80; background: rgba(26, 24, 21, 0.95); backdrop-filter: blur(12px); color: #fff; border-radius: 16px; padding: 12px 16px; text-align: center; font-weight: 600; font-size: 13px; display: none; max-width: 560px; margin: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.2); animation: fadeUp 0.3s; }
 .toast.show { display: block; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-.photo-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
-.photo-thumb { width: 70px; height: 70px; object-fit: cover; border-radius: 14px; border: 1px solid var(--line); cursor: pointer; transition: all .2s; }
+.photo-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.photo-thumb { width: 64px; height: 64px; object-fit: cover; border-radius: 12px; border: 1px solid var(--line); cursor: pointer; transition: all .2s; }
 .photo-thumb:hover { opacity: .8; transform: scale(1.05); }
-.photo-add-btn { width: 70px; height: 70px; border-radius: 14px; border: 2px dashed #d1c8ba; background: #faf8f5; display: grid; place-items: center; cursor: pointer; color: var(--muted); font-size: 24px; flex-shrink: 0; transition: all .2s; }
+.photo-add-btn { width: 64px; height: 64px; border-radius: 12px; border: 2px dashed #d1c8ba; background: #faf8f5; display: grid; place-items: center; cursor: pointer; color: var(--muted); font-size: 22px; flex-shrink: 0; transition: all .2s; }
 .photo-wrap { position: relative; display: inline-block; }
-.photo-del { position: absolute; top: -6px; right: -6px; width: 22px; height: 22px; border-radius: 50%; background: var(--red); color: #fff; font-size: 11px; font-weight: bold; display: grid; place-items: center; cursor: pointer; border: 2px solid #fff;}
+.photo-del { position: absolute; top: -6px; right: -6px; width: 20px; height: 20px; border-radius: 50%; background: var(--red); color: #fff; font-size: 10px; font-weight: bold; display: grid; place-items: center; cursor: pointer; border: 2px solid #fff;}
 
 .lightbox { position: fixed; inset: 0; background: rgba(15, 14, 12, 0.95); z-index: 200; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(10px); }
 .lightbox.show { display: flex; animation: fadeIn 0.2s; }
 @keyframes fadeIn { from{opacity:0} to{opacity:1} }
 .lightbox img { max-width: 90vw; max-height: 75vh; object-fit: contain; border-radius: 16px; }
-.lightbox-nav { display: flex; gap: 16px; align-items: center; margin-top: 20px; }
-.lightbox-nav button { width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.15); color: #fff; font-size: 18px; border: 1px solid rgba(255,255,255,0.2); }
-.lightbox-nav .lb-close { border-radius: 14px; padding: 0 20px; font-weight: 700; font-size: 14px; width: auto; }
+.lightbox-nav { display: flex; gap: 16px; align-items: center; margin-top: 16px; }
+.lightbox-nav button { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.15); color: #fff; font-size: 16px; border: 1px solid rgba(255,255,255,0.2); }
+.lightbox-nav .lb-close { border-radius: 12px; padding: 0 16px; font-weight: 700; font-size: 13px; width: auto; }
 
-.search-wrap { position: relative; margin-bottom: 16px; }
-.search-wrap input { padding-left: 44px; border-radius: 20px; height: 52px; border: 1px solid rgba(230, 225, 216, 0.8); box-shadow: var(--shadow2); }
-.search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+.search-wrap { position: relative; margin-bottom: 14px; }
+.search-wrap input { padding-left: 40px; border-radius: 18px; height: 48px; border: 1px solid rgba(230, 225, 216, 0.8); box-shadow: var(--shadow2); }
+.search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
 
-.filter-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
-.chip { border: 1px solid rgba(230, 225, 216, 0.8); background: rgba(255,255,255,0.8); border-radius: 999px; padding: 8px 16px; font-size: 13px; font-weight: 600; cursor: pointer; color: var(--muted); }
+.filter-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+.chip { border: 1px solid rgba(230, 225, 216, 0.8); background: rgba(255,255,255,0.8); border-radius: 999px; padding: 6px 14px; font-size: 12px; font-weight: 600; cursor: pointer; color: var(--muted); }
 .chip.active { background: #1a1815; color: #ffffff; border-color: #1a1815; }
 
-.settings-card { background: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.9); border-radius: 24px; padding: 20px; margin-bottom: 16px; box-shadow: var(--shadow2); }
-.settings-card h3 { font-size: 17px; font-weight: 800; letter-spacing: -0.4px; margin: 0 0 14px; color: #1a1815; }
-.type-row { display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: #ffffff; border: 1px solid var(--line); border-radius: 18px; }
-.type-row .type-label { flex: 1; font-size: 14px; font-weight: 600; }
-.type-row .type-amount { font-size: 14px; font-weight: 800; }
+.settings-card { background: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.9); border-radius: 20px; padding: 16px; margin-bottom: 14px; box-shadow: var(--shadow2); }
+.settings-card h3 { font-size: 16px; font-weight: 800; letter-spacing: -0.4px; margin: 0 0 12px; color: #1a1815; }
+.type-row { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: #ffffff; border: 1px solid var(--line); border-radius: 16px; }
+.type-row .type-label { flex: 1; font-size: 13px; font-weight: 600; }
+.type-row .type-amount { font-size: 13px; font-weight: 800; }
 
-.edit-badge { font-size: 11px; background: var(--blue-bg); color: var(--blue); border-radius: 999px; padding: 4px 10px; font-weight: 750; display: inline-block; margin-left: 8px; vertical-align: middle; }
+.edit-badge { font-size: 10px; background: var(--blue-bg); color: var(--blue); border-radius: 999px; padding: 3px 8px; font-weight: 750; display: inline-block; margin-left: 6px; vertical-align: middle; }
 .sync-pill { display: inline-flex; align-items: center; gap: 6px; }
 .sync-dot { width: 8px; height: 8px; border-radius: 50%; box-shadow: 0 0 0 2px rgba(255,255,255,0.5); }
-.date-warn { background: #fffdf5; border: 1px solid #f2e3c6; border-radius: 14px; padding: 10px 14px; font-size: 12px; color: #a87314; font-weight: 600; display: none; }
+.date-warn { background: #fffdf5; border: 1px solid #f2e3c6; border-radius: 12px; padding: 8px 12px; font-size: 11px; color: #a87314; font-weight: 600; display: none; }
 .date-warn.show { display: block; }
 
-.pin-badge{font-size:11px;border-radius:999px;padding:3px 10px;font-weight:700;display:inline-block;margin-left:6px;}
+.pin-badge{font-size:10px;border-radius:999px;padding:3px 8px;font-weight:700;display:inline-block;margin-left:4px;}
 .pin-on{background:var(--green-bg);color:var(--green);}
 .pin-off{background:var(--red-bg);color:var(--red);}
 .refund-card{border: 1.5px solid #fadce0; background: #fffcfc;}
-.refund-tag{display:inline-flex;align-items:center;border-radius:999px;padding:6px 12px;font-size:11px;font-weight:750}
+.refund-tag{display:inline-flex;align-items:center;border-radius:999px;padding:4px 10px;font-size:10px;font-weight:750}
 .refund-tag.refund{background:var(--red-bg);color:var(--red);border: 1px solid #fadce0;}
 .refund-tag.resend{background:#fff9e6;color:#b87900;border: 1px solid #f2e3c6;}
-.calc-box{background:#fdfcfb;border:1px solid var(--line);border-radius:18px;padding:14px;margin-top:14px;display:flex;flex-direction:column;gap:8px}
-.calc-row{display:flex;justify-content:space-between;align-items:center;font-size:13px; color: #555;}
+.calc-box{background:#fdfcfb;border:1px solid var(--line);border-radius:16px;padding:12px;margin-top:12px;display:flex;flex-direction:column;gap:6px}
+.calc-row{display:flex;justify-content:space-between;align-items:center;font-size:12px; color: #555;}
 .calc-row b{font-weight:750; color: #1a1815;}
-.calc-total{border-top:1px dashed var(--line);padding-top:10px;margin-top:4px;font-size:15px;font-weight:850; color: #1a1815;}
-.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:6px 0}
-.res-opt{border:2px solid var(--line);border-radius:18px;padding:14px 10px;text-align:center;cursor:pointer;background:#ffffff;}
+.calc-total{border-top:1px dashed var(--line);padding-top:8px;margin-top:4px;font-size:14px;font-weight:850; color: #1a1815;}
+.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:4px 0}
+.res-opt{border:2px solid var(--line);border-radius:16px;padding:12px 8px;text-align:center;cursor:pointer;background:#ffffff;}
 .res-opt.sel-refund{border-color:var(--red);background:var(--red-bg);}
 .res-opt.sel-resend{border-color:#f2e3c6;background:#fff9e6;}
-.res-opt .res-icon{font-size:20px;display:block;margin-bottom:4px;}
-.res-opt .res-lbl{font-size:14px;font-weight:800; color: #1a1815;}
-.res-opt .res-sub{font-size:11px;color:var(--muted);margin-top:4px;font-weight:500;line-height:1.3}
+.res-opt .res-icon{font-size:18px;display:block;margin-bottom:4px;}
+.res-opt .res-lbl{font-size:13px;font-weight:800; color: #1a1815;}
+.res-opt .res-sub{font-size:10px;color:var(--muted);margin-top:2px;font-weight:500;line-height:1.3}
 
 .card-list > div { animation: fadeInUp 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
 .card-list > div:nth-child(1) { animation-delay: 0.05s; }
@@ -266,8 +275,8 @@ input:focus, select:focus, textarea:focus {
         </svg>
       </div>
       <div>
-        <div class="brand">Gatari KPI <span style="font-size:11px;background:#1a1815;color:#fff;border-radius:999px;padding:3px 8px;vertical-align:middle;font-weight:750;">v7 Owner</span></div>
-        <div style="color:var(--muted);font-weight:600;font-size:12px;margin-top:2px;">Performance & Payroll System</div>
+        <div class="brand">Gatari KPI <span style="font-size:10px;background:#1a1815;color:#fff;border-radius:999px;padding:3px 6px;vertical-align:middle;font-weight:750;">v7 Owner</span></div>
+        <div style="color:var(--muted);font-weight:600;font-size:11px;margin-top:2px;">Performance & Payroll System</div>
       </div>
     </div>
   </header>
@@ -302,7 +311,7 @@ input:focus, select:focus, textarea:focus {
   <img id="lbImg" src="" alt="">
   <div class="lightbox-nav">
     <button id="lbPrev" onclick="lbNav(-1)">‹</button>
-    <span id="lbCounter" style="color:#fff;font-size:14px;font-weight:600;"></span>
+    <span id="lbCounter" style="color:#fff;font-size:13px;font-weight:600;"></span>
     <button id="lbNext" onclick="lbNav(1)">›</button>
     <button class="lb-close" onclick="closeLightbox()">Tutup</button>
   </div>
@@ -314,7 +323,7 @@ input:focus, select:focus, textarea:focus {
 const icons={
   home:'<svg viewBox="0 0 24 24"><path d="M3 10.8 12 3l9 7.8v9.7a.5.5 0 0 1-.5.5H15v-6H9v6H3.5a.5.5 0 0 1-.5-.5z"/></svg>',
   team:'<svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
-  records:'<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>', // Changed icon
+  records:'<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>',
   payroll:'<svg viewBox="0 0 24 24"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7H14a3.5 3.5 0 0 1 0 7H6"/></svg>',
   more:'<svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.5" fill="currentColor"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/><circle cx="12" cy="19" r="1.5" fill="currentColor"/></svg>',
   copy:'<svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><rect x="2" y="2" width="13" height="13" rx="2"/></svg>',
@@ -393,13 +402,12 @@ function init(){
 function updateSyncPill(){
   const p=$('syncPill');
   if(settings.sheetsEnabled&&settings.sheetsUrl){
-    p.innerHTML=`<span class="sync-dot" style="background:var(--green)"></span>Cloud Tersambung`;
+    p.innerHTML=`<span class="sync-dot" style="background:var(--green)"></span>Cloud Aktif`;
   } else {
-    p.innerHTML=`<span class="sync-dot" style="background:#c8bfb2"></span>Mode Offline`;
+    p.innerHTML=`<span class="sync-dot" style="background:#c8bfb2"></span>Offline`;
   }
 }
 function renderNav(){
-  // Mengubah nama menu Catatan menjadi Riwayat agar lebih jelas
   let items=[['home','Home'],['team','Team'],['records','Riwayat'],['payroll','Payroll'],['refund','Refund'],['more','Lainnya']];
   $('bottomNav').innerHTML=items.map(([v,l])=>`<button class="nav-btn ${view===v?'active':''}" onclick="view='${v}';filterEmpId='';searchQ='';renderNav();render()">${icon(v)}<span>${l}</span></button>`).join('');
 }
@@ -423,20 +431,19 @@ function renderHome(){
   let leaders=[...em].sort((a,b)=>stats(b.id).score-stats(a.id).score).slice(0,3);
   let badEmps=em.filter(e=>{let st=stats(e.id),kpi=e.kpi||{};return st.pc>(kpi.maxPenalty||2);});
   
-  // WIDGET RIWAYAT TERBARU (HISTORY)
   let recent = [...mr()].sort((a,b)=>(b.createdAt||0) - (a.createdAt||0)).slice(0, 3);
   let recentHTML = recent.length ? `<div class="section-head"><h2>Riwayat Terakhir</h2><button class="btn xsmall" onclick="view='records';renderNav();render()">Lihat Semua</button></div>
-    <div class="card-list" style="margin-bottom:24px;">${recent.map(r=>recordCard(r)).join('')}</div>` : '';
+    <div class="card-list" style="margin-bottom:20px;">${recent.map(r=>recordCard(r)).join('')}</div>` : '';
 
   return hero('Beranda','Ringkasan performa tim & finansial',`<button class="btn primary" onclick="openRecordSheet()">+ Catat</button>`)
-    +(badEmps.length?`<div style="background:var(--red-bg);border:1px solid #fadce0;border-radius:24px;padding:16px 20px;margin-bottom:20px;font-size:14px;font-weight:700;color:var(--red);box-shadow:var(--shadow2)">⚠️ Peringatan: ${badEmps.length} karyawan melebihi batas pinalti bulanan (${badEmps.map(e=>e.name).join(', ')})</div>`:'')
+    +(badEmps.length?`<div style="background:var(--red-bg);border:1px solid #fadce0;border-radius:20px;padding:14px 18px;margin-bottom:16px;font-size:13px;font-weight:700;color:var(--red);box-shadow:var(--shadow2)">⚠️ Peringatan: ${badEmps.length} karyawan melebihi batas pinalti (${badEmps.map(e=>e.name).join(', ')})</div>`:'')
     +`<div class="stats">
       <div class="stat"><div class="stat-label">Tim Aktif</div><div class="stat-value">${em.length}</div></div>
       <div class="stat"><div class="stat-label">Beban Payroll</div><div class="stat-value">${idr(pay)}</div></div>
       <div class="stat"><div class="stat-label">Total Bonus</div><div class="stat-value green">+${idr(tb)}</div></div>
       <div class="stat"><div class="stat-label">Total Pinalti</div><div class="stat-value red">-${idr(tp)}</div></div>
     </div>`
-    + recentHTML // Disisipkan Widget History
+    + recentHTML
     + `<div class="section-head"><h2>Peringkat Performa</h2></div>
     ${leaders.map((e,i)=>`<div class="leader">
       <div class="rank">${i+1}</div>
@@ -460,7 +467,7 @@ function empCard(e,mode='home'){
     <div class="emp-main">
       <div class="avatar">${av(e.name)}</div>
       <div>
-        <div class="emp-name">${e.name}${e.active===false?'<span style="font-size:12px;color:var(--muted);font-weight:700;margin-left:8px;background:#f5f3ef;padding:2px 8px;border-radius:8px">Non-aktif</span>':''}</div>
+        <div class="emp-name">${e.name}${e.active===false?'<span style="font-size:11px;color:var(--muted);font-weight:700;margin-left:6px;background:#f5f3ef;padding:2px 6px;border-radius:6px">Non-aktif</span>':''}</div>
         <div class="score ${sc}">✓ ${st.score} ${scoreLabel(st.score)}</div>
         <div class="emp-meta">${e.role||'-'}${mode==='team'?`<br>Gabung ${fmt(e.joinDate)}<br><b class="gold" style="display:inline-block;margin-top:4px;">Gaji Pokok ${idr(e.baseSalary)}</b><br>KPI: maks ${kpi.maxPenalty} pinalti · min ${kpi.targetBonus} bonus${e.phone?`<br>📱 ${e.phone}`:''}${mode==='team'?e.pin?`<br>🔐 PIN: <span class='pin-badge pin-on'>Aktif</span>`:`<br>🔐 PIN: <span class='pin-badge pin-off'>Belum diset</span>`:''}`:''}</div>
       </div>
@@ -485,7 +492,7 @@ function empCard(e,mode='home'){
 }
 
 function renderRecords(){
-  let allRs=[...mr()].sort((a,b)=>(b.createdAt||0) - (a.createdAt||0)); // Mengurutkan berdasarkan yang terbaru
+  let allRs=[...mr()].sort((a,b)=>(b.createdAt||0) - (a.createdAt||0));
   let filtered=allRs.filter(r=>{
     let e=employees.find(x=>x.id===r.empId)||{name:''};
     let matchEmp=!filterEmpId||r.empId===filterEmpId;
@@ -507,18 +514,18 @@ function recordCard(r){
   let photos=r.photos||[];
   return`<div class="record-card">
     <div style="display:flex;gap:12px;align-items:flex-start">
-      <div class="avatar" style="width:44px;height:44px;font-size:16px;border-radius:14px;">${av(e.name)}</div>
+      <div class="avatar" style="width:40px;height:40px;font-size:15px;border-radius:12px;">${av(e.name)}</div>
       <div style="flex:1;min-width:0;">
         <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;">
           <div>
-            <b style="font-size:16px;color:#1a1815;">${e.name}</b>
+            <b style="font-size:15px;color:#1a1815;">${e.name}</b>
             <div class="emp-meta">${fmt(r.date)} · ${r.label}</div>
           </div>
-          <b class="${r.category==='bonus'?'green':'red'}" style="font-size:17px;white-space:nowrap">${r.category==='bonus'?'+':'-'}${idr(r.amount)}</b>
+          <b class="${r.category==='bonus'?'green':'red'}" style="font-size:16px;white-space:nowrap">${r.category==='bonus'?'+':'-'}${idr(r.amount)}</b>
         </div>
-        ${r.note?`<div class="emp-meta" style="margin-top:8px;font-style:italic;background:#fdfcfb;padding:8px 12px;border-radius:12px;border:1px solid var(--line);">"${r.note}"</div>`:''}
+        ${r.note?`<div class="emp-meta" style="margin-top:6px;font-style:italic;background:#fdfcfb;padding:8px 10px;border-radius:10px;border:1px solid var(--line);">"${r.note}"</div>`:''}
         ${photos.length?`<div class="photo-grid">${photos.map((p,i)=>`<img src="${p.url||p}" class="photo-thumb" onclick="openLightbox(${JSON.stringify(photos).replace(/"/g,"&quot;")},${i})" onerror="this.style.display='none'">`).join('')}</div>`:''}
-        <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;">
+        <div style="display:flex;gap:6px;margin-top:12px;flex-wrap:wrap;">
           <button class="btn xsmall blue" onclick="openEditRecord('${r.id}')">✏️ Edit</button>
           <button class="btn xsmall danger" onclick="delRec('${r.id}')">Hapus</button>
         </div>
@@ -558,23 +565,23 @@ function renderPayroll(){
           <div class="metric"><span>Pinalti Dibebankan</span><b class="red">-${idr(st.penalty)}</b></div>
           <div class="metric"><span>KPI Score</span><b class="gold">${st.score}/100</b></div>
         </div>
-        ${st.rfPot>0?`<div style="background:var(--red-bg);border:1px solid #fadce0;border-radius:16px;padding:12px 14px;margin-top:14px;">
-          <div style="font-size:12px;color:var(--muted);font-weight:750;margin-bottom:6px">⚠️ Pemotongan Dana Insiden / Refund</div>
-          ${st.rfCases.map(r=>`<div style="display:flex;justify-content:space-between;font-size:12px;gap:8px;margin-top:6px;color:#555;">
+        ${st.rfPot>0?`<div style="background:var(--red-bg);border:1px solid #fadce0;border-radius:14px;padding:10px 12px;margin-top:12px;">
+          <div style="font-size:11px;color:var(--muted);font-weight:750;margin-bottom:4px">⚠️ Pemotongan Dana Insiden / Refund</div>
+          ${st.rfCases.map(r=>`<div style="display:flex;justify-content:space-between;font-size:11px;gap:6px;margin-top:4px;color:#555;">
             <span>${fmt(r.date)} · <b>${r.productName}</b> ×${r.qtyKurang} (${r.resolution==='refund'?'Refund 15%':'Ongkir'})</span>
             <span style="color:var(--red);font-weight:800;white-space:nowrap">-${idr(r.potongan)}</span>
           </div>`).join('')}
-          <div style="border-top:1px dashed #fadce0;margin-top:10px;padding-top:10px;display:flex;justify-content:space-between;font-size:14px;font-weight:900;color:var(--red)">
+          <div style="border-top:1px dashed #fadce0;margin-top:8px;padding-top:8px;display:flex;justify-content:space-between;font-size:13px;font-weight:900;color:var(--red)">
             <span>Total Potongan</span><span>-${idr(st.rfPot)}</span>
           </div>
         </div>`:''}
-        ${st.rs.length?`<div style="margin-top:14px;display:flex;flex-direction:column;gap:8px;background:#fdfcfb;border:1px solid var(--line);border-radius:16px;padding:12px 14px;">
-          ${[...st.rs].sort((a,b)=>b.date.localeCompare(a.date)).map(r=>`<div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);gap:8px;">
+        ${st.rs.length?`<div style="margin-top:12px;display:flex;flex-direction:column;gap:6px;background:#fdfcfb;border:1px solid var(--line);border-radius:14px;padding:10px 12px;">
+          ${[...st.rs].sort((a,b)=>b.date.localeCompare(a.date)).map(r=>`<div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);gap:6px;">
             <span>${fmt(r.date)} — ${r.label}${(r.photos||[]).length?` 📷${r.photos.length}`:''}</span>
             <span style="color:${r.category==='bonus'?'var(--green)':'var(--red)'};font-weight:850;white-space:nowrap">${r.category==='bonus'?'+':'-'}${idr(r.amount)}</span>
           </div>`).join('')}
         </div>`:''}
-        <div class="emp-actions" style="margin-top:14px;">
+        <div class="emp-actions" style="margin-top:12px;">
           <button class="btn small" onclick="generateSlip('${e.id}')">${icon('download')} Cetak Slip PDF</button>
           ${e.phone?`<button class="btn green-btn small" onclick="sendWA('${e.id}')">${icon('wa')} Kirim Rincian (WA)</button>`:''}
         </div>
@@ -596,11 +603,11 @@ function renderMore(){
       <h3>☁️ Integrasi Google Sheets & Drive</h3>
       <div class="form">
         <input id="sSheetsUrl" placeholder="https://script.google.com/macros/s/.../exec" value="${settings.sheetsUrl||''}">
-        <label style="display:flex;align-items:center;gap:12px;font-size:14px;font-weight:600;cursor:pointer;background:#fdfcfb;padding:14px;border-radius:16px;border:1px solid var(--line);">
-          <input type="checkbox" id="sSheetsOn" ${settings.sheetsEnabled?'checked':''} style="width:20px;height:20px;accent-color:var(--brand);margin:0;">
-          Aktifkan mode Cloud-First & Drive
+        <label style="display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;cursor:pointer;background:#fdfcfb;padding:12px;border-radius:14px;border:1px solid var(--line);">
+          <input type="checkbox" id="sSheetsOn" ${settings.sheetsEnabled?'checked':''} style="width:18px;height:18px;accent-color:var(--brand);margin:0;">
+          Aktifkan mode Cloud-First
         </label>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
           <button class="btn small primary" onclick="saveSheets()">Simpan Setup</button>
           <button class="btn small blue" onclick="pullSheets()">⬇️ Tarik Data Cloud</button>
           <button class="btn small" onclick="showGASTemplate()">📋 Script Baru</button>
@@ -608,33 +615,33 @@ function renderMore(){
       </div>
     </div>`
     +`<div class="settings-card">
-      <div class="section-head" style="margin:0 0 16px"><h3 style="margin:0">✅ Setup Jenis Bonus</h3><button class="btn xsmall primary" onclick="openTypeSheet('bonus')">+ Kriteria Baru</button></div>
-      <div style="display:flex;flex-direction:column;gap:10px;">
+      <div class="section-head" style="margin:0 0 12px"><h3 style="margin:0">✅ Setup Jenis Bonus</h3><button class="btn xsmall primary" onclick="openTypeSheet('bonus')">+ Kriteria Baru</button></div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
         ${bTypes.map(t=>`<div class="type-row">
           <div class="type-label">${t.label}</div>
           <div class="type-amount green">+${idr(t.amount)}</div>
-          ${!t.builtin?`<button class="btn xsmall danger" onclick="delType('bonus','${t.id}')">Hapus</button>`:`<span style="font-size:11px;color:#ccc;font-weight:600;">Bawaan</span>`}
+          ${!t.builtin?`<button class="btn xsmall danger" onclick="delType('bonus','${t.id}')">Hapus</button>`:`<span style="font-size:10px;color:#ccc;font-weight:600;">Bawaan</span>`}
         </div>`).join('')}
       </div>
     </div>`
     +`<div class="settings-card">
-      <div class="section-head" style="margin:0 0 16px"><h3 style="margin:0">⚠️ Setup Jenis Pinalti</h3><button class="btn xsmall primary" onclick="openTypeSheet('penalty')">+ Kriteria Baru</button></div>
-      <div style="display:flex;flex-direction:column;gap:10px;">
+      <div class="section-head" style="margin:0 0 12px"><h3 style="margin:0">⚠️ Setup Jenis Pinalti</h3><button class="btn xsmall primary" onclick="openTypeSheet('penalty')">+ Kriteria Baru</button></div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
         ${pTypes.map(t=>`<div class="type-row">
           <div class="type-label">${t.label}</div>
           <div class="type-amount red">-${idr(t.amount)}</div>
-          ${!t.builtin?`<button class="btn xsmall danger" onclick="delType('penalty','${t.id}')">Hapus</button>`:`<span style="font-size:11px;color:#ccc;font-weight:600;">Bawaan</span>`}
+          ${!t.builtin?`<button class="btn xsmall danger" onclick="delType('penalty','${t.id}')">Hapus</button>`:`<span style="font-size:10px;color:#ccc;font-weight:600;">Bawaan</span>`}
         </div>`).join('')}
       </div>
     </div>`
     +`<div class="settings-card" style="border-color:#dbe7fa;background:var(--blue-bg)">
       <h3 style="color:var(--blue)">🔗 Portal Mandiri Karyawan</h3>
-      <p style="font-size:13px;color:#555;line-height:1.6;margin:0 0 14px">Buka file <b>gatari-kpi-karyawan.html</b> di browser yang sama untuk tampilan portal karyawan.</p>
-      <div style="background:#ffffff;border:1px solid #dbe7fa;border-radius:14px;padding:12px;font-size:12px;font-weight:700;color:var(--blue);">💡 Tetapkan PIN Login karyawan di menu Daftar Tim → Edit Profil</div>
+      <p style="font-size:12px;color:#555;line-height:1.6;margin:0 0 12px">Buka file <b>gatari-kpi-karyawan.html</b> di browser yang sama untuk tampilan portal karyawan.</p>
+      <div style="background:#ffffff;border:1px solid #dbe7fa;border-radius:12px;padding:10px;font-size:11px;font-weight:700;color:var(--blue);">💡 Tetapkan PIN Login karyawan di menu Daftar Tim → Edit Profil</div>
     </div>`
     +`<div class="settings-card">
       <h3>💾 Pencadangan File (Lokal)</h3>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <div style="display:flex;gap:6px;flex-wrap:wrap;">
         <button class="btn small" onclick="exportJson()">${icon('download')} Export Backup</button>
         <button class="btn small blue" onclick="$('importFile').click()">📂 Restore JSON</button>
         <input id="importFile" type="file" accept=".json" style="display:none" onchange="importJson(event)">
@@ -642,7 +649,7 @@ function renderMore(){
     </div>`
     +`<div class="settings-card" style="border-color:#fadce0;">
       <h3 style="color:var(--red)">🗑️ Danger Zone</h3>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <div style="display:flex;gap:6px;flex-wrap:wrap;">
         <button class="btn small danger" onclick="if(confirm('Aksi ini akan menghapus semua histori catatan bulan ini. Lanjutkan?')){records=records.filter(r=>!r.date.startsWith(month));sv('kpi_records',records);render();toast('Catatan bulan ini berhasil dibersihkan')}">Hapus Catatan Bulan Ini</button>
         <button class="btn small danger" onclick="if(confirm('KEMBALIKAN KE PENGATURAN PABRIK? Seluruh data akan hilang secara permanen jika tidak di-backup!')){localStorage.clear();location.reload()}">Reset Total Pabrik</button>
       </div>
@@ -665,11 +672,11 @@ function openRecordSheet(empId=''){
       <select id="rType"></select>
       <textarea id="rNote" rows="3" placeholder="Tuliskan kronologi / rincian pendukung (opsional)"></textarea>
       <div>
-        <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:8px;">📷 Upload ke Google Drive (Otomatis)</div>
+        <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px;">📷 Upload ke Google Drive (Otomatis)</div>
         <div id="photosRow" class="photo-grid"></div>
         <input type="file" id="rFile" accept="image/*" multiple style="display:none" onchange="handlePhotos(event)">
       </div>
-      <button class="btn primary" onclick="saveRecord()" style="margin-top:8px">Submit Catatan</button>
+      <button class="btn primary" onclick="saveRecord()" style="margin-top:6px">Submit Catatan</button>
       <button class="btn" onclick="closeSheet()">Batalkan</button>
     </div>`;
   fillTypes();renderPhotosRow();
@@ -696,11 +703,11 @@ function openEditRecord(id){
       <select id="rType"></select>
       <textarea id="rNote" rows="3" placeholder="Tuliskan kronologi...">${r.note||''}</textarea>
       <div>
-        <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:8px;">📷 Lampiran Drive</div>
+        <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px;">📷 Lampiran Drive</div>
         <div id="photosRow" class="photo-grid"></div>
         <input type="file" id="rFile" accept="image/*" multiple style="display:none" onchange="handlePhotos(event)">
       </div>
-      <button class="btn primary" onclick="saveRecord()" style="margin-top:8px">Terapkan Perubahan</button>
+      <button class="btn primary" onclick="saveRecord()" style="margin-top:6px">Terapkan Perubahan</button>
       <button class="btn" onclick="closeSheet()">Batalkan</button>
     </div>`;
   fillTypes(r.label);renderPhotosRow();
@@ -727,7 +734,7 @@ function fillTypes(selectLabel=''){
     let existing=$('customFields');
     if(isCustom&&!existing){
       let cf=document.createElement('div');cf.id='customFields';cf.className='form';
-      cf.style.background='#fdfcfb'; cf.style.padding='14px'; cf.style.borderRadius='16px'; cf.style.border='1px solid var(--line)';
+      cf.style.background='#fdfcfb'; cf.style.padding='12px'; cf.style.borderRadius='14px'; cf.style.border='1px solid var(--line)';
       cf.innerHTML=`<input id="rCustomLabel" placeholder="Deskripsi jenis catatan baru"><div class="two"><input id="rCustomAmount" type="text" inputmode="numeric" placeholder="Nominal (Rp)" oninput="fmtRp(this)"><div></div></div>`;
       $('rType').insertAdjacentElement('afterend',cf);
     } else if(!isCustom&&existing){existing.remove();}
@@ -778,7 +785,6 @@ async function handlePhotos(e){
     
     try {
       let compressedBase64 = await compressImage(f);
-      
       let res = await fetch(settings.sheetsUrl, {
         method: 'POST',
         body: JSON.stringify({
@@ -851,7 +857,6 @@ function saveRecord(){
     records=records.map(r=>r.id===editingRecordId?{...r,empId,date,category:cat,label,amount,note,photos:[...recordPhotos]}:r);
     toast('Perubahan pada catatan berhasil disimpan ✓');
   } else {
-    // Menyisipkan timestamp 'createdAt' agar history lebih rapi
     records.push({id:uid(),empId,date,category:cat,label,amount,note,photos:[...recordPhotos], createdAt: Date.now()});
     month=date.slice(0,7);$('monthPicker').value=month;
     toast('Sistem merekam catatan baru ✓');
@@ -872,21 +877,21 @@ function openEmployeeSheet(id=''){
       <input id="ePhone" type="tel" placeholder="Koneksi WhatsApp (628xxx) — opsional" value="${e?.phone||''}">
       <input id="eJoin" type="date" value="${e?.joinDate||today()}">
       
-      <div style="background:#fdfcfb;border:1px solid var(--line);border-radius:18px;padding:14px;margin-top:4px;">
-        <div style="font-size:13px;font-weight:800;color:var(--text);margin-bottom:4px">🔐 Autentikasi Karyawan (PIN)</div>
-        <div style="font-size:11.5px;color:var(--muted);margin-bottom:10px;line-height:1.4">Setel 4 digit PIN untuk akses portal mandiri karyawan bersangkutan.</div>
-        <input id="ePin" type="number" placeholder="Contoh: 1234" value="${e?.pin||''}" style="letter-spacing:10px;font-size:20px;font-weight:900;text-align:center" maxlength="4">
+      <div style="background:#fdfcfb;border:1px solid var(--line);border-radius:16px;padding:12px;margin-top:2px;">
+        <div style="font-size:12px;font-weight:800;color:var(--text);margin-bottom:4px">🔐 Autentikasi Karyawan (PIN)</div>
+        <div style="font-size:10.5px;color:var(--muted);margin-bottom:8px;line-height:1.4">Setel 4 digit PIN untuk akses portal mandiri karyawan bersangkutan.</div>
+        <input id="ePin" type="number" placeholder="Contoh: 1234" value="${e?.pin||''}" style="letter-spacing:10px;font-size:18px;font-weight:900;text-align:center" maxlength="4">
       </div>
       
-      <div style="background:#fdfcfb;border:1px solid var(--line);border-radius:18px;padding:14px;margin-top:4px;">
-        <div style="font-size:13px;font-weight:800;color:var(--text);margin-bottom:10px">🎯 Indikator Kinerja Utama (KPI)</div>
+      <div style="background:#fdfcfb;border:1px solid var(--line);border-radius:16px;padding:12px;margin-top:2px;">
+        <div style="font-size:12px;font-weight:800;color:var(--text);margin-bottom:8px">🎯 Indikator Kinerja Utama (KPI)</div>
         <div class="two">
-          <div><label style="font-size:11px;color:var(--muted);font-weight:600;display:block;margin-bottom:6px">Toleransi Pinalti</label><input id="eMaxPen" type="number" placeholder="2" value="${(e?.kpi||{}).maxPenalty||2}"></div>
-          <div><label style="font-size:11px;color:var(--muted);font-weight:600;display:block;margin-bottom:6px">Ekspektasi Bonus</label><input id="eMinBon" type="number" placeholder="1" value="${(e?.kpi||{}).targetBonus||1}"></div>
+          <div><label style="font-size:10px;color:var(--muted);font-weight:600;display:block;margin-bottom:4px">Toleransi Pinalti</label><input id="eMaxPen" type="number" placeholder="2" value="${(e?.kpi||{}).maxPenalty||2}"></div>
+          <div><label style="font-size:10px;color:var(--muted);font-weight:600;display:block;margin-bottom:4px">Ekspektasi Bonus</label><input id="eMinBon" type="number" placeholder="1" value="${(e?.kpi||{}).targetBonus||1}"></div>
         </div>
       </div>
       
-      <button class="btn primary" onclick="saveEmp('${id}')" style="margin-top:8px">Simpan Entitas</button>
+      <button class="btn primary" onclick="saveEmp('${id}')" style="margin-top:6px">Simpan Entitas</button>
       <button class="btn" onclick="closeSheet()">Batalkan</button>
     </div>`;
   $('sheet').classList.add('show');
@@ -930,7 +935,7 @@ function openTypeSheet(catType){
     <div class="form">
       <input id="ntLabel" placeholder="Definisi kriteria / judul">
       <input id="ntAmount" type="text" inputmode="numeric" placeholder="Nominal Rupiah" oninput="fmtRp(this)">
-      <button class="btn primary" onclick="saveType('${catType}')" style="margin-top:8px">Register Kriteria</button>
+      <button class="btn primary" onclick="saveType('${catType}')" style="margin-top:6px">Register Kriteria</button>
       <button class="btn" onclick="closeSheet()">Batalkan</button>
     </div>`;
   $('sheet').classList.add('show');
@@ -1017,13 +1022,19 @@ function generateSlip(empId){
   doc.text(`Bergabung: ${fmt(e.joinDate)}`,W-pad-6,51,{align:'right'});
   
   let yy=66;
+  
+  // LOGIKA PEMOTONGAN TEKS (ANTI-OVERLAPPING PDF)
+  const trunc = (str, max) => str.length > max ? str.substring(0, max - 3) + '...' : str;
+
   const row=(l,v,color)=>{
-    doc.setFontSize(9);
+    doc.setFontSize(8.5);
     doc.setTextColor(...(color||[26,24,21]));
     doc.setFont('helvetica',l.startsWith(' ')?'normal':'bold');
-    doc.text(l,pad,yy);doc.text(v,W-pad,yy,{align:'right'});
+    doc.text(trunc(l, 45), pad, yy); // Maksimal 45 karakter agar tidak menabrak angka
+    doc.text(v,W-pad,yy,{align:'right'});
     yy+=7;
   };
+  
   row('Gaji Pokok',idr(e.baseSalary));
   st.rs.filter(r=>r.category==='bonus').forEach(r=>row(`  + ${r.label}`,idr(r.amount),[37,140,90]));
   st.rs.filter(r=>r.category==='penalty').forEach(r=>row(`  − ${r.label}`,'('+idr(r.amount)+')',[209,86,98]));
@@ -1042,10 +1053,13 @@ function generateSlip(empId){
   doc.setTextColor(...stColor);doc.setFontSize(8);doc.setFont('helvetica','bold');
   doc.text(`Audit Skor: ${sc}/100 | Frekuensi Bonus: ${st.bc} | Insiden Pinalti: ${st.pc}`,pad,yy);
   
-  doc.setDrawColor(230,225,216);doc.line(pad,200,W-pad,200);
-  doc.setTextColor(180,175,168);doc.setFontSize(7);doc.setFont('helvetica','normal');
-  doc.text('Dokumen ini dienkripsi & digenerate secara otomatis oleh sistem internal.',pad,206);
-  doc.text(`© ${y} Manajemen ${settings.companyName||'Gatari Edutoys'}`,W-pad,206,{align:'right'});
+  doc.setDrawColor(230,225,216);doc.line(pad,198,W-pad,198);
+  doc.setTextColor(180,175,168);doc.setFontSize(6.5);doc.setFont('helvetica','normal');
+  
+  // PEMISAHAN FOOTER AGAR TIDAK BERTUMPUK (Rata Tengah)
+  doc.text('Dokumen ini dienkripsi & digenerate otomatis oleh sistem internal.', W/2, 203, {align:'center'});
+  doc.text(`© ${y} Manajemen ${settings.companyName||'Gatari Edutoys'}`, W/2, 207, {align:'center'});
+  
   doc.save(`Dokumen_Payroll_${e.name.replace(/ /g,'_')}_${month}.pdf`);
   toast(`Mengkompilasi PDF slip gaji atas entitas ${e.name}...`);
 }
@@ -1152,17 +1166,17 @@ function renderRefund(){
   let totalPot=myRf.reduce((s,r)=>s+r.potongan,0);
   let[y,mo]=month.split('-');
   return hero('Manajemen Insiden','Resolusi kurang kirim / barang rusak',`<button class="btn primary" onclick="openRefundSheet()">+ Buat Insiden</button>`)
-    +(myRf.length?`<div style="background:var(--red-bg);border:1px solid #fadce0;border-radius:20px;padding:18px;margin-bottom:20px;box-shadow:var(--shadow2)">
-      <div style="font-size:12px;color:var(--red);font-weight:750;text-transform:uppercase;letter-spacing:0.5px">Total Beban Karyawan (${MONTHS[+mo-1]} ${y})</div>
-      <div style="font-size:28px;font-weight:850;color:var(--red);letter-spacing:-1px;margin-top:4px">-${idr(totalPot)}</div>
-      <div style="font-size:12px;color:var(--muted);margin-top:4px;font-weight:600">Terdistribusi pada ${myRf.length} riwayat kasus operasional</div>
+    +(myRf.length?`<div style="background:var(--red-bg);border:1px solid #fadce0;border-radius:18px;padding:16px;margin-bottom:20px;box-shadow:var(--shadow2)">
+      <div style="font-size:11px;color:var(--red);font-weight:750;text-transform:uppercase;letter-spacing:0.5px">Total Beban Karyawan (${MONTHS[+mo-1]} ${y})</div>
+      <div style="font-size:26px;font-weight:850;color:var(--red);letter-spacing:-1px;margin-top:4px">-${idr(totalPot)}</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:4px;font-weight:600">Terdistribusi pada ${myRf.length} riwayat kasus operasional</div>
     </div>`:'')
     +`<div class="card-list">${myRf.length?myRf.map(r=>{
       let emp=employees.find(e=>e.id===r.empId)||{name:'?'};
       return`<div class="refund-card">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap">
           <div>
-            <div style="font-size:17px;font-weight:850;letter-spacing:-0.5px;color:#1a1815">${r.productName}</div>
+            <div style="font-size:16px;font-weight:850;letter-spacing:-0.5px;color:#1a1815">${r.productName}</div>
             <div class="emp-meta">${fmt(r.date)} · <b style="color:#1a1815">${emp.name}</b></div>
           </div>
           <span class="refund-tag ${r.resolution}">${r.resolution==='refund'?'🔴 Opsi Refund':'🟡 Kirim Susulan'}</span>
@@ -1177,8 +1191,8 @@ function renderRefund(){
             :`<div class="calc-row"><span>Penanggungan Resi Baru</span><b>${idr(r.ongkir)}</b></div>`}
           <div class="calc-row calc-total" style="color:var(--red)"><span>Ekspektasi Potongan</span><span>-${idr(r.potongan)}</span></div>
         </div>
-        ${r.note?`<div class="emp-meta" style="margin-top:12px;font-style:italic">"${r.note}"</div>`:''}
-        <div style="display:flex;gap:8px;margin-top:16px">
+        ${r.note?`<div class="emp-meta" style="margin-top:10px;font-style:italic">"${r.note}"</div>`:''}
+        <div style="display:flex;gap:8px;margin-top:14px">
           <button class="btn xsmall danger" onclick="delRefund('${r.id}')">Hapus Entri Kasus</button>
         </div>
       </div>`;
@@ -1231,7 +1245,7 @@ function openRefundSheet(){
       </div>
     </div>
     
-    <div id="rfOngkirWrap" style="display:none;background:#fffdfa;padding:14px;border-radius:18px;border:1px solid #f2e3c6;margin-top:4px;">
+    <div id="rfOngkirWrap" style="display:none;background:#fffdfa;padding:12px;border-radius:16px;border:1px solid #f2e3c6;margin-top:4px;">
       <label style="font-size:11px;font-weight:700;color:#b87900;display:block;margin-bottom:6px">Beban Tambahan Kurir (Rp)</label>
       <input id="rfOngkir" type="text" inputmode="numeric" placeholder="Misal: 15.000" oninput="fmtRp(this);calcRf()" style="border-color:#f2e3c6;box-shadow:none;">
     </div>
