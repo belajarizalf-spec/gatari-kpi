@@ -878,17 +878,33 @@ async function testSheets(){
   try{await fetch(settings.sheetsUrl+'?action=ping',{method:'GET',mode:'no-cors'});toast('Koneksi OK ✓ (no-cors mode)');}
   catch(e){toast('Gagal: '+e.message);}
 }
+
+// FUNGSI INI SUDAH DIUPDATE: Mengirim data sebagai 1 paket (sync_all)
 async function syncSheets(){
   if(!settings.sheetsUrl||!settings.sheetsEnabled)return;
+  toast('Memulai sinkronisasi...', 2000);
   let[y,mo]=month.split('-');
+  
   let recs=mr().map(r=>{let e=employees.find(x=>x.id===r.empId);return{...r,empName:e?.name||'?',photoCount:(r.photos||[]).length};});
   let payRows=active().map(e=>{let st=stats(e.id);return{name:e.name,role:e.role,baseSalary:e.baseSalary,bonus:st.bonus,penalty:st.penalty,total:e.baseSalary+st.net,score:st.score};});
+  let empRows=employees.map(e=>({id:e.id, name:e.name, role:e.role, baseSalary:e.baseSalary, joinDate:e.joinDate, active:e.active, phone:e.phone}));
+  let rfRows=refundCases.map(r=>{let e=employees.find(x=>x.id===r.empId); return {id:r.id, empName:e?.name||'?', date:r.date, product:r.productName, qtyOrder:r.qtyOrder, qtyKirim:r.qtyKirim, qtyKurang:r.qtyKurang, resolution:r.resolution, potongan:r.potongan};});
+
+  let payload = {
+    action: 'sync_all',
+    month: month,
+    records: recs,
+    payroll: payRows,
+    employees: empRows,
+    refunds: rfRows
+  };
+
   try{
-    await fetch(settings.sheetsUrl,{method:'POST',mode:'no-cors',body:JSON.stringify({action:'sync_records',records:recs})});
-    await fetch(settings.sheetsUrl,{method:'POST',mode:'no-cors',body:JSON.stringify({action:'sync_payroll',month,rows:payRows})});
+    await fetch(settings.sheetsUrl,{method:'POST',mode:'no-cors',body:JSON.stringify(payload)});
     toast('Sync ke Google Sheets berhasil ✓');
   }catch(e){toast('Gagal sync: '+e.message);}
 }
+
 function showGASTemplate(){
   let script=`function doPost(e) {
   const data = JSON.parse(e.postData.contents);
