@@ -485,6 +485,8 @@ let refundCases=ld('kpi_refund_cases',[]);
 let rfResolution='refund';
 let lbPhotos=[], lbIdx=0;
 let filterEmpId='', searchQ='', filterCat='';
+// Photo registry — avoids JSON-in-onclick quoting issues on mobile
+let _photoRegistry={};
 let lastSavedRecordId=null;
 let trendEmpId='', trendMetric='score';
 
@@ -801,6 +803,8 @@ function renderRecords(){
 function recordCard(r){
   let e=employees.find(x=>x.id===r.empId)||{name:'-'};
   let photos=r.photos||[];
+  // Store photos in registry keyed by record id to avoid JSON/quote issues in onclick
+  if(photos.length) _photoRegistry[r.id]=photos;
   return`<div class="record-card" data-record-id="${r.id}">
     <div style="display:flex;gap:12px;align-items:flex-start">
       <div class="avatar" style="width:40px;height:40px;font-size:15px;border-radius:12px;">${av(e.name)}</div>
@@ -813,7 +817,7 @@ function recordCard(r){
           <b class="${r.category==='bonus'?'green':'red'}" style="font-size:16px;white-space:nowrap">${r.category==='bonus'?'+':'-'}${idr(r.amount)}</b>
         </div>
         ${r.note?`<div class="emp-meta" style="margin-top:6px;font-style:italic;background:#fdfcfb;padding:8px 10px;border-radius:10px;border:1px solid var(--line);">"${r.note}"</div>`:''}
-        ${photos.length?`<div class="photo-grid">${photos.map((p,i)=>`<img src="${p.url||p}" class="photo-thumb" onclick="openLightbox(${JSON.stringify(photos).replace(/"/g,'&quot;')},${i})" onerror="this.style.display='none'">`).join('')}</div>`:''}
+        ${photos.length?`<div class="photo-grid">${photos.map((p,i)=>`<img src="${p.url||p}" class="photo-thumb" onclick="openLightboxById('${r.id}',${i})" onerror="this.style.display='none'">`).join('')}</div>`:''}
         <div style="display:flex;gap:6px;margin-top:12px;flex-wrap:wrap;">
           <button class="btn xsmall blue" onclick="openEditRecord('${r.id}')">✏️ Edit</button>
           <button class="btn xsmall danger" onclick="delRec('${r.id}')">Hapus</button>
@@ -1094,9 +1098,11 @@ async function handlePhotos(e){
 
 function renderPhotosRow(){
   let row=$('photosRow');if(!row)return;
+  // Sync to registry so lightbox can access
+  _photoRegistry['__editing__']=recordPhotos;
   row.innerHTML=recordPhotos.map((p,i)=>{
     let url=p.url||p;
-    return`<div class="photo-wrap"><img src="${url}" class="photo-thumb" onclick="openLightbox(recordPhotos,${i})"><div class="photo-del" onclick="deletePhoto(${i})">✕</div></div>`;
+    return`<div class="photo-wrap"><img src="${url}" class="photo-thumb" onclick="openLightboxById('__editing__',${i})"><div class="photo-del" onclick="deletePhoto(${i})">✕</div></div>`;
   }).join('')+`<div class="photo-add-btn" onclick="$('rFile').click()">+</div>`;
 }
 
@@ -1238,10 +1244,18 @@ function delType(catType,id){
   render();toast('Kriteria dihapus');
 }
 
+function openLightboxById(recordId, idx){
+  let photos=_photoRegistry[recordId]||[];
+  openLightbox(photos, idx);
+}
 function openLightbox(photos,idx){
-  lbPhotos=Array.isArray(photos)?photos.map(p=>p.url||p):[];
-  lbIdx=idx||0;
-  $('lbImg').src=lbPhotos[lbIdx]||'';
+  lbPhotos=Array.isArray(photos)?photos.map(p=>(typeof p==='string'?p:p.url||p)).filter(Boolean):[];
+  lbIdx=Math.max(0,Math.min(idx||0, lbPhotos.length-1));
+  if(!lbPhotos.length){toast('Foto tidak ditemukan');return;}
+  let img=$('lbImg');
+  img.src='';
+  // Force reload even if same src
+  setTimeout(()=>{ img.src=lbPhotos[lbIdx]; },10);
   $('lbCounter').textContent=lbPhotos.length>1?`${lbIdx+1} / ${lbPhotos.length}`:'';
   $('lbPrev').style.display=lbPhotos.length>1?'':'none';
   $('lbNext').style.display=lbPhotos.length>1?'':'none';
