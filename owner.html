@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-<title>Gatari KPI v7 — Owner (Drive Storage)</title>
+<title>Gatari KPI v7 — Owner (Cloud First)</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 :root {
@@ -756,7 +756,9 @@ function fillTypes(selectLabel=''){
   };
 }
 
-// FUNGSI BARU: MENGUNGGAH FOTO KE GOOGLE DRIVE SECARA OTOMATIS
+// ----------------------------------------------------
+// FUNGSI FOTO CERDAS (DENGAN PELACAKAN ERROR ASLI)
+// ----------------------------------------------------
 async function handlePhotos(e){
   if(!settings.sheetsUrl || !settings.sheetsEnabled) {
     toast('Gagal: Aktifkan URL Google Sheets di menu Lainnya untuk mengunggah ke Drive', 4000);
@@ -782,15 +784,18 @@ async function handlePhotos(e){
         })
       });
       let data = await res.json();
+      
       if(data.url) {
         recordPhotos.push({ url: data.url, fileId: data.fileId });
         renderPhotosRow();
         toast('Foto berhasil tersimpan di Google Drive ✓');
+      } else if (data.error) {
+        toast('Error Drive Asli: ' + data.error, 5000);
       } else {
-        toast('Google Drive menolak unggahan');
+        toast('Gagal: Script Google belum di-Deploy ke Versi Baru!', 5000);
       }
     } catch(err) {
-      toast('Error upload koneksi: ' + err.message);
+      toast('Error upload koneksi: ' + err.message, 5000);
     }
   }
 }
@@ -798,7 +803,7 @@ async function handlePhotos(e){
 function renderPhotosRow(){
   let row=$('photosRow');if(!row)return;
   row.innerHTML=recordPhotos.map((p,i)=>{
-    let url = p.url || p; // Kompatibilitas dengan base64 lama
+    let url = p.url || p;
     return `<div class="photo-wrap">
       <img src="${url}" class="photo-thumb" onclick="openLightbox(recordPhotos,${i})">
       <div class="photo-del" onclick="deletePhoto(${i})">✕</div>
@@ -806,7 +811,6 @@ function renderPhotosRow(){
   }).join('') + `<div class="photo-add-btn" onclick="$('rFile').click()">+</div>`;
 }
 
-// FUNGSI BARU: MENGHAPUS FOTO DARI GOOGLE DRIVE
 async function deletePhoto(idx) {
   if(!confirm('Hapus foto ini secara permanen dari Google Drive?')) return;
   let p = recordPhotos[idx];
@@ -904,7 +908,6 @@ function delRec(id){
   records=records.filter(x=>x.id!==id);
   sv('kpi_records',records); render(); toast('Entri data telah dieliminasi');
   
-  // HAPUS FOTO TERKAIT DI DRIVE SAAT CATATAN DIHAPUS
   if(r && r.photos && r.photos.length && settings.sheetsUrl) {
     for(let p of r.photos) {
       if(p.fileId) {
@@ -1097,14 +1100,12 @@ async function syncSheets(){
   let empRows=employees.map(e=>({id:e.id, name:e.name, role:e.role, baseSalary:e.baseSalary, joinDate:e.joinDate, active:e.active, phone:e.phone}));
   let rfRows=refundCases.map(r=>{let e=employees.find(x=>x.id===r.empId); return {id:r.id, empName:e?.name||'?', date:r.date, product:r.productName, qtyOrder:r.qtyOrder, qtyKirim:r.qtyKirim, qtyKurang:r.qtyKurang, resolution:r.resolution, potongan:r.potongan};});
 
-  // MENCEGAH PENGIRIMAN BASE64 PANJANG KE SHEETS SAAT BACKUP
   let backupRecords = records.map(r => ({...r, photos: r.photos ? r.photos.map(p => ({url: p.url||p, fileId: p.fileId})) : [] }));
   let backupObj = { employees: employees, records: backupRecords, refundCases: refundCases, bonusTypes: bonusTypes, penaltyTypes: penaltyTypes };
   
   let payload = { action: 'sync_all', month: month, records: recs, payroll: payRows, employees: empRows, refunds: rfRows, backup: backupObj };
 
   try{
-    // Menggunakan text/plain agar tidak terkena blokir CORS OPTIONS dari Google Script
     await fetch(settings.sheetsUrl,{
       method:'POST',
       headers: {'Content-Type': 'text/plain;charset=utf-8'},
