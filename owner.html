@@ -716,16 +716,26 @@ function saveEmp(id){
   if(!data.name||!data.baseSalary)return toast('Nama dan gaji wajib diisi');
   if(id)employees=employees.map(e=>e.id===id?{...e,...data,active:e.active}:e);
   else employees.push({id:'e'+uid(),...data});
-  sv('kpi_employees',employees);closeSheet();render();toast('Data karyawan tersimpan ✓');
+  sv('kpi_employees',employees);
+  closeSheet();
+  render();
+  toast('Data karyawan tersimpan ✓');
+  if(settings.sheetsEnabled&&settings.sheetsUrl)syncSheets();
 }
 function toggleEmp(id){
   if(!confirm('Ubah status karyawan ini?'))return;
   employees=employees.map(e=>e.id===id?{...e,active:e.active===false?true:false}:e);
-  sv('kpi_employees',employees);render();
+  sv('kpi_employees',employees);
+  render();
+  if(settings.sheetsEnabled&&settings.sheetsUrl)syncSheets();
 }
 function delRec(id){
   if(!confirm('Hapus catatan ini?'))return;
-  records=records.filter(r=>r.id!==id);sv('kpi_records',records);render();toast('Catatan dihapus');
+  records=records.filter(r=>r.id!==id);
+  sv('kpi_records',records);
+  render();
+  toast('Catatan dihapus');
+  if(settings.sheetsEnabled&&settings.sheetsUrl)syncSheets();
 }
 function closeSheet(){$('sheet').classList.remove('show');}
 
@@ -885,7 +895,7 @@ async function syncSheets(){
   toast('Memulai sinkronisasi...', 2000);
   let[y,mo]=month.split('-');
   
-  let recs=mr().map(r=>{let e=employees.find(x=>x.id===r.empId);return{...r,empName:e?.name||'?',photoCount:(r.photos||[]).length};});
+  let recs=records.map(r=>{let e=employees.find(x=>x.id===r.empId);return{...r,empName:e?.name||'?',photoCount:(r.photos||[]).length};});
   let payRows=active().map(e=>{let st=stats(e.id);return{name:e.name,role:e.role,baseSalary:e.baseSalary,bonus:st.bonus,penalty:st.penalty,total:e.baseSalary+st.net,score:st.score};});
   let empRows=employees.map(e=>({id:e.id, name:e.name, role:e.role, baseSalary:e.baseSalary, joinDate:e.joinDate, active:e.active, phone:e.phone}));
   let rfRows=refundCases.map(r=>{let e=employees.find(x=>x.id===r.empId); return {id:r.id, empName:e?.name||'?', date:r.date, product:r.productName, qtyOrder:r.qtyOrder, qtyKirim:r.qtyKirim, qtyKurang:r.qtyKurang, resolution:r.resolution, potongan:r.potongan};});
@@ -909,19 +919,36 @@ function showGASTemplate(){
   let script=`function doPost(e) {
   const data = JSON.parse(e.postData.contents);
   const ss = SpreadsheetApp.getActiveSpreadsheet();
-  if (data.action === "sync_records") {
-    let sh = ss.getSheetByName("Catatan") || ss.insertSheet("Catatan");
-    if (sh.getLastRow() === 0) sh.appendRow(["ID","Karyawan","Tanggal","Kategori","Label","Nominal","Catatan","JmlFoto"]);
-    data.records.forEach(r => sh.appendRow([r.id,r.empName,r.date,r.category,r.label,r.amount,r.note||"",r.photoCount||0]));
+  
+  if (data.action === "sync_all") {
+    // 1. Catatan
+    let shRec = ss.getSheetByName("Catatan") || ss.insertSheet("Catatan");
+    shRec.clearContents();
+    shRec.appendRow(["ID","Karyawan","Tanggal","Kategori","Label","Nominal","Catatan","JmlFoto"]);
+    data.records.forEach(r => shRec.appendRow([r.id,r.empName,r.date,r.category,r.label,r.amount,r.note||"",r.photoCount||0]));
+
+    // 2. Payroll
+    let shPay = ss.getSheetByName("Payroll "+data.month) || ss.insertSheet("Payroll "+data.month);
+    shPay.clearContents();
+    shPay.appendRow(["Nama","Jabatan","Gaji Pokok","Bonus","Pinalti","Total","KPI Score"]);
+    data.payroll.forEach(r => shPay.appendRow([r.name,r.role,r.baseSalary,r.bonus,r.penalty,r.total,r.score]));
+
+    // 3. Karyawan
+    let shEmp = ss.getSheetByName("Karyawan") || ss.insertSheet("Karyawan");
+    shEmp.clearContents();
+    shEmp.appendRow(["ID","Nama","Jabatan","Gaji Pokok","Tgl Gabung","Status Aktif","No WA"]);
+    data.employees.forEach(r => shEmp.appendRow([r.id, r.name, r.role, r.baseSalary, r.joinDate, r.active ? "Aktif" : "Non-aktif", r.phone||"-"]));
+
+    // 4. Refund
+    let shRef = ss.getSheetByName("Kasus Refund") || ss.insertSheet("Kasus Refund");
+    shRef.clearContents();
+    shRef.appendRow(["ID","Tanggal","Karyawan","Nama Produk","Qty Order","Qty Kirim","Qty Kurang","Resolusi","Potongan Karyawan"]);
+    data.refunds.forEach(r => shRef.appendRow([r.id, r.date, r.empName, r.product, r.qtyOrder, r.qtyKirim, r.qtyKurang, r.resolution === 'refund' ? 'Refund' : 'Kirim Ulang', r.potongan]));
   }
-  if (data.action === "sync_payroll") {
-    let sh = ss.getSheetByName("Payroll "+data.month) || ss.insertSheet("Payroll "+data.month);
-    sh.clearContents();
-    sh.appendRow(["Nama","Jabatan","Gaji Pokok","Bonus","Pinalti","Total","KPI Score"]);
-    data.rows.forEach(r => sh.appendRow([r.name,r.role,r.baseSalary,r.bonus,r.penalty,r.total,r.score]));
-  }
+  
   return ContentService.createTextOutput(JSON.stringify({status:"ok"})).setMimeType(ContentService.MimeType.JSON);
 }
+
 function doGet(e) {
   return ContentService.createTextOutput(JSON.stringify({status:"ok"})).setMimeType(ContentService.MimeType.JSON);
 }`;
@@ -1105,6 +1132,9 @@ function saveRefund(){
   sv('kpi_records',records);
   closeSheet();render();
   toast(`Potongan ${idr(pot)} ditambahkan ke pinalti ${emp?.name||''} ✓`,3500);
+  
+  // Trigger Auto-Sync
+  if(settings.sheetsEnabled&&settings.sheetsUrl)syncSheets();
 }
 
 function delRefund(id){
@@ -1114,6 +1144,9 @@ function delRefund(id){
   records=records.filter(r=>r.id!=='rf_'+id);
   sv('kpi_records',records);
   render();toast('Kasus dihapus');
+  
+  // Trigger Auto-Sync
+  if(settings.sheetsEnabled&&settings.sheetsUrl)syncSheets();
 }
 
 
