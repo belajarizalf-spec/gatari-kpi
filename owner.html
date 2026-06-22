@@ -263,6 +263,8 @@ let searchQ='';
 function today(){return new Date().toISOString().slice(0,10)}
 function uid(){return Date.now()+''+Math.floor(Math.random()*9999)}
 function idr(n){return'Rp '+Math.abs(Math.round(n||0)).toLocaleString('id-ID')}
+function fmtRp(el){let v=el.value.replace(/[^0-9]/g,'');el.value=v?parseInt(v).toLocaleString('id-ID'):'';}
+function getRaw(id){let v=$(id)?.value||'';return parseInt(v.replace(/[^0-9]/g,''))||0;}
 function av(n){return(n||'?').trim()[0]?.toUpperCase()||'?'}
 function fmt(d){if(!d)return'';let[y,m,da]=d.split('-');return da+' '+MONTHS[+m-1]+' '+y}
 function mr(){return records.filter(r=>(r.date||'').startsWith(month))}
@@ -641,7 +643,7 @@ function fillTypes(selectLabel=''){
     let existing=$('customFields');
     if(isCustom&&!existing){
       let cf=document.createElement('div');cf.id='customFields';cf.className='form';cf.style.gap='10px';
-      cf.innerHTML=`<input id="rCustomLabel" placeholder="Nama jenis (misal: Rapih workspace)" style="margin-bottom:0"><div class="two"><input id="rCustomAmount" type="number" placeholder="Nominal Rp" style="margin-bottom:0"><div></div></div>`;
+      cf.innerHTML=`<input id="rCustomLabel" placeholder="Nama jenis (misal: Rapih workspace)" style="margin-bottom:0"><div class="two"><input id="rCustomAmount" type="text" inputmode="numeric" placeholder="Nominal Rp" style="margin-bottom:0" oninput="fmtRp(this)"><div></div></div>`;
       $('rType').insertAdjacentElement('afterend',cf);
     } else if(!isCustom&&existing){existing.remove();}
   };
@@ -671,7 +673,7 @@ function saveRecord(){
   let arr=cat==='bonus'?bonusTypes:penaltyTypes;
   let t=arr.find(x=>x.id===typeId);
   let label=isCustom?($('rCustomLabel')?.value||'Custom'):t?.label||'';
-  let amount=isCustom?(parseInt($('rCustomAmount')?.value)||0):(t?.amount||0);
+  let amount=isCustom?getRaw('rCustomAmount'):(t?.amount||0);
   if(!empId||!label||amount<=0){toast('Isi semua field dengan benar');return;}
   if(editingRecordId){
     records=records.map(r=>r.id===editingRecordId?{...r,empId,date,category:cat,label,amount,note,photos:[...recordPhotos]}:r);
@@ -694,7 +696,7 @@ function openEmployeeSheet(id=''){
     <div class="form">
       <input id="eName" placeholder="Nama karyawan *" value="${e?.name||''}">
       <input id="eRole" placeholder="Divisi / jabatan" value="${e?.role||''}">
-      <input id="eSalary" type="number" placeholder="Gaji pokok *" value="${e?.baseSalary||''}">
+      <input id="eSalary" type="text" inputmode="numeric" placeholder="Gaji pokok *" value="${e?e.baseSalary.toLocaleString('id-ID'):''}" oninput="fmtRp(this)">
       <input id="ePhone" type="tel" placeholder="No WhatsApp (628xxx) — untuk kirim rekap" value="${e?.phone||''}">
       <input id="eJoin" type="date" value="${e?.joinDate||today()}">
       <div style="font-size:13px;font-weight:750;color:var(--muted);margin-top:4px">🔐 PIN Login Karyawan (4 digit angka)</div>
@@ -712,7 +714,7 @@ function openEmployeeSheet(id=''){
 }
 function saveEmp(id){
   let pin=$('ePin').value.trim().slice(0,4);
-  let data={name:$('eName').value.trim(),role:$('eRole').value.trim(),baseSalary:+$('eSalary').value||0,phone:$('ePhone').value.trim(),joinDate:$('eJoin').value,pin,active:true,kpi:{maxPenalty:+$('eMaxPen').value||2,targetBonus:+$('eMinBon').value||1}};
+  let data={name:$('eName').value.trim(),role:$('eRole').value.trim(),baseSalary:getRaw('eSalary'),phone:$('ePhone').value.trim(),joinDate:$('eJoin').value,pin,active:true,kpi:{maxPenalty:+$('eMaxPen').value||2,targetBonus:+$('eMinBon').value||1}};
   if(!data.name||!data.baseSalary)return toast('Nama dan gaji wajib diisi');
   if(id)employees=employees.map(e=>e.id===id?{...e,...data,active:e.active}:e);
   else employees.push({id:'e'+uid(),...data});
@@ -745,7 +747,7 @@ function openTypeSheet(catType){
     <h2 class="sheet-title">Tambah Jenis ${catType==='bonus'?'Bonus':'Pinalti'}</h2>
     <div class="form">
       <input id="ntLabel" placeholder="Nama jenis (misal: Datang tepat waktu)">
-      <input id="ntAmount" type="number" placeholder="Nominal Rp (misal: 50000)">
+      <input id="ntAmount" type="text" inputmode="numeric" placeholder="Nominal Rp (misal: 50.000)" oninput="fmtRp(this)">
       <button class="btn primary" onclick="saveType('${catType}')">Tambah</button>
       <button class="btn" onclick="closeSheet()">Batal</button>
     </div>`;
@@ -753,7 +755,7 @@ function openTypeSheet(catType){
 }
 function saveType(catType){
   let label=$('ntLabel').value.trim();
-  let amount=parseInt($('ntAmount').value)||0;
+  let amount=getRaw('ntAmount');
   if(!label||!amount){toast('Isi label dan nominal');return;}
   let newT={id:'c'+uid(),label,amount,builtin:false};
   if(catType==='bonus'){bonusTypes=[...bonusTypes,newT];sv('kpi_bonus_types',bonusTypes);}
@@ -889,7 +891,7 @@ async function testSheets(){
   catch(e){toast('Gagal: '+e.message);}
 }
 
-// FUNGSI INI SUDAH DIUPDATE: Mengirim data sebagai 1 paket (sync_all)
+// Mengirim data sebagai 1 paket (sync_all)
 async function syncSheets(){
   if(!settings.sheetsUrl||!settings.sheetsEnabled)return;
   toast('Memulai sinkronisasi...', 2000);
@@ -1042,7 +1044,7 @@ function openRefundSheet(){
     <div class="two">
       <div>
         <label style="font-size:13px;font-weight:750;color:var(--muted);display:block;margin-bottom:6px">Harga Jual Satuan (Rp)</label>
-        <input id="rfHarga" type="number" placeholder="100000" oninput="calcRf()">
+        <input id="rfHarga" type="text" inputmode="numeric" placeholder="100.000" oninput="fmtRp(this);calcRf()">
       </div>
       <div>
         <label style="font-size:13px;font-weight:750;color:var(--muted);display:block;margin-bottom:6px">Qty Dipesan</label>
@@ -1068,7 +1070,7 @@ function openRefundSheet(){
     </div>
     <div id="rfOngkirWrap" style="display:none">
       <label style="font-size:13px;font-weight:750;color:var(--muted);display:block;margin-bottom:6px">Nominal Ongkir (Rp)</label>
-      <input id="rfOngkir" type="number" placeholder="15000" oninput="calcRf()">
+      <input id="rfOngkir" type="text" inputmode="numeric" placeholder="15.000" oninput="fmtRp(this);calcRf()">
     </div>
     <div id="rfCalcPreview" style="display:none" class="calc-box"></div>
     <textarea id="rfNote" rows="2" placeholder="Catatan tambahan (opsional)" style="resize:vertical"></textarea>
@@ -1087,11 +1089,11 @@ function setRfRes(res){
 }
 
 function calcRf(){
-  let harga=parseInt($('rfHarga')?.value)||0;
+  let harga=getRaw('rfHarga');
   let qOrd=parseInt($('rfQtyOrder')?.value)||0;
   let qKir=parseInt($('rfQtyKirim')?.value)||0;
   let qKur=Math.max(0,qOrd-qKir);
-  let ongkir=parseInt($('rfOngkir')?.value)||0;
+  let ongkir=getRaw('rfOngkir');
   let pot=rfResolution==='refund'?Math.round(harga*qKur*.15):ongkir;
   let prev=$('rfCalcPreview');if(!prev)return;
   if(!harga||!qOrd){prev.style.display='none';return;}
@@ -1108,10 +1110,10 @@ function saveRefund(){
   let empId=$('rfEmp')?.value;
   let date=$('rfDate')?.value;
   let product=$('rfProduct')?.value.trim();
-  let harga=parseInt($('rfHarga')?.value)||0;
+  let harga=getRaw('rfHarga');
   let qOrd=parseInt($('rfQtyOrder')?.value)||0;
   let qKir=parseInt($('rfQtyKirim')?.value)||0;
-  let ongkir=parseInt($('rfOngkir')?.value)||0;
+  let ongkir=getRaw('rfOngkir');
   let note=$('rfNote')?.value||'';
   let qKur=Math.max(0,qOrd-qKir);
   let pot=rfResolution==='refund'?Math.round(harga*qKur*.15):ongkir;
