@@ -103,4 +103,1235 @@ input:focus, select:focus, textarea:focus {
   background: #ffffff; color: var(--text); box-shadow: var(--shadow2); 
   border: 1px solid var(--line); display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 54px;
 }
-.btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); border-color: #d
+.btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); border-color: #d1c8ba;}
+.btn:active { transform: scale(0.96); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+
+.btn.primary { background: #1a1815; color: #ffffff; border-color: #1a1815; box-shadow: 0 12px 28px rgba(26, 24, 21, 0.2); }
+.btn.primary:hover { background: #2c2a26; box-shadow: 0 16px 32px rgba(26, 24, 21, 0.25); }
+.btn.green-btn { background: var(--green-bg); color: var(--green); border-color: #d4ebd9; box-shadow: none; }
+.btn.blue { background: var(--blue-bg); color: var(--blue); border-color: #dbe7fa; box-shadow: none; }
+.btn.danger { background: var(--red-bg); color: var(--red); border-color: #fadce0; box-shadow: none; }
+.btn.small { min-height: 44px; padding: 11px 16px; border-radius: 16px; font-size: 14px; }
+.btn.xsmall { min-height: 36px; padding: 8px 14px; border-radius: 12px; font-size: 13px; font-weight: 700; }
+
+.icon { width: 20px; height: 20px; display: inline-block; vertical-align: -4px; }
+.icon svg { width: 100%; height: 100%; stroke: currentColor; stroke-width: 2.2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Cards & Stats */
+.stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 30px; }
+.stat { background: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.9); border-radius: 24px; padding: 20px; box-shadow: var(--shadow2); backdrop-filter: blur(10px); }
+.stat-label { font-size: 13px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+.stat-value { font-size: 26px; font-weight: 850; letter-spacing: -0.8px; margin-top: 8px; color: #1a1815; }
+
+.section-head { display: flex; align-items: center; justify-content: space-between; margin: 32px 0 16px; }
+.section-head h2 { font-size: 22px; letter-spacing: -0.5px; margin: 0; font-weight: 800; color: #1a1815; }
+.card-list { display: flex; flex-direction: column; gap: 16px; }
+
+/* Main Cards */
+.emp-card, .pay-card, .record-card, .refund-card {
+  background: #ffffff; border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; 
+  box-shadow: var(--shadow); overflow: hidden; transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.emp-card:hover, .pay-card:hover, .record-card:hover, .refund-card:hover {
+  transform: translateY(-3px); box-shadow: var(--shadow-hover); border-color: #dfd8cd;
+}
+
+.emp-main { display: grid; grid-template-columns: 60px 1fr auto; gap: 16px; align-items: start; }
+.avatar {
+  width: 60px; height: 60px; border-radius: 20px; background: linear-gradient(135deg, #fff7e6, #f3ead3);
+  border: 1px solid #e8d9bd; color: #a37526; display: grid; place-items: center; font-weight: 850; font-size: 22px; flex-shrink: 0;
+}
+.emp-name { font-size: 21px; line-height: 1.1; font-weight: 800; letter-spacing: -0.5px; color: #1a1815; }
+.emp-meta { font-size: 14px; color: var(--muted); line-height: 1.5; margin-top: 6px; font-weight: 500; }
+.amount { font-size: 24px; font-weight: 850; letter-spacing: -0.8px; text-align: right; white-space: nowrap; color: #1a1815;}
+
+.score {
+  display: inline-flex; align-items: center; gap: 6px; border-radius: 999px;
+  padding: 6px 12px; font-size: 13px; font-weight: 750; margin-top: 10px;
+}
+.score.good { background: var(--green-bg); color: var(--green); }
+.score.warn { background: #fff9e6; color: #b87900; }
+.score.bad { background: var(--red-bg); color: var(--red); }
+
+.emp-actions { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+.emp-actions .btn { flex: 1; }
+
+.metric-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 20px; }
+.metric { border: 1px solid rgba(230, 225, 216, 0.6); background: #fdfcfb; border-radius: 18px; padding: 16px; transition: background 0.2s; }
+.metric:hover { background: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
+.metric span { display: block; color: var(--muted); font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+.metric b { display: block; font-size: 20px; font-weight: 800; letter-spacing: -0.5px; margin-top: 6px; color: #1a1815; }
+.green { color: var(--green) !important; } .red { color: var(--red) !important; } .gold { color: #b58220 !important; }
+
+/* Leaderboard */
+.leader {
+  display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center;
+  background: #ffffff; border: 1px solid var(--line); border-radius: 20px; padding: 14px 18px; margin-bottom: 12px;
+  box-shadow: var(--shadow2); transition: transform 0.2s;
+}
+.leader:hover { transform: translateX(4px); border-color: #d1c8ba; }
+.rank { width: 36px; height: 36px; border-radius: 12px; background: #1a1815; color: #fff; display: grid; place-items: center; font-weight: 850; font-size: 15px; }
+
+.empty { border: 2px dashed #ded6ca; border-radius: 24px; padding: 40px 20px; text-align: center; color: var(--muted); font-weight: 600; background: rgba(255,255,255,0.4); }
+
+/* Navigation */
+.bottom-nav {
+  position: fixed; left: 50%; bottom: calc(16px + var(--safe)); transform: translateX(-50%);
+  width: min(720px, calc(100% - 32px)); height: 82px;
+  background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(24px) saturate(150%); -webkit-backdrop-filter: blur(24px) saturate(150%);
+  border: 1px solid rgba(230, 225, 216, 0.8); box-shadow: 0 24px 60px rgba(28, 25, 20, 0.15);
+  border-radius: 28px; display: grid; grid-template-columns: repeat(6, 1fr); z-index: 30; padding: 8px;
+}
+.nav-btn {
+  background: transparent; color: #a39c92; border-radius: 20px; font-size: 12px; font-weight: 700;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; transition: all 0.3s;
+}
+.nav-btn svg { width: 24px; height: 24px; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.nav-btn.active { color: #1a1815; background: #f5f0e6; }
+.nav-btn.active svg { transform: translateY(-2px); stroke-width: 2.5; }
+.nav-btn:active { transform: scale(0.92); }
+
+.fab {
+  position: fixed; right: max(22px, calc((100% - 720px)/2 + 22px)); bottom: calc(112px + var(--safe));
+  width: 66px; height: 66px; border-radius: 22px; background: #1a1815; color: #fff;
+  box-shadow: 0 16px 36px rgba(26, 24, 21, 0.3); display: grid; place-items: center; z-index: 31; transition: all 0.3s;
+}
+.fab:hover { transform: translateY(-4px) scale(1.05); box-shadow: 0 20px 45px rgba(26, 24, 21, 0.4); }
+.fab:active { transform: scale(0.9); }
+.fab svg { width: 30px; height: 30px; stroke-width: 2.5; }
+
+/* Bottom Sheet */
+.sheet { position: fixed; inset: 0; z-index: 60; background: rgba(20, 18, 15, 0.4); backdrop-filter: blur(4px); display: none; align-items: flex-end; opacity: 0; transition: opacity 0.3s; }
+.sheet.show { display: flex; opacity: 1; }
+.sheet-card {
+  width: 100%; max-width: 760px; margin: 0 auto; background: #ffffff; border-radius: 36px 36px 0 0;
+  padding: 20px 24px calc(24px + var(--safe)); box-shadow: 0 -20px 60px rgba(20, 18, 15, 0.15); max-height: 92vh; overflow: auto;
+  transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.sheet.show .sheet-card { transform: translateY(0); }
+.handle { width: 48px; height: 5px; background: #e0d8cc; border-radius: 99px; margin: 0 auto 24px; }
+.sheet-title { font-size: 26px; font-weight: 850; letter-spacing: -0.8px; margin: 0 0 20px; color: #1a1815; }
+
+/* Forms & Utilities */
+.form { display: grid; gap: 14px; }
+.seg { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: #f2efe9; border-radius: 20px; padding: 6px; }
+.seg button { height: 50px; border-radius: 16px; background: transparent; font-weight: 750; color: var(--muted); }
+.seg button.active { background: #ffffff; color: #1a1815; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+.toast { position: fixed; left: 20px; right: 20px; bottom: calc(188px + var(--safe)); z-index: 80; background: rgba(26, 24, 21, 0.95); backdrop-filter: blur(12px); color: #fff; border-radius: 20px; padding: 16px 20px; text-align: center; font-weight: 600; font-size: 15px; display: none; max-width: 560px; margin: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.2); animation: fadeUp 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.toast.show { display: block; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Photo grid */
+.photo-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+.photo-thumb { width: 76px; height: 76px; object-fit: cover; border-radius: 16px; border: 1px solid var(--line); cursor: pointer; transition: all .2s; }
+.photo-thumb:hover { opacity: .8; transform: scale(1.05); }
+.photo-add-btn { width: 76px; height: 76px; border-radius: 16px; border: 2px dashed #d1c8ba; background: #faf8f5; display: grid; place-items: center; cursor: pointer; color: var(--muted); font-size: 26px; flex-shrink: 0; transition: all .2s; }
+.photo-add-btn:hover { border-color: var(--brand); color: var(--brand); background: #fcf9f2; }
+.photo-wrap { position: relative; display: inline-block; }
+.photo-del { position: absolute; top: -6px; right: -6px; width: 22px; height: 22px; border-radius: 50%; background: var(--red); color: #fff; font-size: 11px; font-weight: bold; display: grid; place-items: center; cursor: pointer; border: 2px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: transform 0.2s;}
+.photo-del:hover { transform: scale(1.15); }
+
+/* Lightbox */
+.lightbox { position: fixed; inset: 0; background: rgba(15, 14, 12, 0.95); z-index: 200; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(10px); }
+.lightbox.show { display: flex; animation: fadeIn 0.2s; }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+.lightbox img { max-width: 90vw; max-height: 75vh; object-fit: contain; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+.lightbox-nav { display: flex; gap: 20px; align-items: center; margin-top: 24px; }
+.lightbox-nav button { width: 48px; height: 48px; border-radius: 50%; background: rgba(255,255,255,0.1); color: #fff; font-size: 20px; display: grid; place-items: center; transition: background 0.2s; border: 1px solid rgba(255,255,255,0.15); }
+.lightbox-nav button:hover { background: rgba(255,255,255,0.2); }
+.lightbox-nav .lb-close { border-radius: 16px; padding: 0 24px; font-weight: 700; font-size: 15px; width: auto; }
+
+/* Search & Tags */
+.search-wrap { position: relative; margin-bottom: 16px; }
+.search-wrap input { padding-left: 48px; border-radius: 22px; height: 56px; border: 1px solid rgba(230, 225, 216, 0.8); box-shadow: var(--shadow2); }
+.search-wrap input:focus { box-shadow: 0 0 0 4px rgba(216, 159, 60, 0.12), var(--shadow); }
+.search-icon { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+
+.filter-chips { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+.chip { border: 1px solid rgba(230, 225, 216, 0.8); background: rgba(255,255,255,0.8); border-radius: 999px; padding: 10px 18px; font-size: 14px; font-weight: 600; cursor: pointer; color: var(--muted); transition: all 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.02); backdrop-filter: blur(10px); }
+.chip:hover { border-color: #d1c8ba; color: var(--text); }
+.chip.active { background: #1a1815; color: #ffffff; border-color: #1a1815; box-shadow: 0 8px 20px rgba(26,24,21,0.15); }
+
+/* Settings / Type */
+.settings-card { background: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.9); border-radius: 28px; padding: 24px; margin-bottom: 16px; box-shadow: var(--shadow2); backdrop-filter: blur(10px); }
+.settings-card h3 { font-size: 19px; font-weight: 800; letter-spacing: -0.4px; margin: 0 0 16px; color: #1a1815; }
+.type-row { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: #ffffff; border: 1px solid var(--line); border-radius: 20px; transition: transform 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.01); }
+.type-row:hover { transform: translateX(4px); border-color: #dfd8cd; box-shadow: var(--shadow2); }
+.type-row .type-label { flex: 1; font-size: 15px; font-weight: 600; }
+.type-row .type-amount { font-size: 15px; font-weight: 800; }
+
+/* Badges & Sync */
+.edit-badge { font-size: 12px; background: var(--blue-bg); color: var(--blue); border-radius: 999px; padding: 4px 12px; font-weight: 750; display: inline-block; margin-left: 10px; vertical-align: middle; }
+.sync-pill { display: inline-flex; align-items: center; gap: 8px; }
+.sync-dot { width: 8px; height: 8px; border-radius: 50%; box-shadow: 0 0 0 2px rgba(255,255,255,0.5); }
+.date-warn { background: #fffdf5; border: 1px solid #f2e3c6; border-radius: 16px; padding: 12px 16px; font-size: 13px; color: #a87314; font-weight: 600; display: none; }
+.date-warn.show { display: block; animation: fadeUp 0.3s; }
+
+/* Responsive adjustments */
+@media(max-width:520px) {
+  .topbar-inner { padding: 16px 20px; }
+  .logo { width: 48px; height: 48px; border-radius: 16px; }
+  .brand { font-size: 21px; }
+  .controls { grid-template-columns: 1fr; gap: 10px; padding: 12px 20px; }
+  .hero { align-items: flex-start; margin-bottom: 20px;}
+  .title { font-size: 34px; }
+  .subtitle { font-size: 16px; }
+  .hero-actions { min-width: 132px; }
+  .stats { grid-template-columns: repeat(2,1fr); gap: 10px; }
+  .emp-main { grid-template-columns: 56px 1fr; gap: 14px; }
+  .amount { grid-column: 2; text-align: left; margin-top: -4px; font-size: 22px; }
+  .emp-actions { margin-left: 0; margin-top: 16px; }
+  .metric-grid { grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
+  .pay-card .emp-main { grid-template-columns: 56px 1fr; }
+  .pay-card .amount { grid-column: 1/3; text-align: left; font-size: 28px; margin-top: 12px; }
+  .hero.pay .hero-actions { display: none; }
+  .bottom-nav { width: calc(100% - 24px); height: 76px; border-radius: 24px; bottom: calc(12px + var(--safe)); }
+  .nav-btn { font-size: 11px; }
+  .sheet-card { padding: 20px 20px calc(24px + var(--safe)); border-radius: 30px 30px 0 0; }
+}
+
+@media(min-width:720px) {
+  .stats { grid-template-columns: repeat(4,1fr); }
+  .card-list.grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .hero-actions { flex-direction: row; }
+  .emp-actions { justify-content: flex-end; }
+  .emp-actions .btn { flex: 0 0 auto; min-width: 120px; }
+}
+
+/* ── PIN & REFUND ── */
+.pin-badge{font-size:11px;border-radius:999px;padding:3px 10px;font-weight:700;display:inline-block;margin-left:6px;vertical-align:middle}
+.pin-on{background:var(--green-bg);color:var(--green);}
+.pin-off{background:var(--red-bg);color:var(--red);}
+.refund-card{border: 1.5px solid #fadce0; background: #fffcfc;}
+.refund-tag{display:inline-flex;align-items:center;border-radius:999px;padding:6px 14px;font-size:12px;font-weight:750}
+.refund-tag.refund{background:var(--red-bg);color:var(--red);border: 1px solid #fadce0;}
+.refund-tag.resend{background:#fff9e6;color:#b87900;border: 1px solid #f2e3c6;}
+.calc-box{background:#fdfcfb;border:1px solid var(--line);border-radius:20px;padding:16px;margin-top:16px;display:flex;flex-direction:column;gap:8px}
+.calc-row{display:flex;justify-content:space-between;align-items:center;font-size:14px; color: #555;}
+.calc-row b{font-weight:750; color: #1a1815;}
+.calc-total{border-top:1px dashed var(--line);padding-top:12px;margin-top:6px;font-size:16px;font-weight:850; color: #1a1815;}
+.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:6px 0}
+.res-opt{border:2px solid var(--line);border-radius:20px;padding:16px 14px;text-align:center;cursor:pointer;transition:all .2s;background:#ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.01);}
+.res-opt:hover { transform: translateY(-2px); box-shadow: var(--shadow2); }
+.res-opt.sel-refund{border-color:var(--red);background:var(--red-bg);}
+.res-opt.sel-resend{border-color:#f2e3c6;background:#fff9e6;}
+.res-opt .res-icon{font-size:24px;display:block;margin-bottom:6px; transition: transform 0.2s;}
+.res-opt:active .res-icon { transform: scale(0.9); }
+.res-opt .res-lbl{font-size:15px;font-weight:800; color: #1a1815;}
+.res-opt .res-sub{font-size:12px;color:var(--muted);margin-top:4px;font-weight:500;line-height:1.4}
+
+/* Animasi untuk List Data (Opsional tapi elegan) */
+.card-list > div { animation: fadeInUp 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.card-list > div:nth-child(1) { animation-delay: 0.05s; }
+.card-list > div:nth-child(2) { animation-delay: 0.1s; }
+.card-list > div:nth-child(3) { animation-delay: 0.15s; }
+.card-list > div:nth-child(4) { animation-delay: 0.2s; }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#b58220" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M13 2 4 14h7l-1 8 10-13h-7l1-7z" fill="#f4d399"/>
+        </svg>
+      </div>
+      <div>
+        <div class="brand">Gatari KPI <span style="font-size:12px;background:#1a1815;color:#fff;border-radius:999px;padding:4px 10px;vertical-align:middle;font-weight:750;letter-spacing:0.5px;">v7 Owner</span></div>
+        <div style="color:var(--muted);font-weight:600;font-size:13px;margin-top:4px;letter-spacing:0.2px;">Performance & Payroll System</div>
+      </div>
+    </div>
+  </header>
+  
+  <div class="controls">
+    <select id="monthPicker"></select>
+    <div class="pill" id="monthSummary"></div>
+  </div>
+  
+  <div class="status-row">
+    <div class="pill"><span class="dot"></span>localStorage</div>
+    <div class="pill" id="todayPill"></div>
+    <div class="pill sync-pill" id="syncPill"><span class="sync-dot" style="background:#c8bfb2"></span>Sheets belum aktif</div>
+  </div>
+  
+  <main id="main" class="main"></main>
+</div>
+
+<button class="fab" onclick="openRecordSheet()" aria-label="Tambah catatan">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+</button>
+
+<nav class="bottom-nav" id="bottomNav"></nav>
+
+<div class="sheet" id="sheet" onclick="if(event.target.id==='sheet')closeSheet()">
+  <div class="sheet-card">
+    <div class="handle"></div>
+    <div id="sheetContent"></div>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox">
+  <img id="lbImg" src="" alt="">
+  <div class="lightbox-nav">
+    <button id="lbPrev" onclick="lbNav(-1)">‹</button>
+    <span id="lbCounter" style="color:#fff;font-size:14px;font-weight:600;letter-spacing:1px;"></span>
+    <button id="lbNext" onclick="lbNav(1)">›</button>
+    <button class="lb-close" onclick="closeLightbox()">Tutup</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── ICONS ────────────────────────────────────────────────────────
+const icons={
+  home:'<svg viewBox="0 0 24 24"><path d="M3 10.8 12 3l9 7.8v9.7a.5.5 0 0 1-.5.5H15v-6H9v6H3.5a.5.5 0 0 1-.5-.5z"/></svg>',
+  team:'<svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+  records:'<svg viewBox="0 0 24 24"><path d="M8 4h8"/><path d="M9 2h6v4H9z"/><path d="M16 4h3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h3"/><path d="M8 11h8M8 16h5"/></svg>',
+  payroll:'<svg viewBox="0 0 24 24"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7H14a3.5 3.5 0 0 1 0 7H6"/></svg>',
+  more:'<svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.5" fill="currentColor"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/><circle cx="12" cy="19" r="1.5" fill="currentColor"/></svg>',
+  copy:'<svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><rect x="2" y="2" width="13" height="13" rx="2"/></svg>',
+  search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>',
+  download:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>',
+  refund:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6"/></svg>',
+  wa:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>',
+};
+function icon(n,cls=''){return`<span class="icon ${cls}">${icons[n]||''}</span>`}
+
+// ─── DATA & STORAGE ───────────────────────────────────────────────
+const MONTHS=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+const DEF_BONUS=[
+  {id:'absen_full',label:'Absen full bulan ini',amount:100000,builtin:true},
+  {id:'teliti',label:'Kerja teliti & rapi',amount:100000,builtin:true},
+  {id:'lembur',label:'Lembur',amount:50000,builtin:true},
+  {id:'best',label:'Performa terbaik',amount:200000,builtin:true},
+];
+const DEF_PENALTY=[
+  {id:'late',label:'Terlambat',amount:25000,builtin:true},
+  {id:'absent',label:'Absen tanpa keterangan',amount:50000,builtin:true},
+  {id:'minor',label:'Kesalahan kecil',amount:25000,builtin:true},
+  {id:'major',label:'Kesalahan besar / kerusakan',amount:100000,builtin:true},
+  {id:'complaint',label:'Komplain pelanggan',amount:75000,builtin:true},
+];
+const SEED=[
+  {id:'e1',name:'Andi Saputra',role:'Produksi',baseSalary:2500000,joinDate:'2023-01-15',active:true,phone:'',kpi:{maxPenalty:2,targetBonus:1}},
+  {id:'e2',name:'Budi Santoso',role:'Finishing',baseSalary:2300000,joinDate:'2023-03-01',active:true,phone:'',kpi:{maxPenalty:2,targetBonus:1}},
+  {id:'e3',name:'Citra Dewi',role:'Packing',baseSalary:2200000,joinDate:'2024-01-10',active:true,phone:'',kpi:{maxPenalty:2,targetBonus:1}},
+];
+const $=id=>document.getElementById(id);
+const ld=(k,f)=>{try{return JSON.parse(localStorage.getItem(k))??f}catch{return f}};
+const sv=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+
+let employees=ld('kpi_employees',SEED);
+let records=ld('kpi_records',[]);
+let bonusTypes=ld('kpi_bonus_types',DEF_BONUS);
+let penaltyTypes=ld('kpi_penalty_types',DEF_PENALTY);
+let settings=ld('kpi_settings',{sheetsUrl:'',sheetsEnabled:false,companyName:'Gatari Edutoys'});
+let view='home',month=new Date().toISOString().slice(0,7),cat='penalty';
+let recordPhotos=[],editingRecordId=null;
+let refundCases=ld('kpi_refund_cases',[]);
+let rfResolution='refund';
+let lbPhotos=[],lbIdx=0;
+let filterEmpId='';
+let searchQ='';
+
+// ─── HELPERS ──────────────────────────────────────────────────────
+function today(){return new Date().toISOString().slice(0,10)}
+function uid(){return Date.now()+''+Math.floor(Math.random()*9999)}
+function idr(n){return'Rp '+Math.abs(Math.round(n||0)).toLocaleString('id-ID')}
+function fmtRp(el){let v=el.value.replace(/[^0-9]/g,'');el.value=v?parseInt(v).toLocaleString('id-ID'):'';}
+function getRaw(id){let v=$(id)?.value||'';return parseInt(v.replace(/[^0-9]/g,''))||0;}
+function av(n){return(n||'?').trim()[0]?.toUpperCase()||'?'}
+function fmt(d){if(!d)return'';let[y,m,da]=d.split('-');return da+' '+MONTHS[+m-1]+' '+y}
+function mr(){return records.filter(r=>(r.date||'').startsWith(month))}
+function active(){return employees.filter(e=>e.active!==false)}
+function stats(id){
+  let rs=mr().filter(r=>r.empId===id);
+  let bonus=rs.filter(r=>r.category==='bonus').reduce((s,r)=>s+r.amount,0);
+  let penalty=rs.filter(r=>r.category==='penalty').reduce((s,r)=>s+r.amount,0);
+  let pc=rs.filter(r=>r.category==='penalty').length;
+  let bc=rs.filter(r=>r.category==='bonus').length;
+  let myRf=refundCases.filter(r=>r.empId===id&&(r.date||'').startsWith(month));
+  let rfPot=myRf.reduce((s,r)=>s+r.potongan,0);
+  let net=bonus-penalty-rfPot;
+  return{rs,bonus,penalty,pc,bc,net,rfPot,rfCases:myRf,score:Math.max(0,Math.min(100,100-(pc*12)+(bc*4)-Math.floor((penalty+rfPot)/100000)*3))};
+}
+function scoreClass(s){return s>=85?'good':s>=70?'warn':'bad'}
+function scoreLabel(s){return s>=85?'Elite':s>=70?'Watch':'Risk'}
+function hero(t,s,a=''){return`<div class="hero ${view}"><div><h1 class="title">${t}</h1><p class="subtitle">${s}</p></div>${a?`<div class="hero-actions">${a}</div>`:''}</div>`}
+
+// ─── TOAST ────────────────────────────────────────────────────────
+function toast(m,dur=2800){let t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(window._toastT);window._toastT=setTimeout(()=>t.classList.remove('show'),dur);}
+
+// ─── INIT ─────────────────────────────────────────────────────────
+function init(){
+  let mp=$('monthPicker');
+  for(let i=-12;i<=6;i++){
+    let d=new Date();d.setMonth(d.getMonth()+i);
+    let v=d.toISOString().slice(0,7);
+    let[y,m]=v.split('-');
+    mp.innerHTML+=`<option value="${v}">${MONTHS[+m-1]} ${y}</option>`;
+  }
+  mp.value=month;mp.onchange=()=>{month=mp.value;render()};
+  $('todayPill').innerHTML=fmt(today());
+  updateSyncPill();renderNav();render();
+}
+function updateSyncPill(){
+  const p=$('syncPill');
+  if(settings.sheetsEnabled&&settings.sheetsUrl){
+    p.innerHTML=`<span class="sync-dot" style="background:var(--green)"></span>Sheets aktif`;
+  } else {
+    p.innerHTML=`<span class="sync-dot" style="background:#c8bfb2"></span>Sheets belum aktif`;
+  }
+}
+function renderNav(){
+  let items=[['home','Home'],['team','Team'],['records','Catatan'],['payroll','Payroll'],['refund','Refund'],['more','Lainnya']];
+  $('bottomNav').innerHTML=items.map(([v,l])=>`<button class="nav-btn ${view===v?'active':''}" onclick="view='${v}';filterEmpId='';searchQ='';renderNav();render()">${icon(v)}<span>${l}</span></button>`).join('');
+}
+function render(){
+  let[y,m]=month.split('-');
+  $('monthSummary').innerHTML=`${MONTHS[+m-1]} ${y} · ${mr().length} catatan`;
+  let c=$('main');
+  if(view==='home')c.innerHTML=renderHome();
+  else if(view==='team')c.innerHTML=renderTeam();
+  else if(view==='records')c.innerHTML=renderRecords();
+  else if(view==='payroll')c.innerHTML=renderPayroll();
+  else if(view==='refund')c.innerHTML=renderRefund();
+  else if(view==='more')c.innerHTML=renderMore();
+}
+
+// ─── HOME ─────────────────────────────────────────────────────────
+function renderHome(){
+  let em=active();
+  let tb=mr().filter(r=>r.category==='bonus').reduce((s,r)=>s+r.amount,0);
+  let tp=mr().filter(r=>r.category==='penalty').reduce((s,r)=>s+r.amount,0);
+  let pay=em.reduce((s,e)=>s+e.baseSalary+stats(e.id).net,0);
+  let leaders=[...em].sort((a,b)=>stats(b.id).score-stats(a.id).score).slice(0,3);
+  let badEmps=em.filter(e=>{let st=stats(e.id),kpi=e.kpi||{};return st.pc>(kpi.maxPenalty||2);});
+  return hero('Home','Ringkasan performa karyawan bulan ini',`<button class="btn primary" onclick="openRecordSheet()">+ Catat</button>`)
+    +(badEmps.length?`<div style="background:var(--red-bg);border:1px solid #fadce0;border-radius:24px;padding:16px 20px;margin-bottom:20px;font-size:14px;font-weight:700;color:var(--red);box-shadow:var(--shadow2)">⚠️ ${badEmps.length} karyawan melebihi batas pinalti: ${badEmps.map(e=>e.name).join(', ')}</div>`:'')
+    +`<div class="stats">
+      <div class="stat"><div class="stat-label">Team aktif</div><div class="stat-value">${em.length}</div></div>
+      <div class="stat"><div class="stat-label">Payroll</div><div class="stat-value">${idr(pay)}</div></div>
+      <div class="stat"><div class="stat-label">Bonus</div><div class="stat-value green">+${idr(tb)}</div></div>
+      <div class="stat"><div class="stat-label">Pinalti</div><div class="stat-value red">-${idr(tp)}</div></div>
+    </div>
+    <div class="section-head"><h2>Leaderboard</h2></div>
+    ${leaders.map((e,i)=>`<div class="leader">
+      <div class="rank">${i+1}</div>
+      <div><b>${e.name}</b><div class="emp-meta">${e.role}</div></div>
+      <div class="score ${scoreClass(stats(e.id).score)}">${stats(e.id).score}</div>
+    </div>`).join('')}
+    <div class="section-head"><h2>Performa Karyawan</h2></div>
+    <div class="card-list grid">${em.map(e=>empCard(e)).join('')}</div>`;
+}
+
+// ─── TEAM ─────────────────────────────────────────────────────────
+function renderTeam(){
+  return hero('Team','Data karyawan, gaji, WhatsApp, dan KPI',`<button class="btn primary" onclick="openEmployeeSheet()">+ Karyawan</button>`)
+    +`<div class="card-list">${employees.map(e=>empCard(e,'team')).join('')}</div>`;
+}
+
+// ─── EMPLOYEE CARD ────────────────────────────────────────────────
+function empCard(e,mode='home'){
+  let st=stats(e.id),total=e.baseSalary+st.net,sc=scoreClass(st.score);
+  let kpi=e.kpi||{maxPenalty:2,targetBonus:1};
+  let overLimit=st.pc>kpi.maxPenalty;
+  return`<div class="emp-card" ${overLimit&&mode==='home'?'style="border-color:#fadce0; background:#fffcfc;"':''}>
+    <div class="emp-main">
+      <div class="avatar">${av(e.name)}</div>
+      <div>
+        <div class="emp-name">${e.name}${e.active===false?'<span style="font-size:12px;color:var(--muted);font-weight:700;margin-left:8px;background:#f5f3ef;padding:2px 8px;border-radius:8px">Non-aktif</span>':''}</div>
+        <div class="score ${sc}">✓ ${st.score} ${scoreLabel(st.score)}</div>
+        <div class="emp-meta">${e.role||'-'}${mode==='team'?`<br>Gabung ${fmt(e.joinDate)}<br><b class="gold" style="display:inline-block;margin-top:4px;">Gaji Pokok ${idr(e.baseSalary)}</b><br>KPI: maks ${kpi.maxPenalty} pinalti · min ${kpi.targetBonus} bonus${e.phone?`<br>📱 ${e.phone}`:''}${mode==='team'?e.pin?`<br>🔐 PIN: <span class='pin-badge pin-on'>Aktif</span>`:`<br>🔐 PIN: <span class='pin-badge pin-off'>Belum diset</span>`:''}`:''}</div>
+      </div>
+      ${mode==='home'?`<div class="amount ${total<e.baseSalary?'red':''}">${idr(total)}</div>`:''}
+    </div>
+    ${mode==='home'?`
+    <div class="metric-grid">
+      <div class="metric"><span>Bonus</span><b class="green">+${idr(st.bonus)}</b></div>
+      <div class="metric"><span>Pinalti</span><b class="red">-${idr(st.penalty)}</b></div>
+      <div class="metric"><span>Pinalti/Limit</span><b class="${overLimit?'red':'green'}">${st.pc}/${kpi.maxPenalty}</b></div>
+      <div class="metric"><span>KPI Score</span><b class="gold">${st.score}/100</b></div>
+    </div>
+    <div class="emp-actions">
+      <button class="btn primary small" onclick="openRecordSheet('${e.id}')">+ Catat</button>
+      ${e.phone?`<button class="btn green-btn small" onclick="sendWA('${e.id}')">${icon('wa')} WA</button>`:''}
+    </div>`
+    :`<div class="emp-actions">
+      <button class="btn small" onclick="openEmployeeSheet('${e.id}')">✏️ Edit</button>
+      <button class="btn danger small" onclick="toggleEmp('${e.id}')">${e.active===false?'Aktifkan':'Nonaktif'}</button>
+    </div>`}
+  </div>`;
+}
+
+// ─── RECORDS ──────────────────────────────────────────────────────
+function renderRecords(){
+  let allRs=[...mr()].sort((a,b)=>b.date.localeCompare(a.date));
+  let filtered=allRs.filter(r=>{
+    let e=employees.find(x=>x.id===r.empId)||{name:''};
+    let matchEmp=!filterEmpId||r.empId===filterEmpId;
+    let matchQ=!searchQ||(e.name+r.label+r.note||'').toLowerCase().includes(searchQ.toLowerCase());
+    return matchEmp&&matchQ;
+  });
+  let em=active();
+  return hero('Catatan','Riwayat bonus, pinalti, dan bukti foto',`<button class="btn primary" onclick="openRecordSheet()">+ Catat</button>`)
+    +`<div class="search-wrap">${icon('search','search-icon')}<input type="search" placeholder="Cari nama, jenis, catatan..." value="${searchQ}" oninput="searchQ=this.value;render()"></div>`
+    +`<div class="filter-chips">
+      <div class="chip ${!filterEmpId?'active':''}" onclick="filterEmpId='';render()">Semua</div>
+      ${em.map(e=>`<div class="chip ${filterEmpId===e.id?'active':''}" onclick="filterEmpId='${e.id}';render()">${e.name}</div>`).join('')}
+    </div>
+    <div class="card-list">${filtered.length?filtered.map(r=>recordCard(r)).join(''):'<div class="empty">Belum ada catatan.</div>'}</div>`;
+}
+
+function recordCard(r){
+  let e=employees.find(x=>x.id===r.empId)||{name:'-'};
+  let photos=r.photos||[];
+  return`<div class="record-card">
+    <div style="display:flex;gap:16px;align-items:flex-start">
+      <div class="avatar" style="width:48px;height:48px;font-size:18px;border-radius:16px;">${av(e.name)}</div>
+      <div style="flex:1;min-width:0;">
+        <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;">
+          <div>
+            <b style="font-size:17px;color:#1a1815;">${e.name}</b>
+            <div class="emp-meta">${fmt(r.date)} · ${r.label}</div>
+          </div>
+          <b class="${r.category==='bonus'?'green':'red'}" style="font-size:18px;white-space:nowrap">${r.category==='bonus'?'+':'-'}${idr(r.amount)}</b>
+        </div>
+        ${r.note?`<div class="emp-meta" style="margin-top:8px;font-style:italic;background:#fdfcfb;padding:8px 12px;border-radius:12px;border:1px solid var(--line);">"${r.note}"</div>`:''}
+        ${photos.length?`<div class="photo-grid">${photos.map((p,i)=>`<img src="${p}" class="photo-thumb" onclick="openLightbox(${JSON.stringify(photos)},${i})" onerror="this.style.display='none'">`).join('')}</div>`:''}
+        <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;">
+          <button class="btn xsmall blue" onclick="openEditRecord('${r.id}')">✏️ Edit</button>
+          <button class="btn xsmall danger" onclick="delRec('${r.id}')">Hapus</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ─── PAYROLL ──────────────────────────────────────────────────────
+function renderPayroll(){
+  let em=active(),pay=em.reduce((s,e)=>s+e.baseSalary+stats(e.id).net,0);
+  let[y,mo]=month.split('-');
+  return hero('Payroll','Rekap gaji, bonus, pinalti, dan slip',
+    `<div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn small" onclick="copyPayroll()">${icon('copy')} Salin</button>
+      <button class="btn small" onclick="exportAllSlips()">📄 Semua Slip</button>
+      ${settings.sheetsEnabled&&settings.sheetsUrl?`<button class="btn green-btn small" onclick="syncSheets()">☁️ Sync</button>`:''}
+    </div>`)
+    +`<div class="stats">
+      <div class="stat"><div class="stat-label">Total payroll</div><div class="stat-value">${idr(pay)}</div></div>
+      <div class="stat"><div class="stat-label">Karyawan</div><div class="stat-value">${em.length}</div></div>
+    </div>
+    <div class="card-list">${em.map(e=>{
+      let st=stats(e.id),total=e.baseSalary+st.net;
+      return`<div class="pay-card">
+        <div class="emp-main">
+          <div class="avatar">${av(e.name)}</div>
+          <div>
+            <div class="emp-name">${e.name}</div>
+            <div class="emp-meta">${e.role}</div>
+            <div class="score ${scoreClass(st.score)}">✓ ${st.score} ${scoreLabel(st.score)}</div>
+          </div>
+          <div class="amount ${total<e.baseSalary?'red':''}">${idr(total)}</div>
+        </div>
+        <div class="metric-grid">
+          <div class="metric"><span>Gaji Pokok</span><b>${idr(e.baseSalary)}</b></div>
+          <div class="metric"><span>Bonus</span><b class="green">+${idr(st.bonus)}</b></div>
+          <div class="metric"><span>Pinalti</span><b class="red">-${idr(st.penalty)}</b></div>
+          <div class="metric"><span>KPI Score</span><b class="gold">${st.score}/100</b></div>
+        </div>
+        ${st.rfPot>0?`<div style="background:var(--red-bg);border:1px solid #fadce0;border-radius:20px;padding:14px 18px;margin-top:16px;">
+          <div style="font-size:12px;color:var(--muted);font-weight:750;margin-bottom:6px">⚠️ Potongan Refund/Kurang Kirim</div>
+          ${st.rfCases.map(r=>`<div style="display:flex;justify-content:space-between;font-size:13px;gap:8px;margin-top:6px;color:#555;">
+            <span>${fmt(r.date)} · <b>${r.productName}</b> ×${r.qtyKurang} (${r.resolution==='refund'?'Refund 15%':'Ongkir'})</span>
+            <span style="color:var(--red);font-weight:800;white-space:nowrap">-${idr(r.potongan)}</span>
+          </div>`).join('')}
+          <div style="border-top:1px dashed #fadce0;margin-top:10px;padding-top:10px;display:flex;justify-content:space-between;font-size:15px;font-weight:900;color:var(--red)">
+            <span>Total Potongan</span><span>-${idr(st.rfPot)}</span>
+          </div>
+        </div>`:''}
+        ${st.rs.length?`<div style="margin-top:16px;display:flex;flex-direction:column;gap:8px;background:#fdfcfb;border:1px solid var(--line);border-radius:20px;padding:14px 16px;">
+          ${[...st.rs].sort((a,b)=>b.date.localeCompare(a.date)).map(r=>`<div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted);gap:8px;">
+            <span>${fmt(r.date)} — ${r.label}${(r.photos||[]).length?` 📷${r.photos.length}`:''}</span>
+            <span style="color:${r.category==='bonus'?'var(--green)':'var(--red)'};font-weight:850;white-space:nowrap">${r.category==='bonus'?'+':'-'}${idr(r.amount)}</span>
+          </div>`).join('')}
+        </div>`:''}
+        <div class="emp-actions" style="margin-top:16px;">
+          <button class="btn small" onclick="generateSlip('${e.id}')">${icon('download')} Slip PDF</button>
+          ${e.phone?`<button class="btn green-btn small" onclick="sendWA('${e.id}')">${icon('wa')} WhatsApp</button>`:''}
+        </div>
+      </div>`;
+    }).join('')}</div>`;
+}
+
+// ─── MORE / SETTINGS ──────────────────────────────────────────────
+function renderMore(){
+  let bTypes=bonusTypes,pTypes=penaltyTypes;
+  return hero('Lainnya','Pengaturan, tipe KPI, backup data')
+    // Company
+    +`<div class="settings-card">
+      <h3>🏢 Perusahaan</h3>
+      <div class="form">
+        <input id="sCompany" placeholder="Nama perusahaan" value="${settings.companyName||''}">
+        <button class="btn small primary" onclick="saveCompany()">Simpan</button>
+      </div>
+    </div>`
+    // Sheets
+    +`<div class="settings-card">
+      <h3>☁️ Google Sheets Sync</h3>
+      <div class="form">
+        <input id="sSheetsUrl" placeholder="https://script.google.com/macros/s/.../exec" value="${settings.sheetsUrl||''}">
+        <label style="display:flex;align-items:center;gap:12px;font-size:15px;font-weight:600;cursor:pointer;background:#fdfcfb;padding:14px;border-radius:18px;border:1px solid var(--line);">
+          <input type="checkbox" id="sSheetsOn" ${settings.sheetsEnabled?'checked':''} style="width:20px;height:20px;accent-color:var(--brand);margin:0;">
+          Aktifkan sync otomatis
+        </label>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn small primary" onclick="saveSheets()">Simpan</button>
+          <button class="btn small" onclick="testSheets()">Test</button>
+          <button class="btn small blue" onclick="showGASTemplate()">📋 Template Script</button>
+        </div>
+      </div>
+    </div>`
+    // Bonus types
+    +`<div class="settings-card">
+      <div class="section-head" style="margin:0 0 16px"><h3 style="margin:0">✅ Jenis Bonus</h3><button class="btn xsmall primary" onclick="openTypeSheet('bonus')">+ Tambah</button></div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        ${bTypes.map(t=>`<div class="type-row">
+          <div class="type-label">${t.label}</div>
+          <div class="type-amount green">+${idr(t.amount)}</div>
+          ${!t.builtin?`<button class="btn xsmall danger" onclick="delType('bonus','${t.id}')">Hapus</button>`:`<span style="font-size:11px;color:#ccc;font-weight:600;">bawaan</span>`}
+        </div>`).join('')}
+      </div>
+    </div>`
+    // Penalty types
+    +`<div class="settings-card">
+      <div class="section-head" style="margin:0 0 16px"><h3 style="margin:0">⚠️ Jenis Pinalti</h3><button class="btn xsmall primary" onclick="openTypeSheet('penalty')">+ Tambah</button></div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        ${pTypes.map(t=>`<div class="type-row">
+          <div class="type-label">${t.label}</div>
+          <div class="type-amount red">-${idr(t.amount)}</div>
+          ${!t.builtin?`<button class="btn xsmall danger" onclick="delType('penalty','${t.id}')">Hapus</button>`:`<span style="font-size:11px;color:#ccc;font-weight:600;">bawaan</span>`}
+        </div>`).join('')}
+      </div>
+    </div>`
+    // Portal
+    +`<div class="settings-card" style="border-color:#dbe7fa;background:var(--blue-bg)">
+      <h3 style="color:var(--blue)">🔗 Portal Karyawan</h3>
+      <p style="font-size:14px;color:#555;line-height:1.6;margin:0 0 14px">Buka file <b>gatari-kpi-karyawan.html</b> di browser yang sama untuk tampilan portal mandiri karyawan.</p>
+      <div style="background:#ffffff;border:1px solid #dbe7fa;border-radius:16px;padding:12px 16px;font-size:13px;font-weight:700;color:var(--blue);box-shadow:var(--shadow2)">💡 Set PIN tiap karyawan di tab Team → Edit</div>
+    </div>`
+    // Backup
+    +`<div class="settings-card">
+      <h3>💾 Backup Data</h3>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="btn small" onclick="exportJson()">${icon('download')} Export JSON</button>
+        <button class="btn small blue" onclick="$('importFile').click()">📂 Import JSON</button>
+        <input id="importFile" type="file" accept=".json" style="display:none" onchange="importJson(event)">
+      </div>
+    </div>`
+    // Danger
+    +`<div class="settings-card" style="border-color:#fadce0;">
+      <h3 style="color:var(--red)">🗑️ Danger Zone</h3>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="btn small danger" onclick="if(confirm('Hapus semua catatan bulan ini?')){records=records.filter(r=>!r.date.startsWith(month));sv('kpi_records',records);render();toast('Catatan dihapus')}">Hapus Catatan Bulan Ini</button>
+        <button class="btn small danger" onclick="if(confirm('RESET SEMUA DATA? Tidak bisa dibatalkan!')){localStorage.clear();location.reload()}">Reset Semua (Factory Reset)</button>
+      </div>
+    </div>`;
+}
+
+// ─── RECORD SHEET ─────────────────────────────────────────────────
+function openRecordSheet(empId=''){
+  cat='penalty';recordPhotos=[];editingRecordId=null;
+  let em=active();
+  $('sheetContent').innerHTML=`
+    <h2 class="sheet-title">Tambah Catatan</h2>
+    <div class="form">
+      <select id="rEmp">${em.map(e=>`<option value="${e.id}" ${e.id===empId?'selected':''}>${e.name} — ${e.role}</option>`).join('')}</select>
+      <input type="date" id="rDate" value="${today()}" onchange="checkDateWarn()">
+      <div class="date-warn" id="dateWarn">⚠️ Tanggal mundur — hanya gunakan jika kelupaan mencatat</div>
+      <div class="seg">
+        <button id="segPenalty" class="active" onclick="setCat('penalty')">⚠️ Pinalti</button>
+        <button id="segBonus" onclick="setCat('bonus')">✅ Bonus</button>
+      </div>
+      <select id="rType"></select>
+      <textarea id="rNote" rows="3" placeholder="Tulis rincian catatan (opsional)"></textarea>
+      <div>
+        <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:10px;">📷 Foto Bukti (bisa lebih dari 1)</div>
+        <div id="photosRow" class="photo-grid"></div>
+        <input type="file" id="rFile" accept="image/*" multiple style="display:none" onchange="handlePhotos(event)">
+      </div>
+      <button class="btn primary" onclick="saveRecord()" style="margin-top:8px">Simpan Catatan</button>
+      <button class="btn" onclick="closeSheet()">Batal</button>
+    </div>`;
+  fillTypes();renderPhotosRow();
+  $('sheet').classList.add('show');
+}
+
+function openEditRecord(id){
+  let r=records.find(x=>x.id===id);
+  if(!r)return;
+  editingRecordId=id;
+  cat=r.category;
+  recordPhotos=[...(r.photos||[])];
+  let em=active();
+  $('sheetContent').innerHTML=`
+    <h2 class="sheet-title">Edit Catatan <span class="edit-badge">Mode Edit</span></h2>
+    <div class="form">
+      <select id="rEmp">${em.map(e=>`<option value="${e.id}" ${e.id===r.empId?'selected':''}>${e.name} — ${e.role}</option>`).join('')}</select>
+      <input type="date" id="rDate" value="${r.date}" onchange="checkDateWarn()">
+      <div class="date-warn ${r.date<today()?'show':''}" id="dateWarn">⚠️ Tanggal mundur</div>
+      <div class="seg">
+        <button id="segPenalty" class="${cat==='penalty'?'active':''}" onclick="setCat('penalty')">⚠️ Pinalti</button>
+        <button id="segBonus" class="${cat==='bonus'?'active':''}" onclick="setCat('bonus')">✅ Bonus</button>
+      </div>
+      <select id="rType"></select>
+      <textarea id="rNote" rows="3" placeholder="Catatan tambahan">${r.note||''}</textarea>
+      <div>
+        <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:10px;">📷 Foto Bukti</div>
+        <div id="photosRow" class="photo-grid"></div>
+        <input type="file" id="rFile" accept="image/*" multiple style="display:none" onchange="handlePhotos(event)">
+      </div>
+      <button class="btn primary" onclick="saveRecord()" style="margin-top:8px">Simpan Perubahan</button>
+      <button class="btn" onclick="closeSheet()">Batal</button>
+    </div>`;
+  fillTypes(r.label);renderPhotosRow();
+  $('sheet').classList.add('show');
+}
+
+function checkDateWarn(){
+  let d=$('rDate')?.value||'';
+  let w=$('dateWarn');if(w)w.classList.toggle('show',d<today()&&d!=='');
+}
+function setCat(c){
+  cat=c;
+  $('segPenalty')?.classList.toggle('active',c==='penalty');
+  $('segBonus')?.classList.toggle('active',c==='bonus');
+  fillTypes();
+}
+function fillTypes(selectLabel=''){
+  let arr=cat==='bonus'?bonusTypes:penaltyTypes;
+  let customOpt={id:'custom',label:'✨ Lainnya (Ketik Sendiri)',amount:0};
+  let all=[...arr,customOpt];
+  $('rType').innerHTML=all.map(t=>`<option value="${t.id}" ${t.label===selectLabel?'selected':''}>${t.label}${t.amount>0?' — '+idr(t.amount):''}</option>`).join('');
+  $('rType').onchange=()=>{
+    let isCustom=$('rType').value==='custom';
+    let existing=$('customFields');
+    if(isCustom&&!existing){
+      let cf=document.createElement('div');cf.id='customFields';cf.className='form';
+      cf.style.background='#fdfcfb'; cf.style.padding='16px'; cf.style.borderRadius='20px'; cf.style.border='1px solid var(--line)';
+      cf.innerHTML=`<input id="rCustomLabel" placeholder="Nama pelanggaran/prestasi baru"><div class="two"><input id="rCustomAmount" type="text" inputmode="numeric" placeholder="Nominal Rp" oninput="fmtRp(this)"><div></div></div>`;
+      $('rType').insertAdjacentElement('afterend',cf);
+    } else if(!isCustom&&existing){existing.remove();}
+  };
+}
+function handlePhotos(e){
+  let files=Array.from(e.target.files);
+  files.forEach(f=>{
+    let r=new FileReader();
+    r.onload=ev=>{recordPhotos.push(ev.target.result);renderPhotosRow();};
+    r.readAsDataURL(f);
+  });
+}
+function renderPhotosRow(){
+  let row=$('photosRow');if(!row)return;
+  row.innerHTML=recordPhotos.map((p,i)=>`<div class="photo-wrap">
+    <img src="${p}" class="photo-thumb" onclick="openLightbox(recordPhotos,${i})">
+    <div class="photo-del" onclick="recordPhotos.splice(${i},1);renderPhotosRow()">✕</div>
+  </div>`).join('')
+  +`<div class="photo-add-btn" onclick="$('rFile').click()">+</div>`;
+}
+function saveRecord(){
+  let empId=$('rEmp')?.value;
+  let date=$('rDate')?.value;
+  let typeId=$('rType')?.value;
+  let note=$('rNote')?.value||'';
+  let isCustom=typeId==='custom';
+  let arr=cat==='bonus'?bonusTypes:penaltyTypes;
+  let t=arr.find(x=>x.id===typeId);
+  let label=isCustom?($('rCustomLabel')?.value||'Custom'):t?.label||'';
+  let amount=isCustom?getRaw('rCustomAmount'):(t?.amount||0);
+  if(!empId||!label||amount<=0){toast('Pastikan label dan nominal terisi benar');return;}
+  if(editingRecordId){
+    records=records.map(r=>r.id===editingRecordId?{...r,empId,date,category:cat,label,amount,note,photos:[...recordPhotos]}:r);
+    toast('Catatan diperbarui ✓');
+  } else {
+    records.push({id:uid(),empId,date,category:cat,label,amount,note,photos:[...recordPhotos]});
+    month=date.slice(0,7);$('monthPicker').value=month;
+    toast('Catatan berhasil disimpan ✓');
+  }
+  sv('kpi_records',records);
+  closeSheet();render();
+  if(settings.sheetsEnabled&&settings.sheetsUrl)syncSheets();
+}
+
+// ─── EMPLOYEE SHEET ───────────────────────────────────────────────
+function openEmployeeSheet(id=''){
+  let e=id?employees.find(x=>x.id===id):null;
+  $('sheetContent').innerHTML=`
+    <h2 class="sheet-title">${e?'Edit Data':'Tambah'} Karyawan</h2>
+    <div class="form">
+      <input id="eName" placeholder="Nama lengkap karyawan *" value="${e?.name||''}">
+      <input id="eRole" placeholder="Divisi / Posisi" value="${e?.role||''}">
+      <input id="eSalary" type="text" inputmode="numeric" placeholder="Gaji pokok (Rp) *" value="${e?e.baseSalary.toLocaleString('id-ID'):''}" oninput="fmtRp(this)">
+      <input id="ePhone" type="tel" placeholder="No WhatsApp (628xxx) — opsional" value="${e?.phone||''}">
+      <input id="eJoin" type="date" value="${e?.joinDate||today()}">
+      
+      <div style="background:#fdfcfb;border:1px solid var(--line);border-radius:20px;padding:18px;margin-top:8px;">
+        <div style="font-size:14px;font-weight:800;color:var(--text);margin-bottom:4px">🔐 PIN Login Karyawan</div>
+        <div style="font-size:12.5px;color:var(--muted);margin-bottom:12px;line-height:1.4">Buat 4 digit angka untuk password login karyawan di portal mandiri mereka.</div>
+        <input id="ePin" type="number" placeholder="Contoh: 1234" value="${e?.pin||''}" style="letter-spacing:10px;font-size:22px;font-weight:900;text-align:center" maxlength="4">
+      </div>
+      
+      <div style="background:#fdfcfb;border:1px solid var(--line);border-radius:20px;padding:18px;margin-top:4px;">
+        <div style="font-size:14px;font-weight:800;color:var(--text);margin-bottom:12px">🎯 Target KPI Bulanan</div>
+        <div class="two">
+          <div><label style="font-size:12px;color:var(--muted);font-weight:600;display:block;margin-bottom:6px">Batas Maksimal Pinalti</label><input id="eMaxPen" type="number" placeholder="2" value="${(e?.kpi||{}).maxPenalty||2}"></div>
+          <div><label style="font-size:12px;color:var(--muted);font-weight:600;display:block;margin-bottom:6px">Target Minimal Bonus</label><input id="eMinBon" type="number" placeholder="1" value="${(e?.kpi||{}).targetBonus||1}"></div>
+        </div>
+      </div>
+      
+      <button class="btn primary" onclick="saveEmp('${id}')" style="margin-top:8px">Simpan Data</button>
+      <button class="btn" onclick="closeSheet()">Batal</button>
+    </div>`;
+  $('sheet').classList.add('show');
+}
+function saveEmp(id){
+  let pin=$('ePin').value.trim().slice(0,4);
+  let data={name:$('eName').value.trim(),role:$('eRole').value.trim(),baseSalary:getRaw('eSalary'),phone:$('ePhone').value.trim(),joinDate:$('eJoin').value,pin,active:true,kpi:{maxPenalty:+$('eMaxPen').value||2,targetBonus:+$('eMinBon').value||1}};
+  if(!data.name||!data.baseSalary)return toast('Mohon lengkapi Nama dan Gaji Pokok');
+  if(id)employees=employees.map(e=>e.id===id?{...e,...data,active:e.active}:e);
+  else employees.push({id:'e'+uid(),...data});
+  sv('kpi_employees',employees);
+  closeSheet(); render(); toast('Data karyawan berhasil disimpan ✓');
+  if(settings.sheetsEnabled&&settings.sheetsUrl)syncSheets();
+}
+function toggleEmp(id){
+  if(!confirm('Ubah status aktif/non-aktif karyawan ini?'))return;
+  employees=employees.map(e=>e.id===id?{...e,active:e.active===false?true:false}:e);
+  sv('kpi_employees',employees); render();
+  if(settings.sheetsEnabled&&settings.sheetsUrl)syncSheets();
+}
+function delRec(id){
+  if(!confirm('Yakin ingin menghapus catatan ini secara permanen?'))return;
+  records=records.filter(r=>r.id!==id);
+  sv('kpi_records',records); render(); toast('Catatan berhasil dihapus');
+  if(settings.sheetsEnabled&&settings.sheetsUrl)syncSheets();
+}
+function closeSheet(){$('sheet').classList.remove('show');}
+
+// ─── TYPE SHEET ───────────────────────────────────────────────────
+function openTypeSheet(catType){
+  $('sheetContent').innerHTML=`
+    <h2 class="sheet-title">Tambah Jenis ${catType==='bonus'?'Bonus':'Pinalti'}</h2>
+    <div class="form">
+      <input id="ntLabel" placeholder="Nama/Judul kriteria">
+      <input id="ntAmount" type="text" inputmode="numeric" placeholder="Nominal Rupiah (misal: 50.000)" oninput="fmtRp(this)">
+      <button class="btn primary" onclick="saveType('${catType}')" style="margin-top:8px">Simpan Kriteria</button>
+      <button class="btn" onclick="closeSheet()">Batal</button>
+    </div>`;
+  $('sheet').classList.add('show');
+}
+function saveType(catType){
+  let label=$('ntLabel').value.trim();
+  let amount=getRaw('ntAmount');
+  if(!label||!amount){toast('Lengkapi nama kriteria dan nominalnya');return;}
+  let newT={id:'c'+uid(),label,amount,builtin:false};
+  if(catType==='bonus'){bonusTypes=[...bonusTypes,newT];sv('kpi_bonus_types',bonusTypes);}
+  else{penaltyTypes=[...penaltyTypes,newT];sv('kpi_penalty_types',penaltyTypes);}
+  closeSheet();render();toast('Kriteria baru berhasil ditambahkan ✓');
+}
+function delType(catType,id){
+  if(catType==='bonus'){bonusTypes=bonusTypes.filter(t=>t.id!==id);sv('kpi_bonus_types',bonusTypes);}
+  else{penaltyTypes=penaltyTypes.filter(t=>t.id!==id);sv('kpi_penalty_types',penaltyTypes);}
+  render();toast('Kriteria dihapus');
+}
+
+// ─── LIGHTBOX ─────────────────────────────────────────────────────
+function openLightbox(photos,idx){
+  lbPhotos=Array.isArray(photos)?photos:[];lbIdx=idx||0;
+  $('lbImg').src=lbPhotos[lbIdx]||'';
+  $('lbCounter').textContent=lbPhotos.length>1?`${lbIdx+1} / ${lbPhotos.length}`:'';
+  $('lbPrev').style.display=lbPhotos.length>1?'':'none';
+  $('lbNext').style.display=lbPhotos.length>1?'':'none';
+  $('lightbox').classList.add('show');
+}
+function lbNav(dir){
+  lbIdx=(lbIdx+dir+lbPhotos.length)%lbPhotos.length;
+  $('lbImg').src=lbPhotos[lbIdx];
+  $('lbCounter').textContent=`${lbIdx+1} / ${lbPhotos.length}`;
+}
+function closeLightbox(){$('lightbox').classList.remove('show');}
+document.addEventListener('keydown',e=>{
+  if($('lightbox').classList.contains('show')){
+    if(e.key==='ArrowLeft')lbNav(-1);
+    else if(e.key==='ArrowRight')lbNav(1);
+    else if(e.key==='Escape')closeLightbox();
+  }
+  if(e.key==='Escape'&&$('sheet').classList.contains('show'))closeSheet();
+});
+
+// ─── WA ───────────────────────────────────────────────────────────
+function sendWA(id){
+  let e=employees.find(x=>x.id===id);
+  if(!e?.phone){toast('Mohon lengkapi No. WhatsApp di profil karyawan terlebih dahulu');return;}
+  let st=stats(id),total=e.baseSalary+st.net;
+  let[y,mo]=month.split('-');
+  let kpi=e.kpi||{maxPenalty:2,targetBonus:1};
+  let statusTxt=st.score>=85?'✅ KPI Sangat Baik':st.score>=70?'⚠️ KPI Perlu Perhatian':'❌ KPI Di Bawah Target';
+  let detailBonus=st.rs.filter(r=>r.category==='bonus').map(r=>`  • ${fmt(r.date)}: ${r.label} (+${idr(r.amount)})`).join('\n')||'  (tidak ada)';
+  let detailPenalty=st.rs.filter(r=>r.category==='penalty').map(r=>`  • ${fmt(r.date)}: ${r.label} (-${idr(r.amount)})`).join('\n')||'  (tidak ada)';
+  let msg=`Halo ${e.name} 👋\n\n*Rekap Performa ${MONTHS[+mo-1]} ${y}*\n${statusTxt} (${st.score}/100)\n\n💰 Gaji Pokok: ${idr(e.baseSalary)}\n\n✅ Bonus (+${idr(st.bonus)}):\n${detailBonus}\n\n⚠️ Pinalti (-${idr(st.penalty)}):\n${detailPenalty}\n\n*Total Gaji: ${idr(total)}*\n\nTarget KPI: maks ${kpi.maxPenalty} pinalti · min ${kpi.targetBonus} bonus\n\nTerima kasih atas kerja kerasnya! 🙏\n— ${settings.companyName||'Gatari Edutoys'}`;
+  window.open('https://wa.me/'+e.phone+'?text='+encodeURIComponent(msg),'_blank');
+}
+
+// ─── PDF SLIP ─────────────────────────────────────────────────────
+function generateSlip(empId){
+  let e=employees.find(x=>x.id===empId);if(!e)return;
+  let st=stats(empId),total=e.baseSalary+st.net;
+  let[y,mo]=month.split('-');
+  if(!window.jspdf){toast('Sistem PDF sedang disiapkan, mohon tunggu sebentar lalu coba lagi');return;}
+  const{jsPDF}=window.jspdf;
+  const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a5'});
+  const W=148,pad=16;
+  
+  doc.setFillColor(26,24,21);doc.rect(0,0,W,20,'F');
+  doc.setTextColor(255,255,255);doc.setFontSize(13);doc.setFont('helvetica','bold');
+  doc.text(settings.companyName||'Gatari Edutoys',pad,13);
+  doc.setFontSize(8);doc.setFont('helvetica','normal');
+  doc.text('SLIP GAJI',W-pad,13,{align:'right'});
+  
+  doc.setFillColor(216,159,60);doc.rect(0,20,W,8,'F');
+  doc.setTextColor(26,24,21);doc.setFontSize(8);doc.setFont('helvetica','bold');
+  doc.text(`Periode: ${MONTHS[+mo-1]} ${y}`,pad,26);
+  doc.text(`Dicetak: ${fmt(today())}`,W-pad,26,{align:'right'});
+  
+  doc.setFillColor(253,252,251);doc.rect(pad,34,W-pad*2,22,'F');
+  doc.setDrawColor(230,225,216);doc.rect(pad,34,W-pad*2,22,'S');
+  doc.setTextColor(26,24,21);doc.setFontSize(13);doc.setFont('helvetica','bold');
+  doc.text(e.name,pad+6,44);
+  doc.setFontSize(9);doc.setFont('helvetica','normal');
+  doc.setTextColor(139,133,124);
+  doc.text(e.role||'',pad+6,51);
+  doc.text(`Bergabung: ${fmt(e.joinDate)}`,W-pad-6,51,{align:'right'});
+  
+  let yy=66;
+  const row=(l,v,color)=>{
+    doc.setFontSize(9);
+    doc.setTextColor(...(color||[26,24,21]));
+    doc.setFont('helvetica',l.startsWith(' ')?'normal':'bold');
+    doc.text(l,pad,yy);doc.text(v,W-pad,yy,{align:'right'});
+    yy+=7;
+  };
+  row('Gaji Pokok',idr(e.baseSalary));
+  st.rs.filter(r=>r.category==='bonus').forEach(r=>row(`  + ${r.label}`,idr(r.amount),[37,140,90]));
+  st.rs.filter(r=>r.category==='penalty').forEach(r=>row(`  − ${r.label}`,'('+idr(r.amount)+')',[209,86,98]));
+  doc.setDrawColor(230,225,216);doc.line(pad,yy,W-pad,yy);yy+=8;
+  
+  doc.setFillColor(253,252,251);doc.rect(pad,yy-5,W-pad*2,14,'F');
+  doc.setDrawColor(26,24,21);doc.setLineWidth(.5);doc.rect(pad,yy-5,W-pad*2,14,'S');
+  doc.setTextColor(26,24,21);doc.setFont('helvetica','normal');doc.setFontSize(10);
+  doc.text('TOTAL DITERIMA',pad+4,yy+4);
+  doc.setFont('helvetica','bold');doc.setFontSize(12);
+  doc.setTextColor(...(total>=e.baseSalary?[37,140,90]:[209,86,98]));
+  doc.text(idr(total),W-pad-4,yy+4,{align:'right'});yy+=20;
+  
+  let sc=st.score;
+  let stColor=sc>=85?[37,140,90]:sc>=70?[184,121,0]:[209,86,98];
+  doc.setTextColor(...stColor);doc.setFontSize(8);doc.setFont('helvetica','bold');
+  doc.text(`KPI Score: ${sc}/100 | Bonus: ${st.bc} | Pinalti: ${st.pc}`,pad,yy);
+  
+  doc.setDrawColor(230,225,216);doc.line(pad,200,W-pad,200);
+  doc.setTextColor(180,175,168);doc.setFontSize(7);doc.setFont('helvetica','normal');
+  doc.text('Dokumen ini diterbitkan secara otomatis oleh sistem.',pad,206);
+  doc.text(`© ${y} ${settings.companyName||'Gatari Edutoys'}`,W-pad,206,{align:'right'});
+  doc.save(`Slip_${e.name.replace(/ /g,'_')}_${month}.pdf`);
+  toast(`Slip gaji ${e.name} sedang diunduh...`);
+}
+function exportAllSlips(){
+  active().forEach((e,i)=>setTimeout(()=>generateSlip(e.id),i*500));
+  toast('Sistem sedang memproses semua slip...',3500);
+}
+
+// ─── PAYROLL COPY ─────────────────────────────────────────────────
+function copyPayroll(){
+  let[y,mo]=month.split('-');
+  let text='Rekap Gaji '+MONTHS[+mo-1]+' '+y+'\n'+active().map(e=>{let st=stats(e.id);return`${e.name}\t${idr(e.baseSalary)}\t+${idr(st.bonus)}\t-${idr(st.penalty)}\t${idr(e.baseSalary+st.net)}`}).join('\n');
+  navigator.clipboard.writeText(text);toast('Teks rekap berhasil disalin ke clipboard ✓');
+}
+
+// ─── GOOGLE SHEETS ────────────────────────────────────────────────
+function saveCompany(){settings.companyName=$('sCompany').value.trim()||'Gatari Edutoys';sv('kpi_settings',settings);toast('Nama perusahaan diperbarui ✓');}
+function saveSheets(){settings.sheetsUrl=$('sSheetsUrl').value.trim();settings.sheetsEnabled=$('sSheetsOn').checked;sv('kpi_settings',settings);updateSyncPill();toast('Pengaturan integrasi Google Sheets disimpan ✓');}
+async function testSheets(){
+  if(!settings.sheetsUrl){toast('Harap masukkan URL Web App terlebih dahulu');return;}
+  toast('Sistem sedang menguji jalur koneksi...',1500);
+  try{await fetch(settings.sheetsUrl+'?action=ping',{method:'GET',mode:'no-cors'});toast('Koneksi sukses tersambung ✓');}
+  catch(e){toast('Koneksi terhambat: '+e.message);}
+}
+
+// Mengirim data sebagai 1 paket (sync_all)
+async function syncSheets(){
+  if(!settings.sheetsUrl||!settings.sheetsEnabled)return;
+  toast('Sistem mensinkronkan data ke Cloud...', 2000);
+  let[y,mo]=month.split('-');
+  
+  let recs=records.map(r=>{let e=employees.find(x=>x.id===r.empId);return{...r,empName:e?.name||'?',photoCount:(r.photos||[]).length};});
+  let payRows=active().map(e=>{let st=stats(e.id);return{name:e.name,role:e.role,baseSalary:e.baseSalary,bonus:st.bonus,penalty:st.penalty,total:e.baseSalary+st.net,score:st.score};});
+  let empRows=employees.map(e=>({id:e.id, name:e.name, role:e.role, baseSalary:e.baseSalary, joinDate:e.joinDate, active:e.active, phone:e.phone}));
+  let rfRows=refundCases.map(r=>{let e=employees.find(x=>x.id===r.empId); return {id:r.id, empName:e?.name||'?', date:r.date, product:r.productName, qtyOrder:r.qtyOrder, qtyKirim:r.qtyKirim, qtyKurang:r.qtyKurang, resolution:r.resolution, potongan:r.potongan};});
+
+  let payload = { action: 'sync_all', month: month, records: recs, payroll: payRows, employees: empRows, refunds: rfRows };
+
+  try{
+    await fetch(settings.sheetsUrl,{method:'POST',mode:'no-cors',body:JSON.stringify(payload)});
+    toast('Cloud Sync Berhasil ✓');
+  }catch(e){toast('Gagal melakukan sync: '+e.message);}
+}
+
+function showGASTemplate(){
+  let script=`function doPost(e) {
+  const data = JSON.parse(e.postData.contents);
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  
+  if (data.action === "sync_all") {
+    let shRec = ss.getSheetByName("Catatan") || ss.insertSheet("Catatan");
+    shRec.clearContents();
+    shRec.appendRow(["ID","Karyawan","Tanggal","Kategori","Label","Nominal","Catatan","JmlFoto"]);
+    data.records.forEach(r => shRec.appendRow([r.id,r.empName,r.date,r.category,r.label,r.amount,r.note||"",r.photoCount||0]));
+
+    let shPay = ss.getSheetByName("Payroll "+data.month) || ss.insertSheet("Payroll "+data.month);
+    shPay.clearContents();
+    shPay.appendRow(["Nama","Jabatan","Gaji Pokok","Bonus","Pinalti","Total","KPI Score"]);
+    data.payroll.forEach(r => shPay.appendRow([r.name,r.role,r.baseSalary,r.bonus,r.penalty,r.total,r.score]));
+
+    let shEmp = ss.getSheetByName("Karyawan") || ss.insertSheet("Karyawan");
+    shEmp.clearContents();
+    shEmp.appendRow(["ID","Nama","Jabatan","Gaji Pokok","Tgl Gabung","Status Aktif","No WA"]);
+    data.employees.forEach(r => shEmp.appendRow([r.id, r.name, r.role, r.baseSalary, r.joinDate, r.active ? "Aktif" : "Non-aktif", r.phone||"-"]));
+
+    let shRef = ss.getSheetByName("Kasus Refund") || ss.insertSheet("Kasus Refund");
+    shRef.clearContents();
+    shRef.appendRow(["ID","Tanggal","Karyawan","Nama Produk","Qty Order","Qty Kirim","Qty Kurang","Resolusi","Potongan Karyawan"]);
+    data.refunds.forEach(r => shRef.appendRow([r.id, r.date, r.empName, r.product, r.qtyOrder, r.qtyKirim, r.qtyKurang, r.resolution === 'refund' ? 'Refund' : 'Kirim Ulang', r.potongan]));
+  }
+  return ContentService.createTextOutput(JSON.stringify({status:"ok"})).setMimeType(ContentService.MimeType.JSON);
+}
+function doGet(e) {
+  return ContentService.createTextOutput(JSON.stringify({status:"ok"})).setMimeType(ContentService.MimeType.JSON);
+}`;
+  $('sheetContent').innerHTML=`
+    <h2 class="sheet-title">Template Google Script</h2>
+    <div class="form">
+      <p style="font-size:14px;color:var(--muted);line-height:1.6;">1. Buka <b>Google Sheets</b> baru<br>2. Klik Extensions → Apps Script lalu Paste script ini<br>3. Deploy as Web App (akses Anyone)<br>4. Salin URL hasil deploy lalu tempel di pengaturan aplikasi ini</p>
+      <textarea style="height:200px;font-family:monospace;font-size:12px;background:#fdfcfb;border-radius:16px;resize:vertical;" readonly>${script}</textarea>
+      <button class="btn primary" onclick="navigator.clipboard.writeText(document.querySelector('#sheetContent textarea').value);toast('Script berhasil disalin ke clipboard ✓')">📋 Salin Script Penuh</button>
+      <button class="btn" onclick="closeSheet()">Kembali</button>
+    </div>`;
+  $('sheet').classList.add('show');
+}
+
+// ─── BACKUP ───────────────────────────────────────────────────────
+function exportJson(){
+  let blob=new Blob([JSON.stringify({employees,records,refundCases,bonusTypes,penaltyTypes,settings,exportedAt:new Date().toISOString()},null,2)],{type:'application/json'});
+  let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`gatari-kpi-backup-${today()}.json`;a.click();
+  toast('File backup sistem sedang diunduh...');
+}
+function importJson(event){
+  let file=event.target.files[0];if(!file)return;
+  let r=new FileReader();
+  r.onload=ev=>{
+    try{
+      let data=JSON.parse(ev.target.result);
+      if(!data.employees&&!data.records){toast('Dokumen backup tidak terdeteksi valid');return;}
+      if(!confirm(`Mulai pemulihan data? Seluruh data di perangkat ini akan ditimpa dengan data backup.\n(Mendeteksi ${data.employees?.length||0} staf & ${data.records?.length||0} catatan)`))return;
+      if(data.employees){employees=data.employees;sv('kpi_employees',employees);}
+      if(data.records){records=data.records;sv('kpi_records',records);}
+      if(data.bonusTypes){bonusTypes=data.bonusTypes;sv('kpi_bonus_types',bonusTypes);}
+      if(data.penaltyTypes){penaltyTypes=data.penaltyTypes;sv('kpi_penalty_types',penaltyTypes);}
+      if(data.refundCases){refundCases=data.refundCases;sv('kpi_refund_cases',refundCases);}
+      if(data.settings){settings=data.settings;sv('kpi_settings',settings);}
+      render();toast('Sistem berhasil dipulihkan ✓');
+    }catch(e){toast('Gagag membaca dokumen: '+e.message);}
+  };
+  r.readAsText(file);
+  event.target.value='';
+}
+
+// ─── REFUND CASES ─────────────────────────────────────────────────
+function renderRefund(){
+  let myRf=[...refundCases].filter(r=>(r.date||'').startsWith(month)).sort((a,b)=>b.date.localeCompare(a.date));
+  let totalPot=myRf.reduce((s,r)=>s+r.potongan,0);
+  let[y,mo]=month.split('-');
+  return hero('Refund','Manajemen resolusi pelanggan',`<button class="btn primary" onclick="openRefundSheet()">+ Buat Resolusi</button>`)
+    +(myRf.length?`<div style="background:var(--red-bg);border:1px solid #fadce0;border-radius:24px;padding:20px;margin-bottom:24px;box-shadow:var(--shadow2)">
+      <div style="font-size:13px;color:var(--red);font-weight:750;text-transform:uppercase;letter-spacing:0.5px">Total Beban Karyawan ${MONTHS[+mo-1]} ${y}</div>
+      <div style="font-size:32px;font-weight:850;color:var(--red);letter-spacing:-1px;margin-top:6px">-${idr(totalPot)}</div>
+      <div style="font-size:13px;color:var(--muted);margin-top:4px;font-weight:600">Dari ${myRf.length} riwayat insiden</div>
+    </div>`:'')
+    +`<div class="card-list">${myRf.length?myRf.map(r=>{
+      let emp=employees.find(e=>e.id===r.empId)||{name:'?'};
+      return`<div class="refund-card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap">
+          <div>
+            <div style="font-size:19px;font-weight:850;letter-spacing:-0.5px;color:#1a1815">${r.productName}</div>
+            <div class="emp-meta">${fmt(r.date)} · <b style="color:#1a1815">${emp.name}</b></div>
+          </div>
+          <span class="refund-tag ${r.resolution}">${r.resolution==='refund'?'🔴 Opsi Refund':'🟡 Kirim Ulang'}</span>
+        </div>
+        <div class="calc-box">
+          <div class="calc-row"><span>HPP / Harga Jual</span><b>${idr(r.hargaSatuan)}</b></div>
+          <div class="calc-row"><span>Pesanan Masuk</span><b>${r.qtyOrder} unit</b></div>
+          <div class="calc-row"><span>Faktual Dikirim</span><b>${r.qtyKirim} unit</b></div>
+          <div class="calc-row" style="color:var(--red)"><span>Selisih (Kurang)</span><b>${r.qtyKurang} unit</b></div>
+          ${r.resolution==='refund'
+            ?`<div class="calc-row"><span>Pinalti (15%)</span><b>15% × ${idr(r.hargaSatuan)} × ${r.qtyKurang}</b></div>`
+            :`<div class="calc-row"><span>Beban Ongkir</span><b>${idr(r.ongkir)}</b></div>`}
+          <div class="calc-row calc-total" style="color:var(--red)"><span>Potongan Dibebankan</span><span>-${idr(r.potongan)}</span></div>
+        </div>
+        ${r.note?`<div class="emp-meta" style="margin-top:12px;font-style:italic">"${r.note}"</div>`:''}
+        <div style="display:flex;gap:8px;margin-top:16px">
+          <button class="btn xsmall danger" onclick="delRefund('${r.id}')">Hapus Kasus</button>
+        </div>
+      </div>`;
+    }).join(''):`<div class="empty">Bulan ini operasional berjalan lancar tanpa ada kasus refund. Teruskan tren positif ini!</div>`}</div>`;
+}
+
+function openRefundSheet(){
+  rfResolution='refund';
+  let em=active();
+  $('sheetContent').innerHTML=`<h2 class="sheet-title">Pembuatan Resolusi Baru</h2>
+  <div class="form">
+    <div><label style="font-size:13px;font-weight:700;color:var(--text);display:block;margin-bottom:8px">Pelaksana Packing (PIC)</label>
+    <select id="rfEmp">${em.map(e=>`<option value="${e.id}">${e.name} — ${e.role}</option>`).join('')}</select></div>
+    
+    <div><label style="font-size:13px;font-weight:700;color:var(--text);display:block;margin-bottom:8px">Tanggal Keluhan / Insiden</label>
+    <input type="date" id="rfDate" value="${today()}"></div>
+    
+    <div><label style="font-size:13px;font-weight:700;color:var(--text);display:block;margin-bottom:8px">Identitas Produk</label>
+    <input id="rfProduct" placeholder="Misal: Wooden Maze Series"></div>
+    
+    <div class="two">
+      <div>
+        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:6px">Harga Satuan (Rp)</label>
+        <input id="rfHarga" type="text" inputmode="numeric" placeholder="100.000" oninput="fmtRp(this);calcRf()">
+      </div>
+      <div>
+        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:6px">Kuantitas di Resi</label>
+        <input id="rfQtyOrder" type="number" placeholder="2" oninput="calcRf()">
+      </div>
+    </div>
+    
+    <div>
+      <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:6px">Faktual Fisik yg Terkirim</label>
+      <input id="rfQtyKirim" type="number" placeholder="1" oninput="calcRf()">
+    </div>
+    
+    <div style="margin-top:8px">
+      <label style="font-size:14px;font-weight:800;color:var(--text);display:block;margin-bottom:10px">Tindakan Kompensasi</label>
+      <div class="res-grid">
+        <div class="res-opt sel-refund" id="resOptRefund" onclick="setRfRes('refund')">
+          <span class="res-icon">🔴</span>
+          <span class="res-lbl">Voucher / Refund</span>
+          <div class="res-sub">Beban 15% dari HPP produk ke karyawan</div>
+        </div>
+        <div class="res-opt" id="resOptResend" onclick="setRfRes('resend')">
+          <span class="res-icon">🟡</span>
+          <span class="res-lbl">Kirim Susulan</span>
+          <div class="res-sub">Biaya pengiriman ditanggung karyawan</div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="rfOngkirWrap" style="display:none;background:#fffdfa;padding:16px;border-radius:20px;border:1px solid #f2e3c6;margin-top:4px;">
+      <label style="font-size:12px;font-weight:700;color:#b87900;display:block;margin-bottom:8px">Biaya Logistik Tambahan (Rp)</label>
+      <input id="rfOngkir" type="text" inputmode="numeric" placeholder="Misal: 15.000" oninput="fmtRp(this);calcRf()" style="border-color:#f2e3c6;box-shadow:none;">
+    </div>
+    
+    <div id="rfCalcPreview" style="display:none" class="calc-box"></div>
+    <textarea id="rfNote" rows="2" placeholder="Catatan opsional mengenai kronologi..." style="resize:vertical;margin-top:8px;"></textarea>
+    
+    <button class="btn primary" onclick="saveRefund()" style="margin-top:8px">Simpan & Distribusikan Beban</button>
+    <button class="btn" onclick="closeSheet()">Kembali</button>
+  </div>`;
+  $('sheet').classList.add('show');
+}
+
+function setRfRes(res){
+  rfResolution=res;
+  $('resOptRefund').className='res-opt'+(res==='refund'?' sel-refund':'');
+  $('resOptResend').className='res-opt'+(res==='resend'?' sel-resend':'');
+  $('rfOngkirWrap').style.display=res==='resend'?'block':'none';
+  calcRf();
+}
+
+function calcRf(){
+  let harga=getRaw('rfHarga');
+  let qOrd=parseInt($('rfQtyOrder')?.value)||0;
+  let qKir=parseInt($('rfQtyKirim')?.value)||0;
+  let qKur=Math.max(0,qOrd-qKir);
+  let ongkir=getRaw('rfOngkir');
+  let pot=rfResolution==='refund'?Math.round(harga*qKur*.15):ongkir;
+  let prev=$('rfCalcPreview');if(!prev)return;
+  if(!harga||!qOrd){prev.style.display='none';return;}
+  prev.style.display='flex';
+  prev.innerHTML=`
+    <div class="calc-row"><span>Unit Selisih</span><b style="color:var(--red)">${qKur} produk</b></div>
+    ${rfResolution==='refund'
+      ?`<div class="calc-row"><span>Penalti (15% × ${idr(harga)} × ${qKur})</span><b></b></div>`
+      :`<div class="calc-row"><span>Beban Ongkir Susulan</span><b>${idr(ongkir)}</b></div>`}
+    <div class="calc-row calc-total" style="color:var(--red)"><span>Estimasi Potongan Gaji</span><span>-${idr(pot)}</span></div>`;
+}
+
+function saveRefund(){
+  let empId=$('rfEmp')?.value;
+  let date=$('rfDate')?.value;
+  let product=$('rfProduct')?.value.trim();
+  let harga=getRaw('rfHarga');
+  let qOrd=parseInt($('rfQtyOrder')?.value)||0;
+  let qKir=parseInt($('rfQtyKirim')?.value)||0;
+  let ongkir=getRaw('rfOngkir');
+  let note=$('rfNote')?.value||'';
+  let qKur=Math.max(0,qOrd-qKir);
+  let pot=rfResolution==='refund'?Math.round(harga*qKur*.15):ongkir;
+  if(!empId||!product||!harga||qOrd<=0){toast('Mohon lengkapi semua parameter wajib');return;}
+  if(qKir>=qOrd){toast('Logika error: Fisik terkirim menyamai/melebihi pesanan');return;}
+  if(pot<=0){toast(rfResolution==='resend'?'Biaya pengiriman belum diinput':'Kalkulasi nominal tidak sah');return;}
+  
+  let kasus={id:uid(),empId,date,productName:product,hargaSatuan:harga,qtyOrder:qOrd,
+    qtyKirim:qKir,qtyKurang:qKur,resolution:rfResolution,ongkir:rfResolution==='resend'?ongkir:0,
+    potongan:pot,note,createdAt:new Date().toISOString()};
+  refundCases.push(kasus);
+  sv('kpi_refund_cases',refundCases);
+  
+  let emp=employees.find(e=>e.id===empId);
+  let recLabel=rfResolution==='refund'
+    ?`Refund Pelanggan: ${product} ×${qKur} (Pinalti 15%)`
+    :`Biaya Logistik Susulan: ${product} ×${qKur}`;
+  records.push({id:'rf_'+kasus.id,empId,date,category:'penalty',label:recLabel,amount:pot,note,photos:[]});
+  sv('kpi_records',records);
+  
+  closeSheet();render();
+  toast(`Beban -${idr(pot)} didistribusikan ke histori pinalti ${emp?.name||''} ✓`, 3500);
+  if(settings.sheetsEnabled&&settings.sheetsUrl)syncSheets();
+}
+
+function delRefund(id){
+  if(!confirm('Otorisasi penghapusan: Seluruh beban finansial ke karyawan dari kasus ini akan dibatalkan. Lanjutkan?'))return;
+  refundCases=refundCases.filter(r=>r.id!==id);
+  sv('kpi_refund_cases',refundCases);
+  records=records.filter(r=>r.id!=='rf_'+id);
+  sv('kpi_records',records);
+  render(); toast('Riwayat insiden dihapus dari sistem');
+  if(settings.sheetsEnabled&&settings.sheetsUrl)syncSheets();
+}
+
+init();
+</script>
+</body>
+</html>
