@@ -3,34 +3,17 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-<title>Gatari KPI v7 — Owner</title>
+<title>Gatari KPI v7 — Owner (Drive Storage)</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 :root {
-  /* Nuansa Scandinavian / Soft Minimalist */
-  --bg: #f9f8f5; 
-  --surface: #ffffff; 
-  --card: #ffffff; 
-  --text: #2a2825; 
-  --muted: #8b857c; 
-  --line: #e6e1d8;
-  --brand: #d89f3c; /* Emas yang lebih kalem/elegan */
-  --brand2: #f2e3c6;
-  --green: #258c5a; 
-  --green-bg: #edf6f1; 
-  --red: #d15662; 
-  --red-bg: #fdf2f3;
-  --blue: #3a75d1; 
-  --blue-bg: #f0f5fd;
-  
-  /* Shadow modern yang sangat halus ala Apple/Stripe */
+  --bg: #f9f8f5; --surface: #ffffff; --card: #ffffff; --text: #2a2825; --muted: #8b857c; --line: #e6e1d8;
+  --brand: #d89f3c; --brand2: #f2e3c6; --green: #258c5a; --green-bg: #edf6f1; --red: #d15662; --red-bg: #fdf2f3;
+  --blue: #3a75d1; --blue-bg: #f0f5fd;
   --shadow: 0 12px 36px rgba(28, 25, 20, 0.04), 0 4px 12px rgba(28, 25, 20, 0.02);
   --shadow2: 0 6px 18px rgba(28, 25, 20, 0.04);
   --shadow-hover: 0 20px 45px rgba(28, 25, 20, 0.08), 0 8px 20px rgba(28, 25, 20, 0.04);
-  
-  --radius: 24px; 
-  --nav-h: 88px; 
-  --safe: env(safe-area-inset-bottom, 0px);
+  --radius: 24px; --nav-h: 88px; --safe: env(safe-area-inset-bottom, 0px);
 }
 
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -38,12 +21,9 @@ html, body {
   margin: 0; min-height: 100%;
   font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   background: #fdfdfc radial-gradient(circle at 50% 0%, #ffffff 0%, #f5f3ef 100%);
-  color: var(--text);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  color: var(--text); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
 }
 
-/* Form Elements */
 button, input, select, textarea { font: inherit; transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
 button { border: 0; cursor: pointer; }
 input, select, textarea {
@@ -56,29 +36,22 @@ input:focus, select:focus, textarea:focus {
   box-shadow: 0 0 0 4px rgba(216, 159, 60, 0.12), inset 0 2px 6px rgba(0,0,0,0.01);
 }
 
-/* Layout */
 .app { max-width: 760px; margin: 0 auto; min-height: 100vh; padding-bottom: calc(var(--nav-h) + var(--safe) + 32px); }
 .main { padding: 18px 22px 0; }
 
-/* Topbar Glassmorphism */
 .topbar {
-  position: sticky; top: 0; z-index: 20;
-  background: rgba(249, 248, 245, 0.75);
-  backdrop-filter: blur(24px) saturate(150%);
-  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  position: sticky; top: 0; z-index: 20; background: rgba(249, 248, 245, 0.75);
+  backdrop-filter: blur(24px) saturate(150%); -webkit-backdrop-filter: blur(24px) saturate(150%);
   border-bottom: 1px solid rgba(230, 225, 216, 0.6);
 }
 .topbar-inner { display: flex; align-items: center; gap: 16px; padding: 18px 22px; }
 .logo {
-  width: 54px; height: 54px; border-radius: 18px;
-  background: linear-gradient(135deg, #ffffff, #f7e6c3);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,1), 0 10px 24px rgba(216,159,60,0.18);
-  display: grid; place-items: center;
+  width: 54px; height: 54px; border-radius: 18px; background: linear-gradient(135deg, #ffffff, #f7e6c3);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,1), 0 10px 24px rgba(216,159,60,0.18); display: grid; place-items: center;
 }
 .logo svg { width: 26px; }
 .brand { font-size: 23px; font-weight: 800; letter-spacing: -0.6px; color: #1a1815; }
 
-/* Pills & Controls */
 .pill {
   display: inline-flex; align-items: center; gap: 8px;
   border: 1px solid rgba(230, 225, 216, 0.8); background: rgba(255,255,255,0.85);
@@ -91,12 +64,10 @@ input:focus, select:focus, textarea:focus {
 .status-row { padding: 0 22px 18px; display: flex; gap: 10px; flex-wrap: wrap; }
 .dot { width: 8px; height: 8px; border-radius: 50%; background: #c8bfb2; }
 
-/* Typography */
 .hero { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; margin: 8px 0 26px; }
 .title { font-size: 40px; line-height: 1; letter-spacing: -1.5px; font-weight: 850; margin: 0; color: #1a1815; }
 .subtitle { font-size: 17px; line-height: 1.5; color: var(--muted); font-weight: 600; margin: 12px 0 0; }
 
-/* Buttons */
 .hero-actions { display: flex; flex-direction: column; gap: 10px; flex: 0 0 auto; }
 .btn {
   border-radius: 20px; padding: 15px 20px; font-weight: 750; font-size: 15px;
@@ -117,7 +88,6 @@ input:focus, select:focus, textarea:focus {
 .icon { width: 20px; height: 20px; display: inline-block; vertical-align: -4px; }
 .icon svg { width: 100%; height: 100%; stroke: currentColor; stroke-width: 2.2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
 
-/* Cards & Stats */
 .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 30px; }
 .stat { background: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.9); border-radius: 24px; padding: 20px; box-shadow: var(--shadow2); backdrop-filter: blur(10px); }
 .stat-label { font-size: 13px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
@@ -127,7 +97,6 @@ input:focus, select:focus, textarea:focus {
 .section-head h2 { font-size: 22px; letter-spacing: -0.5px; margin: 0; font-weight: 800; color: #1a1815; }
 .card-list { display: flex; flex-direction: column; gap: 16px; }
 
-/* Main Cards */
 .emp-card, .pay-card, .record-card, .refund-card {
   background: #ffffff; border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; 
   box-shadow: var(--shadow); overflow: hidden; transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -145,10 +114,7 @@ input:focus, select:focus, textarea:focus {
 .emp-meta { font-size: 14px; color: var(--muted); line-height: 1.5; margin-top: 6px; font-weight: 500; }
 .amount { font-size: 24px; font-weight: 850; letter-spacing: -0.8px; text-align: right; white-space: nowrap; color: #1a1815;}
 
-.score {
-  display: inline-flex; align-items: center; gap: 6px; border-radius: 999px;
-  padding: 6px 12px; font-size: 13px; font-weight: 750; margin-top: 10px;
-}
+.score { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; padding: 6px 12px; font-size: 13px; font-weight: 750; margin-top: 10px; }
 .score.good { background: var(--green-bg); color: var(--green); }
 .score.warn { background: #fff9e6; color: #b87900; }
 .score.bad { background: var(--red-bg); color: var(--red); }
@@ -163,7 +129,6 @@ input:focus, select:focus, textarea:focus {
 .metric b { display: block; font-size: 20px; font-weight: 800; letter-spacing: -0.5px; margin-top: 6px; color: #1a1815; }
 .green { color: var(--green) !important; } .red { color: var(--red) !important; } .gold { color: #b58220 !important; }
 
-/* Leaderboard */
 .leader {
   display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center;
   background: #ffffff; border: 1px solid var(--line); border-radius: 20px; padding: 14px 18px; margin-bottom: 12px;
@@ -174,7 +139,6 @@ input:focus, select:focus, textarea:focus {
 
 .empty { border: 2px dashed #ded6ca; border-radius: 24px; padding: 40px 20px; text-align: center; color: var(--muted); font-weight: 600; background: rgba(255,255,255,0.4); }
 
-/* Navigation */
 .bottom-nav {
   position: fixed; left: 50%; bottom: calc(16px + var(--safe)); transform: translateX(-50%);
   width: min(720px, calc(100% - 32px)); height: 82px;
@@ -200,7 +164,6 @@ input:focus, select:focus, textarea:focus {
 .fab:active { transform: scale(0.9); }
 .fab svg { width: 30px; height: 30px; stroke-width: 2.5; }
 
-/* Bottom Sheet */
 .sheet { position: fixed; inset: 0; z-index: 60; background: rgba(20, 18, 15, 0.4); backdrop-filter: blur(4px); display: none; align-items: flex-end; opacity: 0; transition: opacity 0.3s; }
 .sheet.show { display: flex; opacity: 1; }
 .sheet-card {
@@ -212,7 +175,6 @@ input:focus, select:focus, textarea:focus {
 .handle { width: 48px; height: 5px; background: #e0d8cc; border-radius: 99px; margin: 0 auto 24px; }
 .sheet-title { font-size: 26px; font-weight: 850; letter-spacing: -0.8px; margin: 0 0 20px; color: #1a1815; }
 
-/* Forms & Utilities */
 .form { display: grid; gap: 14px; }
 .seg { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: #f2efe9; border-radius: 20px; padding: 6px; }
 .seg button { height: 50px; border-radius: 16px; background: transparent; font-weight: 750; color: var(--muted); }
@@ -223,7 +185,6 @@ input:focus, select:focus, textarea:focus {
 .toast.show { display: block; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-/* Photo grid */
 .photo-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
 .photo-thumb { width: 76px; height: 76px; object-fit: cover; border-radius: 16px; border: 1px solid var(--line); cursor: pointer; transition: all .2s; }
 .photo-thumb:hover { opacity: .8; transform: scale(1.05); }
@@ -233,7 +194,6 @@ input:focus, select:focus, textarea:focus {
 .photo-del { position: absolute; top: -6px; right: -6px; width: 22px; height: 22px; border-radius: 50%; background: var(--red); color: #fff; font-size: 11px; font-weight: bold; display: grid; place-items: center; cursor: pointer; border: 2px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: transform 0.2s;}
 .photo-del:hover { transform: scale(1.15); }
 
-/* Lightbox */
 .lightbox { position: fixed; inset: 0; background: rgba(15, 14, 12, 0.95); z-index: 200; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(10px); }
 .lightbox.show { display: flex; animation: fadeIn 0.2s; }
 @keyframes fadeIn { from{opacity:0} to{opacity:1} }
@@ -243,7 +203,6 @@ input:focus, select:focus, textarea:focus {
 .lightbox-nav button:hover { background: rgba(255,255,255,0.2); }
 .lightbox-nav .lb-close { border-radius: 16px; padding: 0 24px; font-weight: 700; font-size: 15px; width: auto; }
 
-/* Search & Tags */
 .search-wrap { position: relative; margin-bottom: 16px; }
 .search-wrap input { padding-left: 48px; border-radius: 22px; height: 56px; border: 1px solid rgba(230, 225, 216, 0.8); box-shadow: var(--shadow2); }
 .search-wrap input:focus { box-shadow: 0 0 0 4px rgba(216, 159, 60, 0.12), var(--shadow); }
@@ -254,7 +213,6 @@ input:focus, select:focus, textarea:focus {
 .chip:hover { border-color: #d1c8ba; color: var(--text); }
 .chip.active { background: #1a1815; color: #ffffff; border-color: #1a1815; box-shadow: 0 8px 20px rgba(26,24,21,0.15); }
 
-/* Settings / Type */
 .settings-card { background: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.9); border-radius: 28px; padding: 24px; margin-bottom: 16px; box-shadow: var(--shadow2); backdrop-filter: blur(10px); }
 .settings-card h3 { font-size: 19px; font-weight: 800; letter-spacing: -0.4px; margin: 0 0 16px; color: #1a1815; }
 .type-row { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: #ffffff; border: 1px solid var(--line); border-radius: 20px; transition: transform 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.01); }
@@ -262,14 +220,12 @@ input:focus, select:focus, textarea:focus {
 .type-row .type-label { flex: 1; font-size: 15px; font-weight: 600; }
 .type-row .type-amount { font-size: 15px; font-weight: 800; }
 
-/* Badges & Sync */
 .edit-badge { font-size: 12px; background: var(--blue-bg); color: var(--blue); border-radius: 999px; padding: 4px 12px; font-weight: 750; display: inline-block; margin-left: 10px; vertical-align: middle; }
 .sync-pill { display: inline-flex; align-items: center; gap: 8px; }
 .sync-dot { width: 8px; height: 8px; border-radius: 50%; box-shadow: 0 0 0 2px rgba(255,255,255,0.5); }
 .date-warn { background: #fffdf5; border: 1px solid #f2e3c6; border-radius: 16px; padding: 12px 16px; font-size: 13px; color: #a87314; font-weight: 600; display: none; }
 .date-warn.show { display: block; animation: fadeUp 0.3s; }
 
-/* Responsive adjustments */
 @media(max-width:520px) {
   .topbar-inner { padding: 16px 20px; }
   .logo { width: 48px; height: 48px; border-radius: 16px; }
@@ -300,7 +256,6 @@ input:focus, select:focus, textarea:focus {
   .emp-actions .btn { flex: 0 0 auto; min-width: 120px; }
 }
 
-/* ── PIN & REFUND ── */
 .pin-badge{font-size:11px;border-radius:999px;padding:3px 10px;font-weight:700;display:inline-block;margin-left:6px;vertical-align:middle}
 .pin-on{background:var(--green-bg);color:var(--green);}
 .pin-off{background:var(--red-bg);color:var(--red);}
@@ -322,14 +277,12 @@ input:focus, select:focus, textarea:focus {
 .res-opt .res-lbl{font-size:15px;font-weight:800; color: #1a1815;}
 .res-opt .res-sub{font-size:12px;color:var(--muted);margin-top:4px;font-weight:500;line-height:1.4}
 
-/* Animasi untuk List Data (Opsional tapi elegan) */
 .card-list > div { animation: fadeInUp 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
 .card-list > div:nth-child(1) { animation-delay: 0.05s; }
 .card-list > div:nth-child(2) { animation-delay: 0.1s; }
 .card-list > div:nth-child(3) { animation-delay: 0.15s; }
 .card-list > div:nth-child(4) { animation-delay: 0.2s; }
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-
 </style>
 </head>
 <body>
@@ -354,9 +307,9 @@ input:focus, select:focus, textarea:focus {
   </div>
   
   <div class="status-row">
-    <div class="pill"><span class="dot"></span>localStorage</div>
+    <div class="pill"><span class="dot"></span>Storage</div>
     <div class="pill" id="todayPill"></div>
-    <div class="pill sync-pill" id="syncPill"><span class="sync-dot" style="background:#c8bfb2"></span>Sheets belum aktif</div>
+    <div class="pill sync-pill" id="syncPill"><span class="sync-dot" style="background:#c8bfb2"></span>Mode Offline</div>
   </div>
   
   <main id="main" class="main"></main>
@@ -388,7 +341,6 @@ input:focus, select:focus, textarea:focus {
 <div class="toast" id="toast"></div>
 
 <script>
-// ─── ICONS ────────────────────────────────────────────────────────
 const icons={
   home:'<svg viewBox="0 0 24 24"><path d="M3 10.8 12 3l9 7.8v9.7a.5.5 0 0 1-.5.5H15v-6H9v6H3.5a.5.5 0 0 1-.5-.5z"/></svg>',
   team:'<svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
@@ -403,26 +355,10 @@ const icons={
 };
 function icon(n,cls=''){return`<span class="icon ${cls}">${icons[n]||''}</span>`}
 
-// ─── DATA & STORAGE ───────────────────────────────────────────────
 const MONTHS=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
-const DEF_BONUS=[
-  {id:'absen_full',label:'Absen full bulan ini',amount:100000,builtin:true},
-  {id:'teliti',label:'Kerja teliti & rapi',amount:100000,builtin:true},
-  {id:'lembur',label:'Lembur',amount:50000,builtin:true},
-  {id:'best',label:'Performa terbaik',amount:200000,builtin:true},
-];
-const DEF_PENALTY=[
-  {id:'late',label:'Terlambat',amount:25000,builtin:true},
-  {id:'absent',label:'Absen tanpa keterangan',amount:50000,builtin:true},
-  {id:'minor',label:'Kesalahan kecil',amount:25000,builtin:true},
-  {id:'major',label:'Kesalahan besar / kerusakan',amount:100000,builtin:true},
-  {id:'complaint',label:'Komplain pelanggan',amount:75000,builtin:true},
-];
-const SEED=[
-  {id:'e1',name:'Andi Saputra',role:'Produksi',baseSalary:2500000,joinDate:'2023-01-15',active:true,phone:'',kpi:{maxPenalty:2,targetBonus:1}},
-  {id:'e2',name:'Budi Santoso',role:'Finishing',baseSalary:2300000,joinDate:'2023-03-01',active:true,phone:'',kpi:{maxPenalty:2,targetBonus:1}},
-  {id:'e3',name:'Citra Dewi',role:'Packing',baseSalary:2200000,joinDate:'2024-01-10',active:true,phone:'',kpi:{maxPenalty:2,targetBonus:1}},
-];
+const DEF_BONUS=[{id:'absen_full',label:'Absen full bulan ini',amount:100000,builtin:true},{id:'teliti',label:'Kerja teliti & rapi',amount:100000,builtin:true},{id:'lembur',label:'Lembur',amount:50000,builtin:true},{id:'best',label:'Performa terbaik',amount:200000,builtin:true}];
+const DEF_PENALTY=[{id:'late',label:'Terlambat',amount:25000,builtin:true},{id:'absent',label:'Absen tanpa keterangan',amount:50000,builtin:true},{id:'minor',label:'Kesalahan kecil',amount:25000,builtin:true},{id:'major',label:'Kesalahan besar / kerusakan',amount:100000,builtin:true},{id:'complaint',label:'Komplain pelanggan',amount:75000,builtin:true}];
+const SEED=[{id:'e1',name:'Andi Saputra',role:'Produksi',baseSalary:2500000,joinDate:'2023-01-15',active:true,phone:'',kpi:{maxPenalty:2,targetBonus:1}},{id:'e2',name:'Budi Santoso',role:'Finishing',baseSalary:2300000,joinDate:'2023-03-01',active:true,phone:'',kpi:{maxPenalty:2,targetBonus:1}},{id:'e3',name:'Citra Dewi',role:'Packing',baseSalary:2200000,joinDate:'2024-01-10',active:true,phone:'',kpi:{maxPenalty:2,targetBonus:1}}];
 const $=id=>document.getElementById(id);
 const ld=(k,f)=>{try{return JSON.parse(localStorage.getItem(k))??f}catch{return f}};
 const sv=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
@@ -440,7 +376,6 @@ let lbPhotos=[],lbIdx=0;
 let filterEmpId='';
 let searchQ='';
 
-// ─── HELPERS ──────────────────────────────────────────────────────
 function today(){return new Date().toISOString().slice(0,10)}
 function uid(){return Date.now()+''+Math.floor(Math.random()*9999)}
 function idr(n){return'Rp '+Math.abs(Math.round(n||0)).toLocaleString('id-ID')}
@@ -465,10 +400,8 @@ function scoreClass(s){return s>=85?'good':s>=70?'warn':'bad'}
 function scoreLabel(s){return s>=85?'Elite':s>=70?'Watch':'Risk'}
 function hero(t,s,a=''){return`<div class="hero ${view}"><div><h1 class="title">${t}</h1><p class="subtitle">${s}</p></div>${a?`<div class="hero-actions">${a}</div>`:''}</div>`}
 
-// ─── TOAST ────────────────────────────────────────────────────────
 function toast(m,dur=2800){let t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(window._toastT);window._toastT=setTimeout(()=>t.classList.remove('show'),dur);}
 
-// ─── INIT ─────────────────────────────────────────────────────────
 function init(){
   let mp=$('monthPicker');
   for(let i=-12;i<=6;i++){
@@ -479,14 +412,20 @@ function init(){
   }
   mp.value=month;mp.onchange=()=>{month=mp.value;render()};
   $('todayPill').innerHTML=fmt(today());
-  updateSyncPill();renderNav();render();
+  
+  renderNav();
+  render();
+  
+  if(settings.sheetsEnabled && settings.sheetsUrl) pullSheets();
+  else updateSyncPill();
 }
+
 function updateSyncPill(){
   const p=$('syncPill');
   if(settings.sheetsEnabled&&settings.sheetsUrl){
-    p.innerHTML=`<span class="sync-dot" style="background:var(--green)"></span>Sheets aktif`;
+    p.innerHTML=`<span class="sync-dot" style="background:var(--green)"></span>Cloud Tersambung`;
   } else {
-    p.innerHTML=`<span class="sync-dot" style="background:#c8bfb2"></span>Sheets belum aktif`;
+    p.innerHTML=`<span class="sync-dot" style="background:#c8bfb2"></span>Mode Offline`;
   }
 }
 function renderNav(){
@@ -505,7 +444,6 @@ function render(){
   else if(view==='more')c.innerHTML=renderMore();
 }
 
-// ─── HOME ─────────────────────────────────────────────────────────
 function renderHome(){
   let em=active();
   let tb=mr().filter(r=>r.category==='bonus').reduce((s,r)=>s+r.amount,0);
@@ -513,31 +451,29 @@ function renderHome(){
   let pay=em.reduce((s,e)=>s+e.baseSalary+stats(e.id).net,0);
   let leaders=[...em].sort((a,b)=>stats(b.id).score-stats(a.id).score).slice(0,3);
   let badEmps=em.filter(e=>{let st=stats(e.id),kpi=e.kpi||{};return st.pc>(kpi.maxPenalty||2);});
-  return hero('Home','Ringkasan performa karyawan bulan ini',`<button class="btn primary" onclick="openRecordSheet()">+ Catat</button>`)
-    +(badEmps.length?`<div style="background:var(--red-bg);border:1px solid #fadce0;border-radius:24px;padding:16px 20px;margin-bottom:20px;font-size:14px;font-weight:700;color:var(--red);box-shadow:var(--shadow2)">⚠️ ${badEmps.length} karyawan melebihi batas pinalti: ${badEmps.map(e=>e.name).join(', ')}</div>`:'')
+  return hero('Beranda','Ringkasan performa tim & finansial',`<button class="btn primary" onclick="openRecordSheet()">+ Catat</button>`)
+    +(badEmps.length?`<div style="background:var(--red-bg);border:1px solid #fadce0;border-radius:24px;padding:16px 20px;margin-bottom:20px;font-size:14px;font-weight:700;color:var(--red);box-shadow:var(--shadow2)">⚠️ Peringatan: ${badEmps.length} karyawan melebihi batas pinalti bulanan (${badEmps.map(e=>e.name).join(', ')})</div>`:'')
     +`<div class="stats">
-      <div class="stat"><div class="stat-label">Team aktif</div><div class="stat-value">${em.length}</div></div>
-      <div class="stat"><div class="stat-label">Payroll</div><div class="stat-value">${idr(pay)}</div></div>
-      <div class="stat"><div class="stat-label">Bonus</div><div class="stat-value green">+${idr(tb)}</div></div>
-      <div class="stat"><div class="stat-label">Pinalti</div><div class="stat-value red">-${idr(tp)}</div></div>
+      <div class="stat"><div class="stat-label">Tim Aktif</div><div class="stat-value">${em.length}</div></div>
+      <div class="stat"><div class="stat-label">Beban Payroll</div><div class="stat-value">${idr(pay)}</div></div>
+      <div class="stat"><div class="stat-label">Total Bonus</div><div class="stat-value green">+${idr(tb)}</div></div>
+      <div class="stat"><div class="stat-label">Total Pinalti</div><div class="stat-value red">-${idr(tp)}</div></div>
     </div>
-    <div class="section-head"><h2>Leaderboard</h2></div>
+    <div class="section-head"><h2>Peringkat Performa</h2></div>
     ${leaders.map((e,i)=>`<div class="leader">
       <div class="rank">${i+1}</div>
       <div><b>${e.name}</b><div class="emp-meta">${e.role}</div></div>
       <div class="score ${scoreClass(stats(e.id).score)}">${stats(e.id).score}</div>
     </div>`).join('')}
-    <div class="section-head"><h2>Performa Karyawan</h2></div>
+    <div class="section-head"><h2>Daftar Karyawan</h2></div>
     <div class="card-list grid">${em.map(e=>empCard(e)).join('')}</div>`;
 }
 
-// ─── TEAM ─────────────────────────────────────────────────────────
 function renderTeam(){
-  return hero('Team','Data karyawan, gaji, WhatsApp, dan KPI',`<button class="btn primary" onclick="openEmployeeSheet()">+ Karyawan</button>`)
+  return hero('Daftar Tim','Manajemen personalia & pengaturan KPI',`<button class="btn primary" onclick="openEmployeeSheet()">+ Karyawan</button>`)
     +`<div class="card-list">${employees.map(e=>empCard(e,'team')).join('')}</div>`;
 }
 
-// ─── EMPLOYEE CARD ────────────────────────────────────────────────
 function empCard(e,mode='home'){
   let st=stats(e.id),total=e.baseSalary+st.net,sc=scoreClass(st.score);
   let kpi=e.kpi||{maxPenalty:2,targetBonus:1};
@@ -561,16 +497,15 @@ function empCard(e,mode='home'){
     </div>
     <div class="emp-actions">
       <button class="btn primary small" onclick="openRecordSheet('${e.id}')">+ Catat</button>
-      ${e.phone?`<button class="btn green-btn small" onclick="sendWA('${e.id}')">${icon('wa')} WA</button>`:''}
+      ${e.phone?`<button class="btn green-btn small" onclick="sendWA('${e.id}')">${icon('wa')} Kirim WA</button>`:''}
     </div>`
     :`<div class="emp-actions">
-      <button class="btn small" onclick="openEmployeeSheet('${e.id}')">✏️ Edit</button>
-      <button class="btn danger small" onclick="toggleEmp('${e.id}')">${e.active===false?'Aktifkan':'Nonaktif'}</button>
+      <button class="btn small" onclick="openEmployeeSheet('${e.id}')">✏️ Edit Profil</button>
+      <button class="btn danger small" onclick="toggleEmp('${e.id}')">${e.active===false?'Aktifkan':'Non-aktifkan'}</button>
     </div>`}
   </div>`;
 }
 
-// ─── RECORDS ──────────────────────────────────────────────────────
 function renderRecords(){
   let allRs=[...mr()].sort((a,b)=>b.date.localeCompare(a.date));
   let filtered=allRs.filter(r=>{
@@ -580,13 +515,13 @@ function renderRecords(){
     return matchEmp&&matchQ;
   });
   let em=active();
-  return hero('Catatan','Riwayat bonus, pinalti, dan bukti foto',`<button class="btn primary" onclick="openRecordSheet()">+ Catat</button>`)
-    +`<div class="search-wrap">${icon('search','search-icon')}<input type="search" placeholder="Cari nama, jenis, catatan..." value="${searchQ}" oninput="searchQ=this.value;render()"></div>`
+  return hero('Catatan','Riwayat penambahan dan pengurangan gaji',`<button class="btn primary" onclick="openRecordSheet()">+ Catat</button>`)
+    +`<div class="search-wrap">${icon('search','search-icon')}<input type="search" placeholder="Cari nama karyawan, jenis catatan..." value="${searchQ}" oninput="searchQ=this.value;render()"></div>`
     +`<div class="filter-chips">
-      <div class="chip ${!filterEmpId?'active':''}" onclick="filterEmpId='';render()">Semua</div>
+      <div class="chip ${!filterEmpId?'active':''}" onclick="filterEmpId='';render()">Semua Tim</div>
       ${em.map(e=>`<div class="chip ${filterEmpId===e.id?'active':''}" onclick="filterEmpId='${e.id}';render()">${e.name}</div>`).join('')}
     </div>
-    <div class="card-list">${filtered.length?filtered.map(r=>recordCard(r)).join(''):'<div class="empty">Belum ada catatan.</div>'}</div>`;
+    <div class="card-list">${filtered.length?filtered.map(r=>recordCard(r)).join(''):'<div class="empty">Belum ada histori catatan di bulan ini.</div>'}</div>`;
 }
 
 function recordCard(r){
@@ -604,7 +539,7 @@ function recordCard(r){
           <b class="${r.category==='bonus'?'green':'red'}" style="font-size:18px;white-space:nowrap">${r.category==='bonus'?'+':'-'}${idr(r.amount)}</b>
         </div>
         ${r.note?`<div class="emp-meta" style="margin-top:8px;font-style:italic;background:#fdfcfb;padding:8px 12px;border-radius:12px;border:1px solid var(--line);">"${r.note}"</div>`:''}
-        ${photos.length?`<div class="photo-grid">${photos.map((p,i)=>`<img src="${p}" class="photo-thumb" onclick="openLightbox(${JSON.stringify(photos)},${i})" onerror="this.style.display='none'">`).join('')}</div>`:''}
+        ${photos.length?`<div class="photo-grid">${photos.map((p,i)=>`<img src="${p.url||p}" class="photo-thumb" onclick="openLightbox(${JSON.stringify(photos).replace(/"/g,"&quot;")},${i})" onerror="this.style.display='none'">`).join('')}</div>`:''}
         <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;">
           <button class="btn xsmall blue" onclick="openEditRecord('${r.id}')">✏️ Edit</button>
           <button class="btn xsmall danger" onclick="delRec('${r.id}')">Hapus</button>
@@ -614,19 +549,18 @@ function recordCard(r){
   </div>`;
 }
 
-// ─── PAYROLL ──────────────────────────────────────────────────────
 function renderPayroll(){
   let em=active(),pay=em.reduce((s,e)=>s+e.baseSalary+stats(e.id).net,0);
   let[y,mo]=month.split('-');
-  return hero('Payroll','Rekap gaji, bonus, pinalti, dan slip',
+  return hero('Payroll','Rekapitulasi gaji bersih bulanan',
     `<div style="display:flex;gap:8px;flex-wrap:wrap;">
-      <button class="btn small" onclick="copyPayroll()">${icon('copy')} Salin</button>
-      <button class="btn small" onclick="exportAllSlips()">📄 Semua Slip</button>
-      ${settings.sheetsEnabled&&settings.sheetsUrl?`<button class="btn green-btn small" onclick="syncSheets()">☁️ Sync</button>`:''}
+      <button class="btn small" onclick="copyPayroll()">${icon('copy')} Salin Teks</button>
+      <button class="btn small" onclick="exportAllSlips()">📄 Download Semua Slip</button>
+      ${settings.sheetsEnabled&&settings.sheetsUrl?`<button class="btn green-btn small" onclick="syncSheets()">☁️ Push ke Cloud</button>`:''}
     </div>`)
     +`<div class="stats">
-      <div class="stat"><div class="stat-label">Total payroll</div><div class="stat-value">${idr(pay)}</div></div>
-      <div class="stat"><div class="stat-label">Karyawan</div><div class="stat-value">${em.length}</div></div>
+      <div class="stat"><div class="stat-label">Total Beban Gaji</div><div class="stat-value">${idr(pay)}</div></div>
+      <div class="stat"><div class="stat-label">Jumlah Tim</div><div class="stat-value">${em.length}</div></div>
     </div>
     <div class="card-list">${em.map(e=>{
       let st=stats(e.id),total=e.baseSalary+st.net;
@@ -642,12 +576,12 @@ function renderPayroll(){
         </div>
         <div class="metric-grid">
           <div class="metric"><span>Gaji Pokok</span><b>${idr(e.baseSalary)}</b></div>
-          <div class="metric"><span>Bonus</span><b class="green">+${idr(st.bonus)}</b></div>
-          <div class="metric"><span>Pinalti</span><b class="red">-${idr(st.penalty)}</b></div>
+          <div class="metric"><span>Bonus Diperoleh</span><b class="green">+${idr(st.bonus)}</b></div>
+          <div class="metric"><span>Pinalti Dibebankan</span><b class="red">-${idr(st.penalty)}</b></div>
           <div class="metric"><span>KPI Score</span><b class="gold">${st.score}/100</b></div>
         </div>
         ${st.rfPot>0?`<div style="background:var(--red-bg);border:1px solid #fadce0;border-radius:20px;padding:14px 18px;margin-top:16px;">
-          <div style="font-size:12px;color:var(--muted);font-weight:750;margin-bottom:6px">⚠️ Potongan Refund/Kurang Kirim</div>
+          <div style="font-size:12px;color:var(--muted);font-weight:750;margin-bottom:6px">⚠️ Pemotongan Dana Insiden / Refund</div>
           ${st.rfCases.map(r=>`<div style="display:flex;justify-content:space-between;font-size:13px;gap:8px;margin-top:6px;color:#555;">
             <span>${fmt(r.date)} · <b>${r.productName}</b> ×${r.qtyKurang} (${r.resolution==='refund'?'Refund 15%':'Ongkir'})</span>
             <span style="color:var(--red);font-weight:800;white-space:nowrap">-${idr(r.potongan)}</span>
@@ -663,111 +597,102 @@ function renderPayroll(){
           </div>`).join('')}
         </div>`:''}
         <div class="emp-actions" style="margin-top:16px;">
-          <button class="btn small" onclick="generateSlip('${e.id}')">${icon('download')} Slip PDF</button>
-          ${e.phone?`<button class="btn green-btn small" onclick="sendWA('${e.id}')">${icon('wa')} WhatsApp</button>`:''}
+          <button class="btn small" onclick="generateSlip('${e.id}')">${icon('download')} Cetak Slip PDF</button>
+          ${e.phone?`<button class="btn green-btn small" onclick="sendWA('${e.id}')">${icon('wa')} Kirim Rincian (WA)</button>`:''}
         </div>
       </div>`;
     }).join('')}</div>`;
 }
 
-// ─── MORE / SETTINGS ──────────────────────────────────────────────
 function renderMore(){
   let bTypes=bonusTypes,pTypes=penaltyTypes;
-  return hero('Lainnya','Pengaturan, tipe KPI, backup data')
-    // Company
+  return hero('Pengaturan','Konfigurasi aplikasi dan keamanan data')
     +`<div class="settings-card">
-      <h3>🏢 Perusahaan</h3>
+      <h3>🏢 Profil Bisnis</h3>
       <div class="form">
-        <input id="sCompany" placeholder="Nama perusahaan" value="${settings.companyName||''}">
-        <button class="btn small primary" onclick="saveCompany()">Simpan</button>
+        <input id="sCompany" placeholder="Nama perusahaan yang tampil di slip" value="${settings.companyName||''}">
+        <button class="btn small primary" onclick="saveCompany()">Simpan Profil</button>
       </div>
     </div>`
-    // Sheets
     +`<div class="settings-card">
-      <h3>☁️ Google Sheets Sync</h3>
+      <h3>☁️ Integrasi Google Sheets & Drive</h3>
       <div class="form">
         <input id="sSheetsUrl" placeholder="https://script.google.com/macros/s/.../exec" value="${settings.sheetsUrl||''}">
         <label style="display:flex;align-items:center;gap:12px;font-size:15px;font-weight:600;cursor:pointer;background:#fdfcfb;padding:14px;border-radius:18px;border:1px solid var(--line);">
           <input type="checkbox" id="sSheetsOn" ${settings.sheetsEnabled?'checked':''} style="width:20px;height:20px;accent-color:var(--brand);margin:0;">
-          Aktifkan sync otomatis
+          Aktifkan mode Cloud-First & Drive
         </label>
         <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <button class="btn small primary" onclick="saveSheets()">Simpan</button>
-          <button class="btn small" onclick="testSheets()">Test</button>
-          <button class="btn small blue" onclick="showGASTemplate()">📋 Template Script</button>
+          <button class="btn small primary" onclick="saveSheets()">Simpan Setup</button>
+          <button class="btn small blue" onclick="pullSheets()">⬇️ Tarik Data Cloud</button>
+          <button class="btn small" onclick="showGASTemplate()">📋 Dapatkan Script Baru</button>
         </div>
       </div>
     </div>`
-    // Bonus types
     +`<div class="settings-card">
-      <div class="section-head" style="margin:0 0 16px"><h3 style="margin:0">✅ Jenis Bonus</h3><button class="btn xsmall primary" onclick="openTypeSheet('bonus')">+ Tambah</button></div>
+      <div class="section-head" style="margin:0 0 16px"><h3 style="margin:0">✅ Setup Jenis Bonus</h3><button class="btn xsmall primary" onclick="openTypeSheet('bonus')">+ Kriteria Baru</button></div>
       <div style="display:flex;flex-direction:column;gap:10px;">
         ${bTypes.map(t=>`<div class="type-row">
           <div class="type-label">${t.label}</div>
           <div class="type-amount green">+${idr(t.amount)}</div>
-          ${!t.builtin?`<button class="btn xsmall danger" onclick="delType('bonus','${t.id}')">Hapus</button>`:`<span style="font-size:11px;color:#ccc;font-weight:600;">bawaan</span>`}
+          ${!t.builtin?`<button class="btn xsmall danger" onclick="delType('bonus','${t.id}')">Hapus</button>`:`<span style="font-size:11px;color:#ccc;font-weight:600;">Bawaan</span>`}
         </div>`).join('')}
       </div>
     </div>`
-    // Penalty types
     +`<div class="settings-card">
-      <div class="section-head" style="margin:0 0 16px"><h3 style="margin:0">⚠️ Jenis Pinalti</h3><button class="btn xsmall primary" onclick="openTypeSheet('penalty')">+ Tambah</button></div>
+      <div class="section-head" style="margin:0 0 16px"><h3 style="margin:0">⚠️ Setup Jenis Pinalti</h3><button class="btn xsmall primary" onclick="openTypeSheet('penalty')">+ Kriteria Baru</button></div>
       <div style="display:flex;flex-direction:column;gap:10px;">
         ${pTypes.map(t=>`<div class="type-row">
           <div class="type-label">${t.label}</div>
           <div class="type-amount red">-${idr(t.amount)}</div>
-          ${!t.builtin?`<button class="btn xsmall danger" onclick="delType('penalty','${t.id}')">Hapus</button>`:`<span style="font-size:11px;color:#ccc;font-weight:600;">bawaan</span>`}
+          ${!t.builtin?`<button class="btn xsmall danger" onclick="delType('penalty','${t.id}')">Hapus</button>`:`<span style="font-size:11px;color:#ccc;font-weight:600;">Bawaan</span>`}
         </div>`).join('')}
       </div>
     </div>`
-    // Portal
     +`<div class="settings-card" style="border-color:#dbe7fa;background:var(--blue-bg)">
-      <h3 style="color:var(--blue)">🔗 Portal Karyawan</h3>
-      <p style="font-size:14px;color:#555;line-height:1.6;margin:0 0 14px">Buka file <b>gatari-kpi-karyawan.html</b> di browser yang sama untuk tampilan portal mandiri karyawan.</p>
-      <div style="background:#ffffff;border:1px solid #dbe7fa;border-radius:16px;padding:12px 16px;font-size:13px;font-weight:700;color:var(--blue);box-shadow:var(--shadow2)">💡 Set PIN tiap karyawan di tab Team → Edit</div>
+      <h3 style="color:var(--blue)">🔗 Portal Mandiri Karyawan</h3>
+      <p style="font-size:14px;color:#555;line-height:1.6;margin:0 0 14px">Buka file <b>gatari-kpi-karyawan.html</b> di browser yang sama untuk tampilan portal karyawan.</p>
+      <div style="background:#ffffff;border:1px solid #dbe7fa;border-radius:16px;padding:12px 16px;font-size:13px;font-weight:700;color:var(--blue);box-shadow:var(--shadow2)">💡 Tetapkan PIN Login karyawan di menu Daftar Tim → Edit Profil</div>
     </div>`
-    // Backup
     +`<div class="settings-card">
-      <h3>💾 Backup Data</h3>
+      <h3>💾 Pencadangan File (Lokal)</h3>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
-        <button class="btn small" onclick="exportJson()">${icon('download')} Export JSON</button>
-        <button class="btn small blue" onclick="$('importFile').click()">📂 Import JSON</button>
+        <button class="btn small" onclick="exportJson()">${icon('download')} Export JSON Backup</button>
+        <button class="btn small blue" onclick="$('importFile').click()">📂 Restore dari JSON</button>
         <input id="importFile" type="file" accept=".json" style="display:none" onchange="importJson(event)">
       </div>
     </div>`
-    // Danger
     +`<div class="settings-card" style="border-color:#fadce0;">
       <h3 style="color:var(--red)">🗑️ Danger Zone</h3>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
-        <button class="btn small danger" onclick="if(confirm('Hapus semua catatan bulan ini?')){records=records.filter(r=>!r.date.startsWith(month));sv('kpi_records',records);render();toast('Catatan dihapus')}">Hapus Catatan Bulan Ini</button>
-        <button class="btn small danger" onclick="if(confirm('RESET SEMUA DATA? Tidak bisa dibatalkan!')){localStorage.clear();location.reload()}">Reset Semua (Factory Reset)</button>
+        <button class="btn small danger" onclick="if(confirm('Aksi ini akan menghapus semua histori catatan bulan ini. Lanjutkan?')){records=records.filter(r=>!r.date.startsWith(month));sv('kpi_records',records);render();toast('Catatan bulan ini berhasil dibersihkan')}">Hapus Catatan Bulan Ini</button>
+        <button class="btn small danger" onclick="if(confirm('KEMBALIKAN KE PENGATURAN PABRIK? Seluruh data akan hilang secara permanen jika tidak di-backup!')){localStorage.clear();location.reload()}">Reset Total Pabrik</button>
       </div>
     </div>`;
 }
 
-// ─── RECORD SHEET ─────────────────────────────────────────────────
 function openRecordSheet(empId=''){
   cat='penalty';recordPhotos=[];editingRecordId=null;
   let em=active();
   $('sheetContent').innerHTML=`
-    <h2 class="sheet-title">Tambah Catatan</h2>
+    <h2 class="sheet-title">Pembuatan Catatan Baru</h2>
     <div class="form">
       <select id="rEmp">${em.map(e=>`<option value="${e.id}" ${e.id===empId?'selected':''}>${e.name} — ${e.role}</option>`).join('')}</select>
       <input type="date" id="rDate" value="${today()}" onchange="checkDateWarn()">
-      <div class="date-warn" id="dateWarn">⚠️ Tanggal mundur — hanya gunakan jika kelupaan mencatat</div>
+      <div class="date-warn" id="dateWarn">⚠️ Anda memasukkan tanggal lampau. Pastikan validitas histori.</div>
       <div class="seg">
         <button id="segPenalty" class="active" onclick="setCat('penalty')">⚠️ Pinalti</button>
         <button id="segBonus" onclick="setCat('bonus')">✅ Bonus</button>
       </div>
       <select id="rType"></select>
-      <textarea id="rNote" rows="3" placeholder="Tulis rincian catatan (opsional)"></textarea>
+      <textarea id="rNote" rows="3" placeholder="Tuliskan kronologi / rincian pendukung (opsional)"></textarea>
       <div>
-        <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:10px;">📷 Foto Bukti (bisa lebih dari 1)</div>
+        <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:10px;">📷 Upload ke Google Drive (Otomatis)</div>
         <div id="photosRow" class="photo-grid"></div>
         <input type="file" id="rFile" accept="image/*" multiple style="display:none" onchange="handlePhotos(event)">
       </div>
-      <button class="btn primary" onclick="saveRecord()" style="margin-top:8px">Simpan Catatan</button>
-      <button class="btn" onclick="closeSheet()">Batal</button>
+      <button class="btn primary" onclick="saveRecord()" style="margin-top:8px">Submit Catatan</button>
+      <button class="btn" onclick="closeSheet()">Batalkan</button>
     </div>`;
   fillTypes();renderPhotosRow();
   $('sheet').classList.add('show');
@@ -781,24 +706,24 @@ function openEditRecord(id){
   recordPhotos=[...(r.photos||[])];
   let em=active();
   $('sheetContent').innerHTML=`
-    <h2 class="sheet-title">Edit Catatan <span class="edit-badge">Mode Edit</span></h2>
+    <h2 class="sheet-title">Ubah Catatan <span class="edit-badge">Mode Edit</span></h2>
     <div class="form">
       <select id="rEmp">${em.map(e=>`<option value="${e.id}" ${e.id===r.empId?'selected':''}>${e.name} — ${e.role}</option>`).join('')}</select>
       <input type="date" id="rDate" value="${r.date}" onchange="checkDateWarn()">
-      <div class="date-warn ${r.date<today()?'show':''}" id="dateWarn">⚠️ Tanggal mundur</div>
+      <div class="date-warn ${r.date<today()?'show':''}" id="dateWarn">⚠️ Tanggal lampau</div>
       <div class="seg">
         <button id="segPenalty" class="${cat==='penalty'?'active':''}" onclick="setCat('penalty')">⚠️ Pinalti</button>
         <button id="segBonus" class="${cat==='bonus'?'active':''}" onclick="setCat('bonus')">✅ Bonus</button>
       </div>
       <select id="rType"></select>
-      <textarea id="rNote" rows="3" placeholder="Catatan tambahan">${r.note||''}</textarea>
+      <textarea id="rNote" rows="3" placeholder="Tuliskan kronologi...">${r.note||''}</textarea>
       <div>
-        <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:10px;">📷 Foto Bukti</div>
+        <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:10px;">📷 Lampiran Drive</div>
         <div id="photosRow" class="photo-grid"></div>
         <input type="file" id="rFile" accept="image/*" multiple style="display:none" onchange="handlePhotos(event)">
       </div>
-      <button class="btn primary" onclick="saveRecord()" style="margin-top:8px">Simpan Perubahan</button>
-      <button class="btn" onclick="closeSheet()">Batal</button>
+      <button class="btn primary" onclick="saveRecord()" style="margin-top:8px">Terapkan Perubahan</button>
+      <button class="btn" onclick="closeSheet()">Batalkan</button>
     </div>`;
   fillTypes(r.label);renderPhotosRow();
   $('sheet').classList.add('show');
@@ -816,7 +741,7 @@ function setCat(c){
 }
 function fillTypes(selectLabel=''){
   let arr=cat==='bonus'?bonusTypes:penaltyTypes;
-  let customOpt={id:'custom',label:'✨ Lainnya (Ketik Sendiri)',amount:0};
+  let customOpt={id:'custom',label:'✨ Kriteria Khusus (Ketik Sendiri)',amount:0};
   let all=[...arr,customOpt];
   $('rType').innerHTML=all.map(t=>`<option value="${t.id}" ${t.label===selectLabel?'selected':''}>${t.label}${t.amount>0?' — '+idr(t.amount):''}</option>`).join('');
   $('rType').onchange=()=>{
@@ -825,27 +750,84 @@ function fillTypes(selectLabel=''){
     if(isCustom&&!existing){
       let cf=document.createElement('div');cf.id='customFields';cf.className='form';
       cf.style.background='#fdfcfb'; cf.style.padding='16px'; cf.style.borderRadius='20px'; cf.style.border='1px solid var(--line)';
-      cf.innerHTML=`<input id="rCustomLabel" placeholder="Nama pelanggaran/prestasi baru"><div class="two"><input id="rCustomAmount" type="text" inputmode="numeric" placeholder="Nominal Rp" oninput="fmtRp(this)"><div></div></div>`;
+      cf.innerHTML=`<input id="rCustomLabel" placeholder="Deskripsi jenis catatan baru"><div class="two"><input id="rCustomAmount" type="text" inputmode="numeric" placeholder="Nominal (Rp)" oninput="fmtRp(this)"><div></div></div>`;
       $('rType').insertAdjacentElement('afterend',cf);
     } else if(!isCustom&&existing){existing.remove();}
   };
 }
-function handlePhotos(e){
-  let files=Array.from(e.target.files);
-  files.forEach(f=>{
-    let r=new FileReader();
-    r.onload=ev=>{recordPhotos.push(ev.target.result);renderPhotosRow();};
+
+// FUNGSI BARU: MENGUNGGAH FOTO KE GOOGLE DRIVE SECARA OTOMATIS
+async function handlePhotos(e){
+  if(!settings.sheetsUrl || !settings.sheetsEnabled) {
+    toast('Gagal: Aktifkan URL Google Sheets di menu Lainnya untuk mengunggah ke Drive', 4000);
+    return;
+  }
+  let files = Array.from(e.target.files);
+  for(let f of files) {
+    toast('Sedang mengunggah foto ke Google Drive...', 10000);
+    let r = new FileReader();
     r.readAsDataURL(f);
-  });
+    await new Promise(res => r.onload = res);
+    let base64 = r.result;
+    
+    try {
+      let res = await fetch(settings.sheetsUrl, {
+        method: 'POST',
+        headers: {'Content-Type': 'text/plain;charset=utf-8'},
+        body: JSON.stringify({
+          action: "upload_photo",
+          base64: base64,
+          mimeType: f.type,
+          filename: "Bukti_" + today() + "_" + uid() + ".jpg"
+        })
+      });
+      let data = await res.json();
+      if(data.url) {
+        recordPhotos.push({ url: data.url, fileId: data.fileId });
+        renderPhotosRow();
+        toast('Foto berhasil tersimpan di Google Drive ✓');
+      } else {
+        toast('Google Drive menolak unggahan');
+      }
+    } catch(err) {
+      toast('Error upload koneksi: ' + err.message);
+    }
+  }
 }
+
 function renderPhotosRow(){
   let row=$('photosRow');if(!row)return;
-  row.innerHTML=recordPhotos.map((p,i)=>`<div class="photo-wrap">
-    <img src="${p}" class="photo-thumb" onclick="openLightbox(recordPhotos,${i})">
-    <div class="photo-del" onclick="recordPhotos.splice(${i},1);renderPhotosRow()">✕</div>
-  </div>`).join('')
-  +`<div class="photo-add-btn" onclick="$('rFile').click()">+</div>`;
+  row.innerHTML=recordPhotos.map((p,i)=>{
+    let url = p.url || p; // Kompatibilitas dengan base64 lama
+    return `<div class="photo-wrap">
+      <img src="${url}" class="photo-thumb" onclick="openLightbox(recordPhotos,${i})">
+      <div class="photo-del" onclick="deletePhoto(${i})">✕</div>
+    </div>`;
+  }).join('') + `<div class="photo-add-btn" onclick="$('rFile').click()">+</div>`;
 }
+
+// FUNGSI BARU: MENGHAPUS FOTO DARI GOOGLE DRIVE
+async function deletePhoto(idx) {
+  if(!confirm('Hapus foto ini secara permanen dari Google Drive?')) return;
+  let p = recordPhotos[idx];
+  recordPhotos.splice(idx, 1);
+  renderPhotosRow();
+  
+  if(p.fileId && settings.sheetsUrl) {
+    toast('Sedang menghapus foto dari sistem Drive...', 5000);
+    try {
+      await fetch(settings.sheetsUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ action: "delete_photo", fileId: p.fileId })
+      });
+      toast('Foto berhasil dibersihkan dari Drive ✓');
+    } catch(e) {
+      toast('Drive Error: ' + e.message);
+    }
+  }
+}
+
 function saveRecord(){
   let empId=$('rEmp')?.value;
   let date=$('rDate')?.value;
@@ -856,105 +838,113 @@ function saveRecord(){
   let t=arr.find(x=>x.id===typeId);
   let label=isCustom?($('rCustomLabel')?.value||'Custom'):t?.label||'';
   let amount=isCustom?getRaw('rCustomAmount'):(t?.amount||0);
-  if(!empId||!label||amount<=0){toast('Pastikan label dan nominal terisi benar');return;}
+  if(!empId||!label||amount<=0){toast('Sistem menolak: Label dan nominal tidak valid');return;}
   if(editingRecordId){
     records=records.map(r=>r.id===editingRecordId?{...r,empId,date,category:cat,label,amount,note,photos:[...recordPhotos]}:r);
-    toast('Catatan diperbarui ✓');
+    toast('Perubahan pada catatan berhasil disimpan ✓');
   } else {
     records.push({id:uid(),empId,date,category:cat,label,amount,note,photos:[...recordPhotos]});
     month=date.slice(0,7);$('monthPicker').value=month;
-    toast('Catatan berhasil disimpan ✓');
+    toast('Sistem merekam catatan baru ✓');
   }
   sv('kpi_records',records);
   closeSheet();render();
   if(settings.sheetsEnabled&&settings.sheetsUrl)syncSheets();
 }
 
-// ─── EMPLOYEE SHEET ───────────────────────────────────────────────
 function openEmployeeSheet(id=''){
   let e=id?employees.find(x=>x.id===id):null;
   $('sheetContent').innerHTML=`
-    <h2 class="sheet-title">${e?'Edit Data':'Tambah'} Karyawan</h2>
+    <h2 class="sheet-title">${e?'Modifikasi Profil':'Registrasi'} Karyawan</h2>
     <div class="form">
       <input id="eName" placeholder="Nama lengkap karyawan *" value="${e?.name||''}">
-      <input id="eRole" placeholder="Divisi / Posisi" value="${e?.role||''}">
-      <input id="eSalary" type="text" inputmode="numeric" placeholder="Gaji pokok (Rp) *" value="${e?e.baseSalary.toLocaleString('id-ID'):''}" oninput="fmtRp(this)">
-      <input id="ePhone" type="tel" placeholder="No WhatsApp (628xxx) — opsional" value="${e?.phone||''}">
+      <input id="eRole" placeholder="Divisi operasional" value="${e?.role||''}">
+      <input id="eSalary" type="text" inputmode="numeric" placeholder="Standar gaji pokok (Rp) *" value="${e?e.baseSalary.toLocaleString('id-ID'):''}" oninput="fmtRp(this)">
+      <input id="ePhone" type="tel" placeholder="Koneksi WhatsApp (628xxx) — opsional" value="${e?.phone||''}">
       <input id="eJoin" type="date" value="${e?.joinDate||today()}">
       
       <div style="background:#fdfcfb;border:1px solid var(--line);border-radius:20px;padding:18px;margin-top:8px;">
-        <div style="font-size:14px;font-weight:800;color:var(--text);margin-bottom:4px">🔐 PIN Login Karyawan</div>
-        <div style="font-size:12.5px;color:var(--muted);margin-bottom:12px;line-height:1.4">Buat 4 digit angka untuk password login karyawan di portal mandiri mereka.</div>
+        <div style="font-size:14px;font-weight:800;color:var(--text);margin-bottom:4px">🔐 Autentikasi Karyawan (PIN)</div>
+        <div style="font-size:12.5px;color:var(--muted);margin-bottom:12px;line-height:1.4">Setel 4 digit PIN untuk akses portal mandiri karyawan bersangkutan.</div>
         <input id="ePin" type="number" placeholder="Contoh: 1234" value="${e?.pin||''}" style="letter-spacing:10px;font-size:22px;font-weight:900;text-align:center" maxlength="4">
       </div>
       
       <div style="background:#fdfcfb;border:1px solid var(--line);border-radius:20px;padding:18px;margin-top:4px;">
-        <div style="font-size:14px;font-weight:800;color:var(--text);margin-bottom:12px">🎯 Target KPI Bulanan</div>
+        <div style="font-size:14px;font-weight:800;color:var(--text);margin-bottom:12px">🎯 Indikator Kinerja Utama (KPI)</div>
         <div class="two">
-          <div><label style="font-size:12px;color:var(--muted);font-weight:600;display:block;margin-bottom:6px">Batas Maksimal Pinalti</label><input id="eMaxPen" type="number" placeholder="2" value="${(e?.kpi||{}).maxPenalty||2}"></div>
-          <div><label style="font-size:12px;color:var(--muted);font-weight:600;display:block;margin-bottom:6px">Target Minimal Bonus</label><input id="eMinBon" type="number" placeholder="1" value="${(e?.kpi||{}).targetBonus||1}"></div>
+          <div><label style="font-size:12px;color:var(--muted);font-weight:600;display:block;margin-bottom:6px">Toleransi Pinalti</label><input id="eMaxPen" type="number" placeholder="2" value="${(e?.kpi||{}).maxPenalty||2}"></div>
+          <div><label style="font-size:12px;color:var(--muted);font-weight:600;display:block;margin-bottom:6px">Ekspektasi Bonus</label><input id="eMinBon" type="number" placeholder="1" value="${(e?.kpi||{}).targetBonus||1}"></div>
         </div>
       </div>
       
-      <button class="btn primary" onclick="saveEmp('${id}')" style="margin-top:8px">Simpan Data</button>
-      <button class="btn" onclick="closeSheet()">Batal</button>
+      <button class="btn primary" onclick="saveEmp('${id}')" style="margin-top:8px">Simpan Entitas</button>
+      <button class="btn" onclick="closeSheet()">Batalkan</button>
     </div>`;
   $('sheet').classList.add('show');
 }
 function saveEmp(id){
   let pin=$('ePin').value.trim().slice(0,4);
   let data={name:$('eName').value.trim(),role:$('eRole').value.trim(),baseSalary:getRaw('eSalary'),phone:$('ePhone').value.trim(),joinDate:$('eJoin').value,pin,active:true,kpi:{maxPenalty:+$('eMaxPen').value||2,targetBonus:+$('eMinBon').value||1}};
-  if(!data.name||!data.baseSalary)return toast('Mohon lengkapi Nama dan Gaji Pokok');
+  if(!data.name||!data.baseSalary)return toast('Sistem menolak: Nama dan Gaji Pokok tidak boleh kosong');
   if(id)employees=employees.map(e=>e.id===id?{...e,...data,active:e.active}:e);
   else employees.push({id:'e'+uid(),...data});
   sv('kpi_employees',employees);
-  closeSheet(); render(); toast('Data karyawan berhasil disimpan ✓');
+  closeSheet(); render(); toast('Integrasi data karyawan ke dalam sistem berhasil ✓');
   if(settings.sheetsEnabled&&settings.sheetsUrl)syncSheets();
 }
 function toggleEmp(id){
-  if(!confirm('Ubah status aktif/non-aktif karyawan ini?'))return;
+  if(!confirm('Modifikasi status operasional karyawan bersangkutan di sistem?'))return;
   employees=employees.map(e=>e.id===id?{...e,active:e.active===false?true:false}:e);
   sv('kpi_employees',employees); render();
   if(settings.sheetsEnabled&&settings.sheetsUrl)syncSheets();
 }
 function delRec(id){
-  if(!confirm('Yakin ingin menghapus catatan ini secara permanen?'))return;
-  records=records.filter(r=>r.id!==id);
-  sv('kpi_records',records); render(); toast('Catatan berhasil dihapus');
+  if(!confirm('Anda akan menghapus entitas ini dari database secara permanen. Eksekusi?'))return;
+  let r = records.find(x=>x.id===id);
+  records=records.filter(x=>x.id!==id);
+  sv('kpi_records',records); render(); toast('Entri data telah dieliminasi');
+  
+  // HAPUS FOTO TERKAIT DI DRIVE SAAT CATATAN DIHAPUS
+  if(r && r.photos && r.photos.length && settings.sheetsUrl) {
+    for(let p of r.photos) {
+      if(p.fileId) {
+        fetch(settings.sheetsUrl, { method: 'POST', headers: {'Content-Type': 'text/plain;charset=utf-8'}, body: JSON.stringify({action: "delete_photo", fileId: p.fileId}) });
+      }
+    }
+  }
   if(settings.sheetsEnabled&&settings.sheetsUrl)syncSheets();
 }
 function closeSheet(){$('sheet').classList.remove('show');}
 
-// ─── TYPE SHEET ───────────────────────────────────────────────────
 function openTypeSheet(catType){
   $('sheetContent').innerHTML=`
-    <h2 class="sheet-title">Tambah Jenis ${catType==='bonus'?'Bonus':'Pinalti'}</h2>
+    <h2 class="sheet-title">Penambahan Kriteria ${catType==='bonus'?'Bonus':'Pinalti'}</h2>
     <div class="form">
-      <input id="ntLabel" placeholder="Nama/Judul kriteria">
-      <input id="ntAmount" type="text" inputmode="numeric" placeholder="Nominal Rupiah (misal: 50.000)" oninput="fmtRp(this)">
-      <button class="btn primary" onclick="saveType('${catType}')" style="margin-top:8px">Simpan Kriteria</button>
-      <button class="btn" onclick="closeSheet()">Batal</button>
+      <input id="ntLabel" placeholder="Definisi kriteria / judul">
+      <input id="ntAmount" type="text" inputmode="numeric" placeholder="Nominal Rupiah" oninput="fmtRp(this)">
+      <button class="btn primary" onclick="saveType('${catType}')" style="margin-top:8px">Register Kriteria</button>
+      <button class="btn" onclick="closeSheet()">Batalkan</button>
     </div>`;
   $('sheet').classList.add('show');
 }
 function saveType(catType){
   let label=$('ntLabel').value.trim();
   let amount=getRaw('ntAmount');
-  if(!label||!amount){toast('Lengkapi nama kriteria dan nominalnya');return;}
+  if(!label||!amount){toast('Sistem menolak: Lengkapi seluruh kolom isian');return;}
   let newT={id:'c'+uid(),label,amount,builtin:false};
   if(catType==='bonus'){bonusTypes=[...bonusTypes,newT];sv('kpi_bonus_types',bonusTypes);}
   else{penaltyTypes=[...penaltyTypes,newT];sv('kpi_penalty_types',penaltyTypes);}
-  closeSheet();render();toast('Kriteria baru berhasil ditambahkan ✓');
+  closeSheet();render();toast('Sistem mengkalibrasi kriteria baru ✓');
 }
 function delType(catType,id){
   if(catType==='bonus'){bonusTypes=bonusTypes.filter(t=>t.id!==id);sv('kpi_bonus_types',bonusTypes);}
   else{penaltyTypes=penaltyTypes.filter(t=>t.id!==id);sv('kpi_penalty_types',penaltyTypes);}
-  render();toast('Kriteria dihapus');
+  render();toast('Konfigurasi dihapus');
 }
 
-// ─── LIGHTBOX ─────────────────────────────────────────────────────
 function openLightbox(photos,idx){
-  lbPhotos=Array.isArray(photos)?photos:[];lbIdx=idx||0;
+  lbPhotos=Array.isArray(photos)?photos.map(p=>p.url||p):[];
+  lbIdx=idx||0;
   $('lbImg').src=lbPhotos[lbIdx]||'';
   $('lbCounter').textContent=lbPhotos.length>1?`${lbIdx+1} / ${lbPhotos.length}`:'';
   $('lbPrev').style.display=lbPhotos.length>1?'':'none';
@@ -976,26 +966,24 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Escape'&&$('sheet').classList.contains('show'))closeSheet();
 });
 
-// ─── WA ───────────────────────────────────────────────────────────
 function sendWA(id){
   let e=employees.find(x=>x.id===id);
-  if(!e?.phone){toast('Mohon lengkapi No. WhatsApp di profil karyawan terlebih dahulu');return;}
+  if(!e?.phone){toast('Operasi dibatalkan: Lengkapi direktori No WhatsApp di profil bersangkutan');return;}
   let st=stats(id),total=e.baseSalary+st.net;
   let[y,mo]=month.split('-');
   let kpi=e.kpi||{maxPenalty:2,targetBonus:1};
-  let statusTxt=st.score>=85?'✅ KPI Sangat Baik':st.score>=70?'⚠️ KPI Perlu Perhatian':'❌ KPI Di Bawah Target';
-  let detailBonus=st.rs.filter(r=>r.category==='bonus').map(r=>`  • ${fmt(r.date)}: ${r.label} (+${idr(r.amount)})`).join('\n')||'  (tidak ada)';
-  let detailPenalty=st.rs.filter(r=>r.category==='penalty').map(r=>`  • ${fmt(r.date)}: ${r.label} (-${idr(r.amount)})`).join('\n')||'  (tidak ada)';
-  let msg=`Halo ${e.name} 👋\n\n*Rekap Performa ${MONTHS[+mo-1]} ${y}*\n${statusTxt} (${st.score}/100)\n\n💰 Gaji Pokok: ${idr(e.baseSalary)}\n\n✅ Bonus (+${idr(st.bonus)}):\n${detailBonus}\n\n⚠️ Pinalti (-${idr(st.penalty)}):\n${detailPenalty}\n\n*Total Gaji: ${idr(total)}*\n\nTarget KPI: maks ${kpi.maxPenalty} pinalti · min ${kpi.targetBonus} bonus\n\nTerima kasih atas kerja kerasnya! 🙏\n— ${settings.companyName||'Gatari Edutoys'}`;
+  let statusTxt=st.score>=85?'✅ Indikator Kinerja Optimal':st.score>=70?'⚠️ Indikator Membutuhkan Atensi':'❌ Indikator Kinerja Substandar';
+  let detailBonus=st.rs.filter(r=>r.category==='bonus').map(r=>`  • ${fmt(r.date)}: ${r.label} (+${idr(r.amount)})`).join('\n')||'  (Nihil)';
+  let detailPenalty=st.rs.filter(r=>r.category==='penalty').map(r=>`  • ${fmt(r.date)}: ${r.label} (-${idr(r.amount)})`).join('\n')||'  (Nihil)';
+  let msg=`Halo ${e.name},\n\nBerikut rincian performansi Anda pada periode *${MONTHS[+mo-1]} ${y}*\n${statusTxt} (${st.score}/100)\n\n💰 Basis Gaji: ${idr(e.baseSalary)}\n\n✅ Perolehan Bonus (+${idr(st.bonus)}):\n${detailBonus}\n\n⚠️ Beban Pinalti (-${idr(st.penalty)}):\n${detailPenalty}\n\n*TOTAL DISTRIBUSI: ${idr(total)}*\n\nTarget KPI Berjalan: Limit pinalti ${kpi.maxPenalty} · Minimum perolehan bonus ${kpi.targetBonus}\n\nTetap semangat dan jaga konsistensi operasional! 🙏\n— Manajemen ${settings.companyName||'Gatari Edutoys'}`;
   window.open('https://wa.me/'+e.phone+'?text='+encodeURIComponent(msg),'_blank');
 }
 
-// ─── PDF SLIP ─────────────────────────────────────────────────────
 function generateSlip(empId){
   let e=employees.find(x=>x.id===empId);if(!e)return;
   let st=stats(empId),total=e.baseSalary+st.net;
   let[y,mo]=month.split('-');
-  if(!window.jspdf){toast('Sistem PDF sedang disiapkan, mohon tunggu sebentar lalu coba lagi');return;}
+  if(!window.jspdf){toast('Sistem rendering dokumen belum siap. Memulai inisialisasi ulang...');return;}
   const{jsPDF}=window.jspdf;
   const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a5'});
   const W=148,pad=16;
@@ -1004,12 +992,12 @@ function generateSlip(empId){
   doc.setTextColor(255,255,255);doc.setFontSize(13);doc.setFont('helvetica','bold');
   doc.text(settings.companyName||'Gatari Edutoys',pad,13);
   doc.setFontSize(8);doc.setFont('helvetica','normal');
-  doc.text('SLIP GAJI',W-pad,13,{align:'right'});
+  doc.text('DOKUMEN PAYROLL',W-pad,13,{align:'right'});
   
   doc.setFillColor(216,159,60);doc.rect(0,20,W,8,'F');
   doc.setTextColor(26,24,21);doc.setFontSize(8);doc.setFont('helvetica','bold');
-  doc.text(`Periode: ${MONTHS[+mo-1]} ${y}`,pad,26);
-  doc.text(`Dicetak: ${fmt(today())}`,W-pad,26,{align:'right'});
+  doc.text(`Siklus Finansial: ${MONTHS[+mo-1]} ${y}`,pad,26);
+  doc.text(`Waktu Ekstraksi: ${fmt(today())}`,W-pad,26,{align:'right'});
   
   doc.setFillColor(253,252,251);doc.rect(pad,34,W-pad*2,22,'F');
   doc.setDrawColor(230,225,216);doc.rect(pad,34,W-pad*2,22,'S');
@@ -1044,41 +1032,64 @@ function generateSlip(empId){
   let sc=st.score;
   let stColor=sc>=85?[37,140,90]:sc>=70?[184,121,0]:[209,86,98];
   doc.setTextColor(...stColor);doc.setFontSize(8);doc.setFont('helvetica','bold');
-  doc.text(`KPI Score: ${sc}/100 | Bonus: ${st.bc} | Pinalti: ${st.pc}`,pad,yy);
+  doc.text(`Audit Skor: ${sc}/100 | Frekuensi Bonus: ${st.bc} | Insiden Pinalti: ${st.pc}`,pad,yy);
   
   doc.setDrawColor(230,225,216);doc.line(pad,200,W-pad,200);
   doc.setTextColor(180,175,168);doc.setFontSize(7);doc.setFont('helvetica','normal');
-  doc.text('Dokumen ini diterbitkan secara otomatis oleh sistem.',pad,206);
-  doc.text(`© ${y} ${settings.companyName||'Gatari Edutoys'}`,W-pad,206,{align:'right'});
-  doc.save(`Slip_${e.name.replace(/ /g,'_')}_${month}.pdf`);
-  toast(`Slip gaji ${e.name} sedang diunduh...`);
+  doc.text('Dokumen ini dienkripsi & digenerate secara otomatis oleh sistem internal.',pad,206);
+  doc.text(`© ${y} Manajemen ${settings.companyName||'Gatari Edutoys'}`,W-pad,206,{align:'right'});
+  doc.save(`Dokumen_Payroll_${e.name.replace(/ /g,'_')}_${month}.pdf`);
+  toast(`Mengkompilasi PDF slip gaji atas entitas ${e.name}...`);
 }
 function exportAllSlips(){
   active().forEach((e,i)=>setTimeout(()=>generateSlip(e.id),i*500));
-  toast('Sistem sedang memproses semua slip...',3500);
+  toast('Sistem mengalokasikan resource untuk mengkompilasi sekumpulan data slip...',3500);
 }
 
-// ─── PAYROLL COPY ─────────────────────────────────────────────────
 function copyPayroll(){
   let[y,mo]=month.split('-');
-  let text='Rekap Gaji '+MONTHS[+mo-1]+' '+y+'\n'+active().map(e=>{let st=stats(e.id);return`${e.name}\t${idr(e.baseSalary)}\t+${idr(st.bonus)}\t-${idr(st.penalty)}\t${idr(e.baseSalary+st.net)}`}).join('\n');
-  navigator.clipboard.writeText(text);toast('Teks rekap berhasil disalin ke clipboard ✓');
+  let text='Rekapitulasi Finansial '+MONTHS[+mo-1]+' '+y+'\n'+active().map(e=>{let st=stats(e.id);return`${e.name}\t${idr(e.baseSalary)}\t+${idr(st.bonus)}\t-${idr(st.penalty)}\t${idr(e.baseSalary+st.net)}`}).join('\n');
+  navigator.clipboard.writeText(text);toast('Data terekstraksi ke dalam clipboard sistem ✓');
 }
 
-// ─── GOOGLE SHEETS ────────────────────────────────────────────────
-function saveCompany(){settings.companyName=$('sCompany').value.trim()||'Gatari Edutoys';sv('kpi_settings',settings);toast('Nama perusahaan diperbarui ✓');}
-function saveSheets(){settings.sheetsUrl=$('sSheetsUrl').value.trim();settings.sheetsEnabled=$('sSheetsOn').checked;sv('kpi_settings',settings);updateSyncPill();toast('Pengaturan integrasi Google Sheets disimpan ✓');}
-async function testSheets(){
-  if(!settings.sheetsUrl){toast('Harap masukkan URL Web App terlebih dahulu');return;}
-  toast('Sistem sedang menguji jalur koneksi...',1500);
-  try{await fetch(settings.sheetsUrl+'?action=ping',{method:'GET',mode:'no-cors'});toast('Koneksi sukses tersambung ✓');}
-  catch(e){toast('Koneksi terhambat: '+e.message);}
+function saveCompany(){settings.companyName=$('sCompany').value.trim()||'Gatari Edutoys';sv('kpi_settings',settings);toast('Database identitas bisnis berhasil diperbarui ✓');}
+function saveSheets(){settings.sheetsUrl=$('sSheetsUrl').value.trim();settings.sheetsEnabled=$('sSheetsOn').checked;sv('kpi_settings',settings);updateSyncPill();toast('Perintah otorisasi dan URL Cloud dienkripsi dan disimpan ✓');if(settings.sheetsEnabled&&settings.sheetsUrl)pullSheets();}
+
+async function pullSheets(){
+  if(!settings.sheetsUrl||!settings.sheetsEnabled)return;
+  toast('Sedang mengekstrak matriks data dari Cloud Google Sheets...', 2500);
+  $('syncPill').innerHTML=`<span class="sync-dot" style="background:#3a75d1;box-shadow:0 0 0 2px rgba(58,117,209,0.3)"></span>Menyelaraskan Cloud...`;
+  try {
+    let res = await fetch(settings.sheetsUrl + '?action=pull');
+    let data = await res.json();
+    if(data && !data.error && data.employees) {
+      employees = data.employees || employees;
+      records = data.records || records;
+      refundCases = data.refundCases || refundCases;
+      bonusTypes = data.bonusTypes || bonusTypes;
+      penaltyTypes = data.penaltyTypes || penaltyTypes;
+      
+      sv('kpi_employees',employees);
+      sv('kpi_records',records);
+      sv('kpi_refund_cases',refundCases);
+      sv('kpi_bonus_types',bonusTypes);
+      sv('kpi_penalty_types',penaltyTypes);
+      
+      render();
+      toast('Injeksi data Cloud berhasil: Sistem terkalibrasi 100% ✓', 3000);
+    } else if (data.error === "empty" || data.error === "no_db") {
+      toast('Akses Cloud diotorisasi (Database Cloud Kosong). Siap untuk Sync perdana.');
+    }
+  } catch(e) {
+    toast('Gagal berinteraksi dengan API Google. Mengembalikan ke mode Local Storage.');
+  }
+  updateSyncPill();
 }
 
-// Mengirim data sebagai 1 paket (sync_all)
 async function syncSheets(){
   if(!settings.sheetsUrl||!settings.sheetsEnabled)return;
-  toast('Sistem mensinkronkan data ke Cloud...', 2000);
+  toast('Mendorong payload data terenkripsi ke Cloud API...', 2000);
+  $('syncPill').innerHTML=`<span class="sync-dot" style="background:#f3b23c;box-shadow:0 0 0 2px rgba(243,178,60,0.3)"></span>Pushing Data...`;
   let[y,mo]=month.split('-');
   
   let recs=records.map(r=>{let e=employees.find(x=>x.id===r.empId);return{...r,empName:e?.name||'?',photoCount:(r.photos||[]).length};});
@@ -1086,61 +1097,28 @@ async function syncSheets(){
   let empRows=employees.map(e=>({id:e.id, name:e.name, role:e.role, baseSalary:e.baseSalary, joinDate:e.joinDate, active:e.active, phone:e.phone}));
   let rfRows=refundCases.map(r=>{let e=employees.find(x=>x.id===r.empId); return {id:r.id, empName:e?.name||'?', date:r.date, product:r.productName, qtyOrder:r.qtyOrder, qtyKirim:r.qtyKirim, qtyKurang:r.qtyKurang, resolution:r.resolution, potongan:r.potongan};});
 
-  let payload = { action: 'sync_all', month: month, records: recs, payroll: payRows, employees: empRows, refunds: rfRows };
+  // MENCEGAH PENGIRIMAN BASE64 PANJANG KE SHEETS SAAT BACKUP
+  let backupRecords = records.map(r => ({...r, photos: r.photos ? r.photos.map(p => ({url: p.url||p, fileId: p.fileId})) : [] }));
+  let backupObj = { employees: employees, records: backupRecords, refundCases: refundCases, bonusTypes: bonusTypes, penaltyTypes: penaltyTypes };
+  
+  let payload = { action: 'sync_all', month: month, records: recs, payroll: payRows, employees: empRows, refunds: rfRows, backup: backupObj };
 
   try{
-    await fetch(settings.sheetsUrl,{method:'POST',mode:'no-cors',body:JSON.stringify(payload)});
-    toast('Cloud Sync Berhasil ✓');
-  }catch(e){toast('Gagal melakukan sync: '+e.message);}
+    // Menggunakan text/plain agar tidak terkena blokir CORS OPTIONS dari Google Script
+    await fetch(settings.sheetsUrl,{
+      method:'POST',
+      headers: {'Content-Type': 'text/plain;charset=utf-8'},
+      body:JSON.stringify(payload)
+    });
+    toast('Cloud Sync Berhasil: Database eksternal terupdate ✓');
+  }catch(e){toast('Kegagalan protokol push: '+e.message);}
+  updateSyncPill();
 }
 
-function showGASTemplate(){
-  let script=`function doPost(e) {
-  const data = JSON.parse(e.postData.contents);
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
-  
-  if (data.action === "sync_all") {
-    let shRec = ss.getSheetByName("Catatan") || ss.insertSheet("Catatan");
-    shRec.clearContents();
-    shRec.appendRow(["ID","Karyawan","Tanggal","Kategori","Label","Nominal","Catatan","JmlFoto"]);
-    data.records.forEach(r => shRec.appendRow([r.id,r.empName,r.date,r.category,r.label,r.amount,r.note||"",r.photoCount||0]));
-
-    let shPay = ss.getSheetByName("Payroll "+data.month) || ss.insertSheet("Payroll "+data.month);
-    shPay.clearContents();
-    shPay.appendRow(["Nama","Jabatan","Gaji Pokok","Bonus","Pinalti","Total","KPI Score"]);
-    data.payroll.forEach(r => shPay.appendRow([r.name,r.role,r.baseSalary,r.bonus,r.penalty,r.total,r.score]));
-
-    let shEmp = ss.getSheetByName("Karyawan") || ss.insertSheet("Karyawan");
-    shEmp.clearContents();
-    shEmp.appendRow(["ID","Nama","Jabatan","Gaji Pokok","Tgl Gabung","Status Aktif","No WA"]);
-    data.employees.forEach(r => shEmp.appendRow([r.id, r.name, r.role, r.baseSalary, r.joinDate, r.active ? "Aktif" : "Non-aktif", r.phone||"-"]));
-
-    let shRef = ss.getSheetByName("Kasus Refund") || ss.insertSheet("Kasus Refund");
-    shRef.clearContents();
-    shRef.appendRow(["ID","Tanggal","Karyawan","Nama Produk","Qty Order","Qty Kirim","Qty Kurang","Resolusi","Potongan Karyawan"]);
-    data.refunds.forEach(r => shRef.appendRow([r.id, r.date, r.empName, r.product, r.qtyOrder, r.qtyKirim, r.qtyKurang, r.resolution === 'refund' ? 'Refund' : 'Kirim Ulang', r.potongan]));
-  }
-  return ContentService.createTextOutput(JSON.stringify({status:"ok"})).setMimeType(ContentService.MimeType.JSON);
-}
-function doGet(e) {
-  return ContentService.createTextOutput(JSON.stringify({status:"ok"})).setMimeType(ContentService.MimeType.JSON);
-}`;
-  $('sheetContent').innerHTML=`
-    <h2 class="sheet-title">Template Google Script</h2>
-    <div class="form">
-      <p style="font-size:14px;color:var(--muted);line-height:1.6;">1. Buka <b>Google Sheets</b> baru<br>2. Klik Extensions → Apps Script lalu Paste script ini<br>3. Deploy as Web App (akses Anyone)<br>4. Salin URL hasil deploy lalu tempel di pengaturan aplikasi ini</p>
-      <textarea style="height:200px;font-family:monospace;font-size:12px;background:#fdfcfb;border-radius:16px;resize:vertical;" readonly>${script}</textarea>
-      <button class="btn primary" onclick="navigator.clipboard.writeText(document.querySelector('#sheetContent textarea').value);toast('Script berhasil disalin ke clipboard ✓')">📋 Salin Script Penuh</button>
-      <button class="btn" onclick="closeSheet()">Kembali</button>
-    </div>`;
-  $('sheet').classList.add('show');
-}
-
-// ─── BACKUP ───────────────────────────────────────────────────────
 function exportJson(){
   let blob=new Blob([JSON.stringify({employees,records,refundCases,bonusTypes,penaltyTypes,settings,exportedAt:new Date().toISOString()},null,2)],{type:'application/json'});
   let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`gatari-kpi-backup-${today()}.json`;a.click();
-  toast('File backup sistem sedang diunduh...');
+  toast('Menginisialisasi download arsip database...');
 }
 function importJson(event){
   let file=event.target.files[0];if(!file)return;
@@ -1148,31 +1126,31 @@ function importJson(event){
   r.onload=ev=>{
     try{
       let data=JSON.parse(ev.target.result);
-      if(!data.employees&&!data.records){toast('Dokumen backup tidak terdeteksi valid');return;}
-      if(!confirm(`Mulai pemulihan data? Seluruh data di perangkat ini akan ditimpa dengan data backup.\n(Mendeteksi ${data.employees?.length||0} staf & ${data.records?.length||0} catatan)`))return;
+      if(!data.employees&&!data.records){toast('Integritas file backup dikompromi: Format invalid');return;}
+      if(!confirm(`Konfirmasi penimpaan data: Sistem akan merewrite seluruh database menggunakan arsip JSON ini.\n(Mendeteksi ${data.employees?.length||0} staf & ${data.records?.length||0} histori)`))return;
       if(data.employees){employees=data.employees;sv('kpi_employees',employees);}
       if(data.records){records=data.records;sv('kpi_records',records);}
       if(data.bonusTypes){bonusTypes=data.bonusTypes;sv('kpi_bonus_types',bonusTypes);}
       if(data.penaltyTypes){penaltyTypes=data.penaltyTypes;sv('kpi_penalty_types',penaltyTypes);}
       if(data.refundCases){refundCases=data.refundCases;sv('kpi_refund_cases',refundCases);}
       if(data.settings){settings=data.settings;sv('kpi_settings',settings);}
-      render();toast('Sistem berhasil dipulihkan ✓');
+      render();toast('Sistem berhasil direstore dari arsip lokal ✓');
+      if(settings.sheetsEnabled&&settings.sheetsUrl)syncSheets();
     }catch(e){toast('Gagag membaca dokumen: '+e.message);}
   };
   r.readAsText(file);
   event.target.value='';
 }
 
-// ─── REFUND CASES ─────────────────────────────────────────────────
 function renderRefund(){
   let myRf=[...refundCases].filter(r=>(r.date||'').startsWith(month)).sort((a,b)=>b.date.localeCompare(a.date));
   let totalPot=myRf.reduce((s,r)=>s+r.potongan,0);
   let[y,mo]=month.split('-');
-  return hero('Refund','Manajemen resolusi pelanggan',`<button class="btn primary" onclick="openRefundSheet()">+ Buat Resolusi</button>`)
+  return hero('Manajemen Insiden','Resolusi kurang kirim / barang rusak',`<button class="btn primary" onclick="openRefundSheet()">+ Buat Insiden</button>`)
     +(myRf.length?`<div style="background:var(--red-bg);border:1px solid #fadce0;border-radius:24px;padding:20px;margin-bottom:24px;box-shadow:var(--shadow2)">
-      <div style="font-size:13px;color:var(--red);font-weight:750;text-transform:uppercase;letter-spacing:0.5px">Total Beban Karyawan ${MONTHS[+mo-1]} ${y}</div>
+      <div style="font-size:13px;color:var(--red);font-weight:750;text-transform:uppercase;letter-spacing:0.5px">Total Beban Karyawan (${MONTHS[+mo-1]} ${y})</div>
       <div style="font-size:32px;font-weight:850;color:var(--red);letter-spacing:-1px;margin-top:6px">-${idr(totalPot)}</div>
-      <div style="font-size:13px;color:var(--muted);margin-top:4px;font-weight:600">Dari ${myRf.length} riwayat insiden</div>
+      <div style="font-size:13px;color:var(--muted);margin-top:4px;font-weight:600">Terdistribusi pada ${myRf.length} riwayat kasus operasional</div>
     </div>`:'')
     +`<div class="card-list">${myRf.length?myRf.map(r=>{
       let emp=employees.find(e=>e.id===r.empId)||{name:'?'};
@@ -1182,82 +1160,82 @@ function renderRefund(){
             <div style="font-size:19px;font-weight:850;letter-spacing:-0.5px;color:#1a1815">${r.productName}</div>
             <div class="emp-meta">${fmt(r.date)} · <b style="color:#1a1815">${emp.name}</b></div>
           </div>
-          <span class="refund-tag ${r.resolution}">${r.resolution==='refund'?'🔴 Opsi Refund':'🟡 Kirim Ulang'}</span>
+          <span class="refund-tag ${r.resolution}">${r.resolution==='refund'?'🔴 Opsi Refund':'🟡 Kirim Susulan'}</span>
         </div>
         <div class="calc-box">
-          <div class="calc-row"><span>HPP / Harga Jual</span><b>${idr(r.hargaSatuan)}</b></div>
-          <div class="calc-row"><span>Pesanan Masuk</span><b>${r.qtyOrder} unit</b></div>
-          <div class="calc-row"><span>Faktual Dikirim</span><b>${r.qtyKirim} unit</b></div>
-          <div class="calc-row" style="color:var(--red)"><span>Selisih (Kurang)</span><b>${r.qtyKurang} unit</b></div>
+          <div class="calc-row"><span>Basis Harga</span><b>${idr(r.hargaSatuan)}</b></div>
+          <div class="calc-row"><span>Demand Pemesanan</span><b>${r.qtyOrder} unit</b></div>
+          <div class="calc-row"><span>Terkirim di Paket</span><b>${r.qtyKirim} unit</b></div>
+          <div class="calc-row" style="color:var(--red)"><span>Deviasi Kurang</span><b>${r.qtyKurang} unit</b></div>
           ${r.resolution==='refund'
-            ?`<div class="calc-row"><span>Pinalti (15%)</span><b>15% × ${idr(r.hargaSatuan)} × ${r.qtyKurang}</b></div>`
-            :`<div class="calc-row"><span>Beban Ongkir</span><b>${idr(r.ongkir)}</b></div>`}
-          <div class="calc-row calc-total" style="color:var(--red)"><span>Potongan Dibebankan</span><span>-${idr(r.potongan)}</span></div>
+            ?`<div class="calc-row"><span>Logika Pinalti</span><b>15% × ${idr(r.hargaSatuan)} × ${r.qtyKurang}</b></div>`
+            :`<div class="calc-row"><span>Penanggungan Resi Baru</span><b>${idr(r.ongkir)}</b></div>`}
+          <div class="calc-row calc-total" style="color:var(--red)"><span>Ekspektasi Potongan</span><span>-${idr(r.potongan)}</span></div>
         </div>
         ${r.note?`<div class="emp-meta" style="margin-top:12px;font-style:italic">"${r.note}"</div>`:''}
         <div style="display:flex;gap:8px;margin-top:16px">
-          <button class="btn xsmall danger" onclick="delRefund('${r.id}')">Hapus Kasus</button>
+          <button class="btn xsmall danger" onclick="delRefund('${r.id}')">Hapus Entri Kasus</button>
         </div>
       </div>`;
-    }).join(''):`<div class="empty">Bulan ini operasional berjalan lancar tanpa ada kasus refund. Teruskan tren positif ini!</div>`}</div>`;
+    }).join(''):`<div class="empty">Tidak terdeteksi adanya friksi operasional (Kasus Refund) bulan ini.</div>`}</div>`;
 }
 
 function openRefundSheet(){
   rfResolution='refund';
   let em=active();
-  $('sheetContent').innerHTML=`<h2 class="sheet-title">Pembuatan Resolusi Baru</h2>
+  $('sheetContent').innerHTML=`<h2 class="sheet-title">Input Analisis Insiden</h2>
   <div class="form">
-    <div><label style="font-size:13px;font-weight:700;color:var(--text);display:block;margin-bottom:8px">Pelaksana Packing (PIC)</label>
+    <div><label style="font-size:13px;font-weight:700;color:var(--text);display:block;margin-bottom:8px">Identifikasi Karyawan (PIC)</label>
     <select id="rfEmp">${em.map(e=>`<option value="${e.id}">${e.name} — ${e.role}</option>`).join('')}</select></div>
     
-    <div><label style="font-size:13px;font-weight:700;color:var(--text);display:block;margin-bottom:8px">Tanggal Keluhan / Insiden</label>
+    <div><label style="font-size:13px;font-weight:700;color:var(--text);display:block;margin-bottom:8px">Waktu Kronologi</label>
     <input type="date" id="rfDate" value="${today()}"></div>
     
-    <div><label style="font-size:13px;font-weight:700;color:var(--text);display:block;margin-bottom:8px">Identitas Produk</label>
-    <input id="rfProduct" placeholder="Misal: Wooden Maze Series"></div>
+    <div><label style="font-size:13px;font-weight:700;color:var(--text);display:block;margin-bottom:8px">Nomenklatur Produk</label>
+    <input id="rfProduct" placeholder="Identitas/SKU Barang"></div>
     
     <div class="two">
       <div>
-        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:6px">Harga Satuan (Rp)</label>
+        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:6px">Harga per Unit (Rp)</label>
         <input id="rfHarga" type="text" inputmode="numeric" placeholder="100.000" oninput="fmtRp(this);calcRf()">
       </div>
       <div>
-        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:6px">Kuantitas di Resi</label>
+        <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:6px">Volume Pesanan</label>
         <input id="rfQtyOrder" type="number" placeholder="2" oninput="calcRf()">
       </div>
     </div>
     
     <div>
-      <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:6px">Faktual Fisik yg Terkirim</label>
+      <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:6px">Faktual Fisik Berangkat</label>
       <input id="rfQtyKirim" type="number" placeholder="1" oninput="calcRf()">
     </div>
     
     <div style="margin-top:8px">
-      <label style="font-size:14px;font-weight:800;color:var(--text);display:block;margin-bottom:10px">Tindakan Kompensasi</label>
+      <label style="font-size:14px;font-weight:800;color:var(--text);display:block;margin-bottom:10px">Pendekatan Resolusi</label>
       <div class="res-grid">
         <div class="res-opt sel-refund" id="resOptRefund" onclick="setRfRes('refund')">
           <span class="res-icon">🔴</span>
-          <span class="res-lbl">Voucher / Refund</span>
-          <div class="res-sub">Beban 15% dari HPP produk ke karyawan</div>
+          <span class="res-lbl">Kompensasi / Refund</span>
+          <div class="res-sub">15% Pinalti Harga HPP</div>
         </div>
         <div class="res-opt" id="resOptResend" onclick="setRfRes('resend')">
           <span class="res-icon">🟡</span>
-          <span class="res-lbl">Kirim Susulan</span>
-          <div class="res-sub">Biaya pengiriman ditanggung karyawan</div>
+          <span class="res-lbl">Pengiriman Terpisah</span>
+          <div class="res-sub">Substitusi biaya ekspedisi</div>
         </div>
       </div>
     </div>
     
     <div id="rfOngkirWrap" style="display:none;background:#fffdfa;padding:16px;border-radius:20px;border:1px solid #f2e3c6;margin-top:4px;">
-      <label style="font-size:12px;font-weight:700;color:#b87900;display:block;margin-bottom:8px">Biaya Logistik Tambahan (Rp)</label>
+      <label style="font-size:12px;font-weight:700;color:#b87900;display:block;margin-bottom:8px">Beban Tambahan Kurir (Rp)</label>
       <input id="rfOngkir" type="text" inputmode="numeric" placeholder="Misal: 15.000" oninput="fmtRp(this);calcRf()" style="border-color:#f2e3c6;box-shadow:none;">
     </div>
     
     <div id="rfCalcPreview" style="display:none" class="calc-box"></div>
-    <textarea id="rfNote" rows="2" placeholder="Catatan opsional mengenai kronologi..." style="resize:vertical;margin-top:8px;"></textarea>
+    <textarea id="rfNote" rows="2" placeholder="Detail argumentasi tambahan..." style="resize:vertical;margin-top:8px;"></textarea>
     
-    <button class="btn primary" onclick="saveRefund()" style="margin-top:8px">Simpan & Distribusikan Beban</button>
-    <button class="btn" onclick="closeSheet()">Kembali</button>
+    <button class="btn primary" onclick="saveRefund()" style="margin-top:8px">Register Distribusi Beban</button>
+    <button class="btn" onclick="closeSheet()">Batalkan</button>
   </div>`;
   $('sheet').classList.add('show');
 }
@@ -1281,11 +1259,11 @@ function calcRf(){
   if(!harga||!qOrd){prev.style.display='none';return;}
   prev.style.display='flex';
   prev.innerHTML=`
-    <div class="calc-row"><span>Unit Selisih</span><b style="color:var(--red)">${qKur} produk</b></div>
+    <div class="calc-row"><span>Deviasi Terhitung</span><b style="color:var(--red)">${qKur} unit</b></div>
     ${rfResolution==='refund'
-      ?`<div class="calc-row"><span>Penalti (15% × ${idr(harga)} × ${qKur})</span><b></b></div>`
-      :`<div class="calc-row"><span>Beban Ongkir Susulan</span><b>${idr(ongkir)}</b></div>`}
-    <div class="calc-row calc-total" style="color:var(--red)"><span>Estimasi Potongan Gaji</span><span>-${idr(pot)}</span></div>`;
+      ?`<div class="calc-row"><span>Simulasi Pinalti</span><b></b></div>`
+      :`<div class="calc-row"><span>Tagihan Logistik Terpisah</span><b>${idr(ongkir)}</b></div>`}
+    <div class="calc-row calc-total" style="color:var(--red)"><span>Pemotongan Payroll Diestimasi</span><span>-${idr(pot)}</span></div>`;
 }
 
 function saveRefund(){
@@ -1299,9 +1277,9 @@ function saveRefund(){
   let note=$('rfNote')?.value||'';
   let qKur=Math.max(0,qOrd-qKir);
   let pot=rfResolution==='refund'?Math.round(harga*qKur*.15):ongkir;
-  if(!empId||!product||!harga||qOrd<=0){toast('Mohon lengkapi semua parameter wajib');return;}
-  if(qKir>=qOrd){toast('Logika error: Fisik terkirim menyamai/melebihi pesanan');return;}
-  if(pot<=0){toast(rfResolution==='resend'?'Biaya pengiriman belum diinput':'Kalkulasi nominal tidak sah');return;}
+  if(!empId||!product||!harga||qOrd<=0){toast('Sistem menolak: Input parameter fungsional belum terpenuhi');return;}
+  if(qKir>=qOrd){toast('Verifikasi logika error: Distribusi kirim setara/lebih tinggi dari demand pemesanan');return;}
+  if(pot<=0){toast(rfResolution==='resend'?'Data tarif belum ditambahkan':'Kalkulator sistem mereturn hasil nol');return;}
   
   let kasus={id:uid(),empId,date,productName:product,hargaSatuan:harga,qtyOrder:qOrd,
     qtyKirim:qKir,qtyKurang:qKur,resolution:rfResolution,ongkir:rfResolution==='resend'?ongkir:0,
@@ -1311,23 +1289,23 @@ function saveRefund(){
   
   let emp=employees.find(e=>e.id===empId);
   let recLabel=rfResolution==='refund'
-    ?`Refund Pelanggan: ${product} ×${qKur} (Pinalti 15%)`
-    :`Biaya Logistik Susulan: ${product} ×${qKur}`;
+    ?`Aduan Pelanggan: ${product} ×${qKur} (Pinalti 15%)`
+    :`Distribusi Susulan: ${product} ×${qKur}`;
   records.push({id:'rf_'+kasus.id,empId,date,category:'penalty',label:recLabel,amount:pot,note,photos:[]});
   sv('kpi_records',records);
   
   closeSheet();render();
-  toast(`Beban -${idr(pot)} didistribusikan ke histori pinalti ${emp?.name||''} ✓`, 3500);
+  toast(`Eksekusi potongan beban sejumlah -${idr(pot)} terhadap entri ${emp?.name||''} berhasil ✓`, 3500);
   if(settings.sheetsEnabled&&settings.sheetsUrl)syncSheets();
 }
 
 function delRefund(id){
-  if(!confirm('Otorisasi penghapusan: Seluruh beban finansial ke karyawan dari kasus ini akan dibatalkan. Lanjutkan?'))return;
+  if(!confirm('Konfirmasi: Dengan mengeliminasi entri ini, semua pengurangan dana terkait kasus tsb akan dianulir. Setuju?'))return;
   refundCases=refundCases.filter(r=>r.id!==id);
   sv('kpi_refund_cases',refundCases);
   records=records.filter(r=>r.id!=='rf_'+id);
   sv('kpi_records',records);
-  render(); toast('Riwayat insiden dihapus dari sistem');
+  render(); toast('Sistem telah membersihkan riwayat insiden');
   if(settings.sheetsEnabled&&settings.sheetsUrl)syncSheets();
 }
 
